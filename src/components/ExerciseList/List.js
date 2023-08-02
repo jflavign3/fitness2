@@ -1,8 +1,9 @@
 import React from 'react';
-import Exercise from './Exercise.js';
+import Exercise from '../../components/ExerciseCard';
 
 const List = ({ exercises }) => {
  
+    debugger;
   return (    
     <section>
       {exercises.map((exercise) => {
