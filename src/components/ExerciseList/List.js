@@ -1,13 +1,13 @@
 import React from 'react';
-import Exercise from '../../components/ExerciseCard';
+import ExerciseCard from '../../components/ExerciseCard';
 
 const List = ({ exercises }) => {
  
-    debugger;
+    //debugger;
   return (    
     <section>
       {exercises.map((exercise) => {
-        return <Exercise key={exercise.id} {...exercise} />;
+        return <ExerciseCard key={exercise.id} {...exercise} />;
       })}
     </section>
   );
