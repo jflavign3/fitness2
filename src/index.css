@@ -271,6 +271,9 @@ main {
   justify-content: center;
   align-items: center;
 }
+.MuiStack-root{
+  flex-wrap: wrap;
+}
 .container {
   /* border: 2px solid red; */
   width: 95vw;
@@ -282,6 +285,13 @@ main {
   box-shadow: var(--shadow-1);
   overflow: hidden;
 }
+.container {
+  /* border: 2px solid red; */
+  width: 95vw;
+  margin: 5rem 0;
+  padding: 1.5rem 1.5rem;
+}
+
 .container h3 {
   margin-bottom: 2rem;
 }

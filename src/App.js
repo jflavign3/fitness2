@@ -47,8 +47,9 @@ function App() {
 <>  
     {
         !userId 
-          ? <main><Login users={users} setCurrentUser={SetCurrentUser}></Login>
-          </main>: (
+          ? <main> <section className='containerLogin'>
+            <Login users={users} setCurrentUser={SetCurrentUser}></Login>
+          </section></main>: (
            
 
     <main>

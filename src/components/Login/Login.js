@@ -1,5 +1,4 @@
-//import {User} from "../../Types";
-import UserCard from './UserCard';
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -25,9 +24,6 @@ import Stack from '@mui/material/Stack';
     </Stack>
 
 
-      {users.map((user, i) => {
-        return <UserCard key={i} {...user} />;
-      })}
     </div>
   );
 };
