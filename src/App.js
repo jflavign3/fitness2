@@ -27,6 +27,11 @@ function App() {
 
   };
 
+  const SetCurrentUser = (id) => {
+     setUserId(id);
+     sessionStorage.setItem("userId",id);
+  };
+
   console.log('user id:' + (window.sessionStorage.getItem("userId")));
 
   useEffect(() => {
@@ -39,11 +44,11 @@ function App() {
 
   return (   
 
-<>
+<>  
     {
         !userId 
-          ? <Login users={users}></Login>
-          : (
+          ? <main><Login users={users} setCurrentUser={SetCurrentUser}></Login>
+          </main>: (
            
 
     <main>
