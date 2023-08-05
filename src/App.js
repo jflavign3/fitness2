@@ -59,7 +59,7 @@ function App() {
      let todayExercises = [];
  
      const d = new Date();
-     var day = d.getDay();
+     var day = 4;//d.getDay();
       let programs = await GetProgramsByUserId(userId);   
       var todayProgram = programs.filter(x=>x.weekday === day);  
       todayProgram.forEach(programItem => {

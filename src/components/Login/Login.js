@@ -1,4 +1,4 @@
-
+import "./login.scss";
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
@@ -19,15 +19,16 @@ const avatarClick = (user, setCurrentUser) =>
     <div>
 
 <div className='loginLabel'>Qui suis-je?</div>
+<div className='userBadgesSection'>
     <Stack direction="row" spacing={2}>    
 
       {users.map((user, id) => {
-        return <Avatar key={id} onClick={()=>avatarClick(user, setCurrentUser)} sx={{ width: 200, height: 200 }} alt="" src={user.avatar} />
+        return <Avatar key={id} onClick={()=>avatarClick(user, setCurrentUser)} sx={{ width: 150, height: 150 }} alt="" src={user.avatar} />
       })}      
       
     </Stack>
 
-
+    </div>
     </div>
   );
 };

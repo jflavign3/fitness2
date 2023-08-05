@@ -12,7 +12,37 @@
 // Select the database to use.
 use('FITNESS');
 
+//rename field
+/*
 db.Program.updateMany( 
     { }, 
     { $rename: { "exercise": "exerciseId" } } 
   )
+*/
+
+//edit exercise
+/*
+db.EXERCISE.updateOne( { id:1 },
+{
+  $set: {
+    image: "/pushup.png"
+  },
+  $currentDate: { lastUpdated: true }
+})*/
+
+
+//add exercise
+/*
+db.getCollection('EXERCISE').insertOne({
+  "id": 9,
+  "name": "Calf Raise",
+  "type": "lower body",
+  "image": "/calfraise.jpg",
+});
+*/
+db.getCollection('Program').insertOne({
+"id": 1,
+"weekday": 4,
+"userId": 1,
+"exerciseId": 9
+});

@@ -13,6 +13,7 @@ inspirational quote (you lose muscle every day...)
 include cardio tracking
 graph on improvment
 randonmize exercise by types
+user badge upper right of page
 
 
 
