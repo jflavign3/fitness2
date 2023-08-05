@@ -5,6 +5,7 @@ import MenuBar from "./components/MenuBar/MenuBar";
 //import GetAll from "./DAL/Exercises";
 import {GetAllExercises} from "./Exercises";
 import {GetAllUsers} from "./Users";
+import {GetProgramsByUserId} from "./Program";
 import Login from './components/Login/Login';
 
 
@@ -13,40 +14,88 @@ import Login from './components/Login/Login';
 function App() {
   const [exercises, setExercises] = useState([]);  
   const [users, setUsers] = useState([]);  
-  const [userId, setUserId] = useState(0);  
+  //const [userId, setUserId] = useState(0);  
+  const [isUserLogged, setIsUserLogged] = useState(false);  
+
+  const GetPrograms = async(userId)=>{
+    
+    let allExercises = await GetAllExercises();
+    let todayExercises = [];
+
+    const d = new Date();
+    var day = 1;//d.getDay();
+     let programs = await GetProgramsByUserId(userId);   
+     var todayProgram = programs.filter(x=>x.weekday === day);  
+     todayProgram.forEach(programItem => {
+       let exercise = exercises.filter(x=>x.id === programItem.exerciseId);
+       todayExercises.push(exercise);
+
+
+     });
+
+     setExercises(todayExercises);
+     console.log('program ' + JSON.stringify(todayProgram));
+     
+  }
 
   const GetData = async () => {
- 
-    //debugger;
    
     let allUsers = await GetAllUsers();
     setUsers(allUsers);    
-  
-    let allExercises = await GetAllExercises();
-    setExercises(allExercises);    
-
+   
+   // let allExercises = await GetAllExercises();
+    //setExercises(allExercises);  
+ 
   };
 
-  const SetCurrentUser = (id) => {
-     setUserId(id);
-     sessionStorage.setItem("userId",id);
+  const SetCurrentUser = async (userId) => {
+    
+     console.log('user was selected. getting program');
+     //setUserId(id);
+     sessionStorage.setItem("__userId",userId);
+
+     //try to get db stuff here
+     let allExercises = await GetAllExercises();
+     let todayExercises = [];
+ 
+     const d = new Date();
+     var day = d.getDay();
+      let programs = await GetProgramsByUserId(userId);   
+      var todayProgram = programs.filter(x=>x.weekday === day);  
+      todayProgram.forEach(programItem => {
+        let exercise = allExercises.filter(x=>x.id === programItem.exerciseId)[0];
+        todayExercises.push(exercise);
+      });
+
+      console.log("Setting program: " + JSON.stringify(todayExercises));
+ 
+      setExercises(todayExercises);
+
+
+     setIsUserLogged(true);
   };
 
-  console.log('user id:' + (window.sessionStorage.getItem("userId")));
+  console.log('rerendering. user id:' + (window.sessionStorage.getItem("userId")));
 
   useEffect(() => {
     
-  setUserId(window.sessionStorage.getItem("userId"));
-    GetData();  
+  //setUserId(window.sessionStorage.getItem("userId"));
+  GetData();  //get only users
+  console.log('inside useEffect');
 }, []);
 
-
+//cannot put getPrograms in useEffect, beacaue of dependency on UserId..
+if (isUserLogged){
+  //debugger;
+   // GetPrograms(userId);  
+    
+}
 
   return (   
 
 <>  
     {
-        !userId 
+        !isUserLogged 
           ? <main> <section className='containerLogin'>
             <Login users={users} setCurrentUser={SetCurrentUser}></Login>
           </section></main>: (
