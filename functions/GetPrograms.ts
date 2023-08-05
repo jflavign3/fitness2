@@ -2,15 +2,18 @@ const {MongoClient} = require("mongodb");
 
 exports.handler = async (event, context) => {
   
-  
   const mongoClient = new MongoClient(process.env.MONGODB_URI);
+  
   try {
   
-  const clientPromise = await mongoClient.connect();
+  const clientPromise = mongoClient.connect();
   const database = (await clientPromise).db("FITNESS");
-  const collection = database.collection("USER");
-  const results = await collection.find({}).limit(100).toArray();
+  const collection = database.collection("Program");
+  
+  let userId = Number(event.queryStringParameters.userId);
 
+  const results = await collection.find({id:{$eq:userId}}).toArray();
+  
   return {
     statusCode: 200,
     body: JSON.stringify(results),
@@ -19,6 +22,7 @@ exports.handler = async (event, context) => {
     return { statusCode: 422, body: err.stack };
   }finally{
     mongoClient.close();
+
   }
 };
 
