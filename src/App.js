@@ -57,7 +57,7 @@ function App() {
      //try to get db stuff here
      let allExercises = await GetAllExercises();
      
-     let specs = await GetAllExerciseSpecs();
+     //let specs = await GetAllExerciseSpecs();
 
      let todayExercises = [];
  
