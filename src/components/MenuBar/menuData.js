@@ -16,8 +16,8 @@ const menuItems = [
       showName: true,
     },
     {
-      name: "Quotes",
-      title: "My Stock Quotes",
+      name: "Stats",
+      title: "",
       default: false,
       image: "fa fa-chart",
       webOnly: false,

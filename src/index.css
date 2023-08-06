@@ -159,7 +159,7 @@ ul {
   background: var(--primary-700);
 }
 .btn-block {
-  width: 100%;
+    margin-top: 6px;
 }
 
 /* alerts */
@@ -294,23 +294,4 @@ main {
 
 .container h3 {
   margin-bottom: 2rem;
-}
-.exercise {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  align-items: center;
-}
-.exercise img {
-  width: 175px;  
-  border-radius: 10%;
-  box-shadow: var(--shadow-3);
-}
-.exercise h4 {
-  font-weight: 500;
-  margin-bottom: 0.5rem;
-}
-.exercise p {
-  color: var(--grey-500);
 }

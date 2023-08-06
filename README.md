@@ -14,6 +14,7 @@ include cardio tracking
 graph on improvment
 randonmize exercise by types
 user badge upper right of page
+bouton pour Previous/Next day
 
 
 
