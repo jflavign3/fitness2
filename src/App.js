@@ -56,14 +56,22 @@ function App() {
 
      //try to get db stuff here
      let allExercises = await GetAllExercises();
+     
+     let specs = await GetAllExerciseSpecs();
+
      let todayExercises = [];
  
      const d = new Date();
      var day = 4;//d.getDay();
       let programs = await GetProgramsByUserId(userId);   
       var todayProgram = programs.filter(x=>x.weekday === day);  
+
       todayProgram.forEach(programItem => {
         let exercise = allExercises.filter(x=>x.id === programItem.exerciseId)[0];
+        let details = [ {title:"Reps", value:46}, {title:"Sets", value:46}]
+        exercise.details = details;
+      
+
         todayExercises.push(exercise);
       });
 
@@ -110,13 +118,7 @@ if (isUserLogged){
         <h3>{exercises.length} exercises today</h3>
         
         <List exercises={exercises} />
-        <button
-          type='button'
-          className='btn btn-block'
-          onClick={() => setExercises([])}
-        >
-          Lets do it
-        </button>
+       
       </section>
 
       <div id="bottomMenuForSmallScreen">
