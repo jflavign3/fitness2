@@ -8,7 +8,7 @@ exports.handler = async (event, context) => {
   console.log(process.env.MONGODB_URI);
   const clientPromise = mongoClient.connect();
   const database = (await clientPromise).db("FITNESS");
-  const collection = database.collection("EXERCISE");
+  const collection = database.collection("Exercise");
   const results = await collection.find({}).limit(100).toArray();
  
   return {

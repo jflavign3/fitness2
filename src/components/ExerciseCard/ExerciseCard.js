@@ -43,8 +43,8 @@ const expandCard = ()=>{
     return(
         <div key={i} className="detailRow">
           <div className='kpi'>
-            <div>{detail.title}</div>
-            <div className="kpiValue">{detail.value}</div>
+            <div>{detail.Title}</div>
+            <div className="kpiValue">{detail.Value}</div>
           </div>
          
         </div>

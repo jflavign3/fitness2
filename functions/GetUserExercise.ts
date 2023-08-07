@@ -5,12 +5,12 @@ exports.handler = async (event, context) => {
   
   const mongoClient = new MongoClient(process.env.MONGODB_URI);
   try {
-  
-  const clientPromise = await mongoClient.connect();
+  console.log(process.env.MONGODB_URI);
+  const clientPromise = mongoClient.connect();
   const database = (await clientPromise).db("FITNESS");
-  const collection = database.collection("User");
-  const results = await collection.find({}).limit(100).toArray();
-
+  const collection = database.collection("UserExercise");
+  const results = await collection.find({}).toArray();
+ 
   return {
     statusCode: 200,
     body: JSON.stringify(results),
