@@ -4,9 +4,12 @@ import "./App.scss";
 import MenuBar from "./components/MenuBar/MenuBar";
 //import GetAll from "./DAL/Exercises";
 import {GetAllExercises} from "./Exercises";
+import {GetAllExerciseDetails} from "./DAL/ExerciseDetails";
+import {GetAllUserExercises} from "./DAL/UserExercise";
 import {GetAllUsers} from "./Users";
 import {GetProgramsByUserId} from "./Program";
 import Login from './components/Login/Login';
+
 
 
 
@@ -16,35 +19,12 @@ function App() {
   const [users, setUsers] = useState([]);  
   //const [userId, setUserId] = useState(0);  
   const [isUserLogged, setIsUserLogged] = useState(false);  
-/*
-  const GetPrograms = async(userId)=>{
-    
-    let allExercises = await GetAllExercises();
-    let todayExercises = [];
-
-    const d = new Date();
-    var day = d.getDay();
-     let programs = await GetProgramsByUserId(userId);   
-     var todayProgram = programs.filter(x=>x.weekday === day);  
-     todayProgram.forEach(programItem => {
-       let exercise = exercises.filter(x=>x.id === programItem.exerciseId);
-       todayExercises.push(exercise);
-
-
-     });
-
-     setExercises(todayExercises);
-     console.log('program ' + JSON.stringify(todayProgram));
-     
-  }*/
 
   const GetData = async () => {
    
     let allUsers = await GetAllUsers();
     setUsers(allUsers);    
    
-   // let allExercises = await GetAllExercises();
-    //setExercises(allExercises);  
  
   };
 
@@ -56,29 +36,37 @@ function App() {
 
      //try to get db stuff here
      let allExercises = await GetAllExercises();
-     
-     //let specs = await GetAllExerciseSpecs();
-
+     let userExercises = await GetAllUserExercises();
+     let details = await GetAllExerciseDetails();
+     console.log('all details: ' + JSON.stringify(details));
      let todayExercises = [];
  
      const d = new Date();
-     var day = 4;//d.getDay();
+     var day = 1;//d.getDay();
       let programs = await GetProgramsByUserId(userId);   
       var todayProgram = programs.filter(x=>x.weekday === day);  
 
+      debugger;
       todayProgram.forEach(programItem => {
         let exercise = allExercises.filter(x=>x.id === programItem.exerciseId)[0];
-        let details = [ {title:"Reps", value:46}, {title:"Sets", value:46}]
-        exercise.details = details;
-      
+       // console.log('current exercise: ' + JSON.stringify(exercise));
+        let currentUserExercise = userExercises.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId)[0];
+        //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
+        
+        if (currentUserExercise){
+        let currentDetails = details.filter(x=>x.UserExerciseId === currentUserExercise.id);
+        //console.log('current details: ' + JSON.stringify(currentDetails));
+       // let details = [ {title:"Reps", value:46}, {title:"Sets", value:46}]
+        exercise.details = currentDetails;     
 
         todayExercises.push(exercise);
+
+        }
       });
 
       console.log("Setting program: " + JSON.stringify(todayExercises));
  
       setExercises(todayExercises);
-
 
      setIsUserLogged(true);
   };
