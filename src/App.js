@@ -1,120 +1,105 @@
-import { useState, useEffect } from 'react';
-import List from './components/ExerciseList/List';
 import "./App.scss";
+import { useState, useEffect } from 'react';
+import Home from './components/ExerciseList/Home';
+import Setup from './components/Setup/Setup';
 import MenuBar from "./components/MenuBar/MenuBar";
-//import GetAll from "./DAL/Exercises";
-import {GetAllExercises} from "./Exercises";
-import {GetAllExerciseDetails} from "./DAL/ExerciseDetails";
-import {GetAllUserExercises} from "./DAL/UserExercise";
 import {GetAllUsers} from "./Users";
-import {GetProgramsByUserId} from "./Program";
 import Login from './components/Login/Login';
 
 
 
 
-
 function App() {
-  const [exercises, setExercises] = useState([]);  
-  const [users, setUsers] = useState([]);  
-  //const [userId, setUserId] = useState(0);  
-  const [isUserLogged, setIsUserLogged] = useState(false);  
-
-  const GetData = async () => {
-   
-    let allUsers = await GetAllUsers();
-    setUsers(allUsers);    
-   
  
+  const [users, setUsers] = useState([]);  
+  const [user, setUser] = useState(null);  
+  const [page, setPage] = useState(null);  
+
+  const GetListOfUsers = async () => {   
+    console.log(`Getting list of all users`);
+    let allUsers = await GetAllUsers();
+    setUsers(allUsers);       
   };
+
+  const SetCurrentPage = async(page) => {
+   // debugger;
+    
+    console.log(`Page ${page.name} was selected.`);
+    sessionStorage.setItem("__page",page.name);
+    setPage(page);
+  
+   
+  }
+
 
   const SetCurrentUser = async (userId) => {
     
-     console.log('user was selected. getting program');
-     //setUserId(id);
-     sessionStorage.setItem("__userId",userId);
+     console.log(`User ${userId} was selected. Load home data.`);
+     
+     sessionStorage.setItem("__userId",userId);     
+     setUser(userId);
+     sessionStorage.setItem("__page","Home");     
+     setPage("Home");
 
-     //try to get db stuff here
-     let allExercises = await GetAllExercises();
-     let userExercises = await GetAllUserExercises();
-     let details = await GetAllExerciseDetails();
-     console.log('all details: ' + JSON.stringify(details));
-     let todayExercises = [];
- 
-     const d = new Date();
-     var day = 1;//d.getDay();
-      let programs = await GetProgramsByUserId(userId);   
-      var todayProgram = programs.filter(x=>x.weekday === day);  
-
-      debugger;
-      todayProgram.forEach(programItem => {
-        let exercise = allExercises.filter(x=>x.id === programItem.exerciseId)[0];
-       // console.log('current exercise: ' + JSON.stringify(exercise));
-        let currentUserExercise = userExercises.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId)[0];
-        //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
-        
-        if (currentUserExercise){
-        let currentDetails = details.filter(x=>x.UserExerciseId === currentUserExercise.id);
-        //console.log('current details: ' + JSON.stringify(currentDetails));
-       // let details = [ {title:"Reps", value:46}, {title:"Sets", value:46}]
-        exercise.details = currentDetails;     
-
-        todayExercises.push(exercise);
-
-        }
-      });
-
-      console.log("Setting program: " + JSON.stringify(todayExercises));
- 
-      setExercises(todayExercises);
-
-     setIsUserLogged(true);
   };
 
-  console.log('rerendering. user id:' + (window.sessionStorage.getItem("userId")));
+  console.log('rerendering. user id:' + (sessionStorage.getItem("__userId")));   
+  console.log('Session:page= ' + page);
 
-  useEffect(() => {
-    
-  //setUserId(window.sessionStorage.getItem("userId"));
-  GetData();  //get only users
-  console.log('inside useEffect');
-}, []);
+//debugger;
+useEffect(() => {
+  console.log("useEffect app");
+  GetListOfUsers();
 
-//cannot put getPrograms in useEffect, beacaue of dependency on UserId..
-if (isUserLogged){
-  //debugger;
-   // GetPrograms(userId);  
-    
-}
+  //on first rerender take page from session
+  var pageSession = sessionStorage.getItem("__page");
+  if (pageSession){
+    setPage(pageSession);
+  }
 
-  return (   
+  //on first rerender take user from session
+  var userSession = sessionStorage.getItem("__userId");
+  if (!user && users && userSession){
+   
+    setUser(userSession);
+  }
+
+},[]);
+
+
+
+ return (   
 
 <>  
     {
-        !isUserLogged 
+        !user && users
           ? <main> <section className='containerLogin'>
             <Login users={users} setCurrentUser={SetCurrentUser}></Login>
           </section></main>: (
            
 
-    <main>
+<main>            
     <div className="leftMenuForBigScreen">
-      <MenuBar></MenuBar>
+      <MenuBar setCurrentPage={SetCurrentPage}></MenuBar>
     </div>
 
-    <section className='container'>
-        <h3>{exercises.length} exercises today</h3>
-        
-        <List exercises={exercises} />
-       
-      </section>
+    {page === "Home" ? (
+      <Home/>   
+ 
+    ) : (<Setup/>)
+    
+    }
+
 
       <div id="bottomMenuForSmallScreen">
         <div id="spacer"></div>
-        <MenuBar></MenuBar>
+        <MenuBar setCurrentPage={SetCurrentPage}></MenuBar>
       </div>
 
     </main>)}
+
+ 
+
     </>
     )
 }
