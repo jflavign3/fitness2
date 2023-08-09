@@ -3,12 +3,15 @@ import { useState } from 'react';
 
 
 
-
-
 const ExerciseCard = ({ image, name, type, details }) => {
-
   
 const [isExpanded, setIsExpanded] = useState(false);  
+
+
+
+const saveProgress = ()=>{
+
+}
 
 const expandCard = ()=>{
     setIsExpanded(!isExpanded);
@@ -45,11 +48,18 @@ const expandCard = ()=>{
           <div className='kpi'>
             <div>{detail.Title}</div>
             <div className="kpiValue">{detail.Value}</div>
-          </div>
-         
+          </div>          
         </div>
         )
         })}
+        <button
+          type='button'
+          className='btn btn-block'
+          onClick={() => saveProgress()}
+        >
+          All Done!
+        </button>
+         
 
 
 

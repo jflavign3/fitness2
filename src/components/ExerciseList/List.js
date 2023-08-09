@@ -3,12 +3,13 @@ import ExerciseCard from '../ExerciseCard/ExerciseCard';
 
 const List = ({ exercises }) => {
  
-    //debugger;
+   // debugger;
   return (    
     <section>
-      {exercises.map((exercise) => {
-        return <ExerciseCard key={exercise.id} {...exercise} />;
+         {exercises && exercises.map((exercise,i) => {
+        return <ExerciseCard key={i} {...exercise} />;
       })}
+   
     </section>
   );
 };

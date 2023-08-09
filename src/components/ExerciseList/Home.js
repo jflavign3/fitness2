@@ -23,20 +23,19 @@ const Home = () => {
      let todayExercises = [];
  
      const d = new Date();
-     var day = 1;//d.getDay();
+     var day = 4;//d.getDay();
       let programs = await GetProgramsByUserId(userId);   
       var todayProgram = programs.filter(x=>x.weekday === day);  
 
-    //  debugger;
       todayProgram.forEach(programItem => {
-        let exercise = allExercises.filter(x=>x.id === programItem.exerciseId)[0];
+        let exercise = allExercises.filter(x=>x._id === programItem.exerciseId)[0];
        // console.log('current exercise: ' + JSON.stringify(exercise));
-        let currentUserExercise = userExercises.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId)[0];
+        let currentProgram = programs.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId)[0];
         //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
         
-        if (currentUserExercise){
-           let currentDetails = details.filter(x=>x.UserExerciseId === currentUserExercise.id);
-           todayExercises.details = currentDetails;
+        if (currentProgram){
+           let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id);
+           exercise.details = currentDetails;
            todayExercises.push(exercise);
         }
       });

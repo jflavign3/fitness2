@@ -1,3 +1,5 @@
+import { log } from "console";
+
 const {MongoClient} = require("mongodb");
 
 exports.handler = async (event, context) => {
@@ -8,11 +10,13 @@ exports.handler = async (event, context) => {
   
   const clientPromise = mongoClient.connect();
   const database = (await clientPromise).db("FITNESS");
-  const collection = database.collection("Program");
+  const collection = database.collection("ExerciseDetails");  
   
-  let userId = Number(event.queryStringParameters.userId);
+  let details: string[] = [];
+  details = JSON.parse(event.body);
 
-  const results = await collection.find({userId:{$eq:userId}}).toArray();
+
+  const results = await collection.insertMany(details);
   
   return {
     statusCode: 200,

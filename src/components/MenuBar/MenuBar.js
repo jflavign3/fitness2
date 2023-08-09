@@ -4,7 +4,7 @@ import logo from "../../images/vite.JPG";
 import { useState } from "react";
 import { FaHome, FaCog, FaBook } from "react-icons/fa";
 
-const MenuBar = () => {
+const MenuBar = ({setCurrentPage}) => {
   const [itemActive] = useState("Home");
 
   return (
@@ -18,7 +18,7 @@ const MenuBar = () => {
         {menuData.map((item) => {
           const { name } = item;
           return (
-            <li key={name} className="">
+            <li key={name} onClick={()=>setCurrentPage(item)} className="">
               <a
                 href="_blank"
                 className={itemActive === name ? "itemActive" : "itemDisabled"}
