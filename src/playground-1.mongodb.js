@@ -39,11 +39,11 @@ db.EXERCISE.updateOne( { id:1 },
 
 
 //add exercise
-/*
+
 db.getCollection('Exercise').insertOne({  
-  "name": "Harmstring Curl",
-  "type": "lower body",
-  "image": "/images/harmstringcurl.jpg",
+  "name": "Bulgarian Squat",
+  "type": "quad",
+  "image": "/images/bulgariansquat.jpg",
 });
 
 
