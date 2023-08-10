@@ -12,11 +12,18 @@
 // Select the database to use.
 use('FITNESS');
 
+//ADD FIELD
+/*
+db.Program.updateMany({}, { 
+   $set: { LastCompletionDate: new Date() } 
+});*/
+
+
 //rename field
 /*
 db.Program.updateMany( 
     { }, 
-    { $rename: { "exercise": "exerciseId" } } 
+    { $rename: { "LastCompletionDate": "lastCompletionDate" } } 
   )
 */
 
@@ -32,11 +39,11 @@ db.EXERCISE.updateOne( { id:1 },
 
 
 //add exercise
-
+/*
 db.getCollection('Exercise').insertOne({  
-  "name": "Wall Sit",
+  "name": "Harmstring Curl",
   "type": "lower body",
-  "image": "/wallsit.jpg",
+  "image": "/images/harmstringcurl.jpg",
 });
 
 

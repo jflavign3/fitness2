@@ -10,11 +10,11 @@ exports.handler = async (event, context) => {
   const database = (await clientPromise).db("FITNESS");
   const collection = database.collection("Program");
   
-  const { userId, weekDayId, exerciseId } = JSON.parse(event.body);
+  const { userId, weekday, exerciseId } = JSON.parse(event.body);
   
 
   const results = await collection.insertOne({
-    weekday:weekDayId,
+    weekday:weekday,
     userId:userId,
     exerciseId:exerciseId});
   
