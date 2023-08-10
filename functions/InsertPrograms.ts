@@ -10,13 +10,14 @@ exports.handler = async (event, context) => {
   const database = (await clientPromise).db("FITNESS");
   const collection = database.collection("Program");
   
-  const { userId, weekday, exerciseId } = JSON.parse(event.body);
+  const { userId, weekday, exerciseId, lastCompletionDate } = JSON.parse(event.body);
   
 
   const results = await collection.insertOne({
     weekday:weekday,
     userId:userId,
-    exerciseId:exerciseId});
+    exerciseId:exerciseId,
+    lastCompletionDate: lastCompletionDate });
   
   return {
     statusCode: 200,

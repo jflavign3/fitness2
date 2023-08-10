@@ -1,5 +1,6 @@
 import "./exerciseCard.scss";
 import {UpdateProgram} from "../../DAL/Program";
+import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 
@@ -32,12 +33,42 @@ const saveProgress = async ()=>{
      var offset = -300; //Timezone offset for EST in minutes.
      const dt = new Date();
      var date = new Date(dt.getTime() + offset*60*1000); 
-     program.lastCompletionDate = date.toISOString().split('T')[0];
+     var formattedDate = date.toISOString().split('T')[0];
+     program.lastCompletionDate = formattedDate;
      setIsCompleted(true);
-    expandCard();
-  var p = await UpdateProgram(program);     
-  console.log('===>Updated program ' + JSON.stringify(p));
+     expandCard();
+ // var p = await UpdateProgram(program);       
+  //console.log('===>Updated program ' + JSON.stringify(p));
+
+
+  //to do, put stats in session
+  let stats = await GetAllStats();
+ 
+
+  let currentStat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
+    
+    let todayReps = details.filter(v=>v.Title === "Reps")[0]?.Value;
+    let todaySets = details.filter(v=>v.Title === "Sets")[0]?.Value;
+    let todayLbs = details.filter(v=>v.Title === "Lbs")[0]?.Value;
+    let todaySeconds = details.filter(v=>v.Title === "Seconds")[0]?.Value;
+    let todayTotalReps = todayReps * todaySets;
   
+    //initialize object if new
+    if (!currentStat){  
+    currentStat = {};
+    currentStat.userId = program.userId;
+    currentStat.exerciseId = program.exerciseId;
+  }  
+  
+  var totalReps = currentStat.totalReps ?? 0;
+  currentStat.totalReps = totalReps + todayTotalReps;
+
+  var completions = currentStat.totalCompletions ?? 0;
+  currentStat.totalCompletions = completions + 1;
+  currentStat.lastUpdateDate = date;
+  var r = await UpsertStat(currentStat);
+  console.log('===>Updated stats ' + JSON.stringify(r));
+ 
      //stats
 }
 

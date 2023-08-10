@@ -29,7 +29,7 @@ exports.handler = async (event, context) => {
   };
 
 
-  console.log(JSON.stringify(program));
+  //console.log(JSON.stringify(program));
 
   const results = await collection.updateOne(filter, updateDoc, options);
   

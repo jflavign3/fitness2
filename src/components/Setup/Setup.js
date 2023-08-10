@@ -20,14 +20,13 @@ const Setup = () => {
     }
 
 const InsertItem = async (items)=>{
-  let program = {"userId":Number(items.User),"weekDayId": Number(items.DayOfWeek),"exerciseId":items.Exercise};
+  let program = {"userId":Number(items.User),"weekday": Number(items.DayOfWeek),"exerciseId":items.Exercise, "lastCompletionDate": new Date(2001,1,1)};
  
   let reps = Number(items.reps);
   let sets =  Number(items.sets);
   let lbs =  Number(items.lbs);
   let seconds =  Number(items.seconds);
   let day = items.DayOfWeek;
-
 
   var p = await InsertProgram(program);
   console.log('Inserted program ' + JSON.stringify(p));
