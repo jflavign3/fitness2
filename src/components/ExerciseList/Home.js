@@ -9,6 +9,8 @@ import List from "./List";
 const Home = () => {
 
   const [exercises, setExercises] = useState([]);  
+  const [isLoaded, setIsLoaded] = useState(false);  
+  
 
   const GetHomeData = async () => {
     
@@ -23,7 +25,7 @@ const Home = () => {
      let todayExercises = [];
  
      const d = new Date();
-     var day = 4;//d.getDay();
+     var day = d.getDay();
       let programs = await GetProgramsByUserId(userId);   
       var todayProgram = programs.filter(x=>x.weekday === day);  
 
@@ -36,13 +38,15 @@ const Home = () => {
         if (currentProgram){
            let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id);
            exercise.details = currentDetails;
+           exercise.program = programItem;           
            todayExercises.push(exercise);
         }
       });
 
-      console.log("Setting program: " + JSON.stringify(todayExercises));
+      console.log("Setting programs ");// + JSON.stringify(todayExercises));
  
       setExercises(todayExercises);
+      setIsLoaded(true);
     }
 
     useEffect(() => {
@@ -54,9 +58,14 @@ const Home = () => {
   return (    
     <main>    
       <section className='container'>
+        
         <h3>{exercises.length} exercises today</h3>
-        {exercises ?
-        (<List exercises={exercises} />) : (<> </>)}
+        {exercises.length > 0 &&
+        (<List exercises={exercises} />)}
+        {(exercises.length === 0 && isLoaded) &&
+           (<img src={'./images/rest.png'} alt='rest' className='img' />)}
+        {(!isLoaded) &&
+          (<>Loading</>)}
      
        
       </section>
