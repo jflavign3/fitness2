@@ -93,6 +93,22 @@ $SelectedTextSize: 14px;
   z-index: 5;
 }
 
+.spinner {
+  animation: spin infinite 5s linear;
+
+  /*You can increase or decrease the timer (5s) to 
+   increase or decrease the speed of the spinner*/
+}
+
+@keyframes spin {
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
+}
+
 @media only screen and (min-width: 635px) {
   .topBarVisibleForSmallScreen,
   #bottomMenuForSmallScreen {

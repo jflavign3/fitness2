@@ -1,22 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { Formik,Field, Form, ErrorMessage ,useField } from 'formik';
+import { Formik,Field, Form,  useFormik, ErrorMessage ,useField } from 'formik';
 import {GetAllExercises} from "../../Exercises";
 import {InsertExerciseDetails} from "../../DAL/ExerciseDetails";
 import {InsertProgram} from "../../DAL/Program";
 import "./styles.css";
 import "./styles-custom.css";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 const Setup = () => {
 
-
+  const [alignment, setAlignment] = React.useState('new');
   const [exercises, setExercises] = useState([]);  
+  //set many at once
+  const [details, setDetails] = useState({   
+    reps:'',
+    sets:'',
+    seconds:'',
+    lbs: ''
+  });
 
+  const handleChange = (e) => {
+    setDetails({...details,[e.target.name]:e.target.value});
+  }
+  
+  const handleToggleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  //console.log(sets, reps)
+}
+ 
 
     const GetExercises = async()=>{
       
      //to do , keep in session storage
       let allExercises = await GetAllExercises();  
       setExercises(allExercises);
+    }
+
+    const loadDetails = async ()=>{
+
     }
 
 const InsertItem = async (items)=>{
@@ -34,22 +60,22 @@ const InsertItem = async (items)=>{
 
   let details = [];
   if (reps > 0){
-    let detail = {"Title":'Reps', "Value":reps, "ProgramId":programId};
+    let detail = {"Title":'Reps', "Value":reps, "ProgramId":programId, "LastUpdatedDate": new Date()};
     details.push(detail);
   }
   
   if (sets > 0){
-    let detail = {"Title":'Sets', "Value":sets, "ProgramId":programId};
+    let detail = {"Title":'Sets', "Value":sets, "ProgramId":programId,  "LastUpdatedDate": new Date()};
     details.push(detail);
   }
   
   if (lbs > 0){
-    let detail = {"Title":'Lbs', "Value":lbs, "ProgramId":programId};
+    let detail = {"Title":'Lbs', "Value":lbs, "ProgramId":programId, "LastUpdatedDate": new Date()};
     details.push(detail);
   }
   
   if (seconds > 0){
-    let detail = {"Title":'Seconds', "Value":seconds, "ProgramId":programId};
+    let detail = {"Title":'Seconds', "Value":seconds, "ProgramId":programId,  "LastUpdatedDate": new Date()};
     details.push(detail);
   }
 
@@ -58,7 +84,8 @@ const InsertItem = async (items)=>{
 
 }
 
-    const MySelect = ({ label, ...props }) => {
+
+   /* const MySelect = ({ label, ...props }) => {
         const [field, meta] = useField(props);
         return (
           <div>
@@ -69,7 +96,7 @@ const InsertItem = async (items)=>{
             ) : null}
           </div>
         );
-      };
+      };*/
 /*
       debugger;
       const ex = sessionStorage.getItem("Exercises");
@@ -83,43 +110,86 @@ const InsertItem = async (items)=>{
 
 
     return (
-      <>
+      <div className='main'>
      
+     <ToggleButtonGroup
+      color="primary"
+      value={alignment}
+      exclusive
+      onChange={handleToggleChange}
+      aria-label="Platform"
+    >
+      <ToggleButton value="new">NEW</ToggleButton>
+      <ToggleButton value="update">UPDATE</ToggleButton>      
+    </ToggleButtonGroup>
+
       {exercises ? (
-        <Formik
+
+<form className='form' onSubmit={handleSubmit}>
+
+<div className='form-row'>
+  <label htmlFor='user' className='form-label'>User</label>
+  <input type='text' id='reps' className='form-input' value={details.reps} name="user" onChange={(e)=>{handleChange(e.target.value);}}></input>
+</div>
+
+<div className='form-row'>
+  <label htmlFor='reps' className='form-label'>Reps</label>
+  <input type='text' id='reps' className='form-input' value={details.reps} name="reps" onChange={(e)=>{handleChange(e.target.value);}}></input>
+</div>
+<div className='form-row'>
+  <label htmlFor='sets' className='form-label'>Sets</label>
+  <input type='text' id='sets' className='form-input' value={details.sets} name="sets" onChange={(e)=>{handleChange(e.target.value);}}></input>
+</div>
+
+<div>
+  <button type='submit'>Submit</button>
+</div>
+
+</form>
+
+        /*<Formik 
           initialValues={{ User: '', Exercise: '', reps: '', sets: '', lbs: '', seconds: '', DayOfWeek:'' }}
-       /*   validationSchema={Yup.object({
-            firstName: Yup.string()
-              .max(15, 'Must be 15 characters or less')
-              .required('Required'),
-            lastName: Yup.string()
-              .max(20, 'Must be 20 characters or less')
-              .required('Required'),
-            email: Yup.string().email('Invalid email address').required('Required'),
-          })}*/
+      
+        
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
               //alert(JSON.stringify(values, null, 2));
-               InsertItem(values);
+              InsertItem(values);
               setSubmitting(false);
             }, 400);
           }}
         >
           <Form>
-            <MySelect label="User" name="User">
-             <option value="">Select a user</option>
+            <MySelect label="User" name="User" >             
              <option value="1">Joelle</option>
              <option value="2">Samuel</option>
              <option value="3">JF</option>
-             <option value="4">Alexane</option>             
+             <option value="4">Alexane</option>   
+             
+           </MySelect>
+       
+
+           <MySelect label="Day Of Week" name="DayOfWeek" onClick={handleChange}>             
+             <option value="1">Lundi</option>
+             <option value="2">Mardi</option>
+             <option value="3">Mercredi</option>
+             <option value="4">Jeudi</option>
+             <option value="5">Vendredi</option>
+             <option value="6">Samedi</option>
+             <option value="0">Dimanche</option>
+             {alignment === 'update' && <option value="">All Days</option>}
            </MySelect>
 
-            <MySelect label="Exercise" name="Exercise">
-             <option value="">Select</option>
+            <MySelect label="Exercise" name="Exercise">             
              {exercises.map((e,i)=>{
                     return (<option key={i} value={e._id}>{e.name}</option>)
              })}
            </MySelect>
+
+           {alignment === 'update' && 
+           <div>
+            <button className='btn-done' type="submit" >Find</button>
+            </div>}
 
            <label htmlFor="reps">Reps</label>
             <Field name="reps" type="text" />
@@ -131,26 +201,15 @@ const InsertItem = async (items)=>{
             <Field name="lbs" type="text" />
             
             <label htmlFor="seconds">Seconds</label>
-            <Field name="seconds" type="text" />
-            
+            <Field name="seconds" type="text" />           
 
-
-            <MySelect label="Day Of Week" name="DayOfWeek">
-             <option value="">Select a day</option>
-             <option value="1">Lundi</option>
-             <option value="2">Mardi</option>
-             <option value="3">Mercredi</option>
-             <option value="4">Jeudi</option>
-             <option value="5">Vendredi</option>
-             <option value="6">Samedi</option>
-             <option value="0">Dimanche</option>
-           </MySelect>
-
-            <button type="submit">Submit</button>
+            <div>
+            <button className='btn-done' type="submit">Submit</button>
+            </div>
           </Form>
-        </Formik>
+        </Formik>*/
       ) : (<></>)};
-      </>
+      </div>
 
       );
 };

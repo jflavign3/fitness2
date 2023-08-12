@@ -9,6 +9,7 @@ export const GetAllExerciseDetails = async() => {
 
 export const InsertExerciseDetails = async(details) => {
   
+    
     const url = "/.netlify/functions/InsertExerciseDetails";
   
     let result = await fetch(url, {

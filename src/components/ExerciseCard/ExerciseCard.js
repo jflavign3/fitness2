@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 
 
+var offset = -300; //Timezone offset for EST in minutes.
 const ExerciseCard = ({ program, image, name, type, details }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
@@ -15,8 +16,9 @@ const [_program, setProgram] = useState(null);
 const checkIfCompleted = async ()=>{
   
   if (program.lastCompletionDate === null) return false;
-  //debugger;
-  let today = new Date();    
+ 
+  let dt = new Date(); 
+  var today = new Date(dt.getTime() + offset*60*1000);    
   today = today.toISOString().split('T')[0];
  
   let completionDate = new Date( program.lastCompletionDate);
@@ -30,20 +32,17 @@ const checkIfCompleted = async ()=>{
 const saveProgress = async ()=>{
      //update 
      
-     var offset = -300; //Timezone offset for EST in minutes.
      const dt = new Date();
      var date = new Date(dt.getTime() + offset*60*1000); 
      var formattedDate = date.toISOString().split('T')[0];
      program.lastCompletionDate = formattedDate;
      setIsCompleted(true);
      expandCard();
- // var p = await UpdateProgram(program);       
-  //console.log('===>Updated program ' + JSON.stringify(p));
-
+     var p = await UpdateProgram(program);       
+     console.log('===>Updated program ' + JSON.stringify(p));
 
   //to do, put stats in session
-  let stats = await GetAllStats();
- 
+  let stats = await GetAllStats(); 
 
   let currentStat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
     
@@ -130,7 +129,7 @@ const expandCard = ()=>{
         })}
         <button
           type='button'
-          className='btn-block'
+          className='btn-done'
           onClick={() => saveProgress()}
         >
           I'm Done!

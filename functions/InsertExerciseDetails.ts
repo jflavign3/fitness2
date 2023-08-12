@@ -14,7 +14,7 @@ exports.handler = async (event, context) => {
   
   let details: string[] = [];
   details = JSON.parse(event.body);
-
+  
 
   const results = await collection.insertMany(details);
   

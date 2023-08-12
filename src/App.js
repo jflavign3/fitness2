@@ -32,18 +32,18 @@ function App() {
   }
 
 
-  const SetCurrentUser = async (userId) => {
+  const SetCurrentUser = async (user) => {
     
-     console.log(`User ${userId} was selected. Load home data.`);
+     console.log(`User ${user.name} was selected. Load home data.`);
      
-     sessionStorage.setItem("__userId",userId);     
-     setUser(userId);
+     sessionStorage.setItem("__userId",user.userId);     
+     sessionStorage.setItem("userName",user.name);     
+     setUser(user.userId);
      sessionStorage.setItem("__page","Home");     
      setPage("Home");
 
   };
-
-  console.log('rerendering. user id:' + (sessionStorage.getItem("__userId")));   
+  
   console.log('Session:page= ' + page);
 
 //debugger;

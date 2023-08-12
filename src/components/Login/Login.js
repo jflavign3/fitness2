@@ -10,7 +10,7 @@ import Stack from '@mui/material/Stack';
 const avatarClick = (user, setCurrentUser) =>
 {
   console.log('Avatar clicked' + user.userId);
-  setCurrentUser(user.userId)
+  setCurrentUser(user)
 }
 //const Login = (users: User[]) => {
   const Login = ({users, setCurrentUser}) => {

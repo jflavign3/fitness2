@@ -160,7 +160,7 @@ ul {
   background: var(--primary-700);
 }
 .btn-block {
-    margin-top: 6px;
+    margin: 7px;
 }
 
 /* alerts */
@@ -295,3 +295,4 @@ main {
 .container h3 {
   margin-bottom: 2rem;
 }
+
