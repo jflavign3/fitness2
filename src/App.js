@@ -5,8 +5,8 @@ import Setup from './components/Setup/Setup';
 import MenuBar from "./components/MenuBar/MenuBar";
 import {GetAllUsers} from "./Users";
 import Login from './components/Login/Login';
-
-
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -70,7 +70,13 @@ useEffect(() => {
 
  return (   
 
-<>  
+<>   
+<ToastContainer
+          autoClose={2000}
+          hideProgressBar={true}
+          position="top-center"
+        />
+
     {
         !user && users
           ? <main> <section className='containerLogin'>

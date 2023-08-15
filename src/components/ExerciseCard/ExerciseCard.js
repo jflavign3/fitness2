@@ -3,9 +3,10 @@ import {UpdateProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
+import {getToday, getMonday, getSunday} from "../../Common";
 
 
-var offset = -300; //Timezone offset for EST in minutes.
+
 const ExerciseCard = ({ program, image, name, type, details }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
@@ -16,15 +17,17 @@ const [_program, setProgram] = useState(null);
 const checkIfCompleted = async ()=>{
   
   if (program.lastCompletionDate === null) return false;
+
+
+  var today = getToday();  
+  var monday = getMonday();
+  var sunday = getSunday();
+
+  debugger;
+
+  let completionDate = new Date( program.lastCompletionDate);  
  
-  let dt = new Date(); 
-  var today = new Date(dt.getTime() + offset*60*1000);    
-  today = today.toISOString().split('T')[0];
- 
-  let completionDate = new Date( program.lastCompletionDate);
-  completionDate = completionDate.toISOString().split('T')[0];
- 
-  if (today === completionDate){  
+  if (completionDate >= monday && completionDate <= sunday){  
     setIsCompleted(true);
   }
 }
@@ -32,10 +35,9 @@ const checkIfCompleted = async ()=>{
 const saveProgress = async ()=>{
      //update 
      
-     const dt = new Date();
-     var date = new Date(dt.getTime() + offset*60*1000); 
-     var formattedDate = date.toISOString().split('T')[0];
-     program.lastCompletionDate = formattedDate;
+     
+     var date = getToday();
+     program.lastCompletionDate = date;
      setIsCompleted(true);
      expandCard();
      var p = await UpdateProgram(program);       

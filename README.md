@@ -6,6 +6,8 @@ graphql
 localstore for logges user
 
 features:
+
+done = date in current week
 warmup as exercise
 progress bar for the day (material)
 inspirational quote (you lose muscle every day...)

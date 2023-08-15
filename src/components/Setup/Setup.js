@@ -2,35 +2,71 @@ import React, { useEffect, useState } from 'react';
 import { Formik,Field, Form,  useFormik, ErrorMessage ,useField } from 'formik';
 import {GetAllExercises} from "../../Exercises";
 import {InsertExerciseDetails} from "../../DAL/ExerciseDetails";
-import {InsertProgram} from "../../DAL/Program";
+import {GetProgramsByUserId} from "../../Program";
+import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
+import {UpdateExerciseDetails} from "../../DAL/ExerciseDetails";
+import {InsertProgram, UpdateProgram} from "../../DAL/Program";
 import "./styles.css";
 import "./styles-custom.css";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { toast } from "react-toastify";
+import { getToday } from "../../Common";
+
 
 const Setup = () => {
 
   const [alignment, setAlignment] = React.useState('new');
-  const [exercises, setExercises] = useState([]);  
-  //set many at once
-  const [details, setDetails] = useState({   
-    reps:'',
-    sets:'',
-    seconds:'',
-    lbs: ''
-  });
+  const [exercises, setExercises] = useState([]);    
+  const [weekday, setWeekday] = useState('');
+  const [userId, setUserId] = useState('');
+  const [exerciseId, setExerciseId] = useState('');
+  const [reps, setReps] = useState('');
+  const [sets, setSets] = useState('');
+  const [seconds, setSeconds] = useState('');
+  const [lbs, setLbs] = useState('');
+  const [multipleUpdates, setMultipleUpdates] = useState(false);
+  const [programsToUpdate, setProgramsToUpdate] = useState([]);
 
-  const handleChange = (e) => {
-    setDetails({...details,[e.target.name]:e.target.value});
-  }
   
+  const handleWeekdayChange = (e) => {
+    setWeekday(Number(e));
+  }
+  const handleUserChange = (e) => {
+
+    setUserId(Number(e));
+  }
+  const handleExerciseChange = (e) => {
+    setExerciseId(e);
+  }
+
+  const handleRepsChange = (e) => {
+    setReps(e.target.value);
+  }
+
+  const handleSetsChange = (e) => {
+    setSets(e.target.value);
+  }
+
+  const handleSecondsChange = (e) => {
+    setSeconds(e.target.value);
+  }
+  const handleLbsChange = (e) => {
+    setLbs(e.target.value);
+  }
+
   const handleToggleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e) => {    
   e.preventDefault();
-  //console.log(sets, reps)
+
+  if (alignment === 'update' ){
+    Update();
+  }else{
+     InsertItem();
+  }
 }
  
 
@@ -43,17 +79,91 @@ const Setup = () => {
 
     const loadDetails = async ()=>{
 
+    
+      let programs = await GetProgramsByUserId(userId);   
+      let allDetails = await GetAllExerciseDetails();
+
+      programs = programs.filter(x=>x.exerciseId === exerciseId );    
+      if (programs.length === 0){
+        toast.error(
+          `Program not found.`
+         );    
+     
+        return;
+      }
+      var programArray = [];
+      if (weekday !== "" ){
+        var program = programs.filter(x=>x.weekday === weekday)[0];    
+        programArray.push(program);        
+        console.log("Program to update: " + JSON.stringify(program));
+        let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Reps')[0];
+        if (detail) {
+            setReps(detail.Value);
+        }
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Sets')[0];
+        if (detail) {
+              setSets(detail.Value);
+        }
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Seconds')[0];
+        if (detail) {
+           setSeconds(detail.Value);
+        }
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Lbs')[0];
+        if (detail){
+           setLbs(detail.Value);
+        }
+      }else{
+        setMultipleUpdates(true);
+        programArray.push(programs);
+        console.log("Programs to update: " + JSON.stringify(programs));
+      }
+
+      setProgramsToUpdate(programArray);
+      
+     
+
+
+      //get program or programs with day and user and exercise
+
+
+
     }
 
-const InsertItem = async (items)=>{
-  let program = {"userId":Number(items.User),"weekday": Number(items.DayOfWeek),"exerciseId":items.Exercise, "lastCompletionDate": new Date(2001,1,1)};
- 
-  let reps = Number(items.reps);
-  let sets =  Number(items.sets);
-  let lbs =  Number(items.lbs);
-  let seconds =  Number(items.seconds);
-  let day = items.DayOfWeek;
 
+    const Update = async ()=>{
+
+      var today = getToday();
+      
+      var details = [{"Title": "Reps", "Value": Number(reps)},
+                         {"Title": "Sets", "Value": Number(sets)},
+                         {"Title": "Seconds", "Value": Number(seconds)},
+                         {"Title": "Lbs", "Value": Number(lbs)}]       
+
+      for (const program of programsToUpdate) {       
+        
+        for(var i = 0; i < details.length; i++)
+        {
+              let d = details[i];          
+              if (d.Value){
+                 var exDetails = {"ProgramId": program._id, "Title":d.Title, "Value":d.Value, "LastUpdateDate": today};  
+                 var p = await UpdateExerciseDetails(exDetails);
+                console.log(`Updated or inserted detail for ${d.Title}` + JSON.stringify(p));
+              }
+        
+       }        
+      }; 
+
+    }
+
+const InsertItem = async ()=>{
+  
+  let program = {userId, weekday,exerciseId, "lastCompletionDate": new Date(2001,1,1)};
+ 
+  let reps = Number(reps);
+  let sets =  Number(sets);
+  let lbs =  Number(lbs);
+  let seconds =  Number(seconds);
+  
   var p = await InsertProgram(program);
   console.log('Inserted program ' + JSON.stringify(p));
   var programId = p.insertedId;
@@ -84,26 +194,8 @@ const InsertItem = async (items)=>{
 
 }
 
-
-   /* const MySelect = ({ label, ...props }) => {
-        const [field, meta] = useField(props);
-        return (
-          <div>
-            <label htmlFor={props.id || props.name}>{label}</label>
-            <select {...field} {...props} />
-            {meta.touched && meta.error ? (
-              <div className="error">{meta.error}</div>
-            ) : null}
-          </div>
-        );
-      };*/
-/*
-      debugger;
-      const ex = sessionStorage.getItem("Exercises");
-      if (!ex){
-        GetExercises();        
-      }*/
       useEffect(()=>{
+     
         console.log("SETUP - Get all exercises");
         GetExercises();
       },[]);
@@ -129,16 +221,62 @@ const InsertItem = async (items)=>{
 
 <div className='form-row'>
   <label htmlFor='user' className='form-label'>User</label>
-  <input type='text' id='reps' className='form-input' value={details.reps} name="user" onChange={(e)=>{handleChange(e.target.value);}}></input>
+  <select id='user' className='form-input' value={userId} onChange={(e)=>{handleUserChange(e.target.value);}}>
+  <option value="">----</option>
+  <option value="1">Joelle</option>
+             <option value="2">Samuel</option>
+             <option value="3">JF</option>
+             <option value="4">Alexane</option>   
+  </select>
 </div>
 
 <div className='form-row'>
+  <label htmlFor='weekday' className='form-label'>Day</label>
+  <select id='weekday' className='form-input'  value={weekday} onChange={(e)=>{handleWeekdayChange(e.target.value);}}>
+  <option value="">----</option>
+  <option value="1">Lundi</option>
+             <option value="2">Mardi</option>
+             <option value="3">Mercredi</option>
+             <option value="4">Jeudi</option>
+             <option value="5">Vendredi</option>
+             <option value="6">Samedi</option>
+             <option value="0">Dimanche</option>
+  </select>
+</div>
+
+<div className='form-row'>
+  <label htmlFor='exercise' className='form-label'>Exercise</label>
+  <select id='exercise' className='form-input' value={exerciseId} onChange={(e)=>{handleExerciseChange(e.target.value);}}>
+  <option value="">----</option>
+  {exercises.map((e,i)=>{
+                    return (<option key={i} value={e._id}>{e.name}</option>)
+             })}
+  </select>
+</div>
+
+
+{alignment === 'update' && 
+           <div>
+            <button className='btn-done' onClick={()=>loadDetails()} type="button" >Load Details</button>
+            </div>}
+            {multipleUpdates && <div>No data show. Mutiple programs to update.</div>}
+
+
+<div className='form-row'>
   <label htmlFor='reps' className='form-label'>Reps</label>
-  <input type='text' id='reps' className='form-input' value={details.reps} name="reps" onChange={(e)=>{handleChange(e.target.value);}}></input>
+  <input type='text' id='reps' className='form-input' value={reps}  onChange={handleRepsChange}></input>
 </div>
 <div className='form-row'>
   <label htmlFor='sets' className='form-label'>Sets</label>
-  <input type='text' id='sets' className='form-input' value={details.sets} name="sets" onChange={(e)=>{handleChange(e.target.value);}}></input>
+  <input type='text' id='sets' className='form-input' value={sets}  onChange={handleSetsChange}></input>
+</div>
+<div className='form-row'>
+  <label htmlFor='seconds' className='form-label'>Seconds</label>
+  <input type='text' id='seconds' className='form-input' value={seconds} onChange={handleSecondsChange}></input>
+</div>
+<div className='form-row'>
+  <label htmlFor='lbs' className='form-label'>Lbs</label>
+  <input type='text' id='lbs' className='form-input' value={lbs}  onChange={handleLbsChange}></input>
 </div>
 
 <div>
@@ -146,68 +284,7 @@ const InsertItem = async (items)=>{
 </div>
 
 </form>
-
-        /*<Formik 
-          initialValues={{ User: '', Exercise: '', reps: '', sets: '', lbs: '', seconds: '', DayOfWeek:'' }}
-      
-        
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              //alert(JSON.stringify(values, null, 2));
-              InsertItem(values);
-              setSubmitting(false);
-            }, 400);
-          }}
-        >
-          <Form>
-            <MySelect label="User" name="User" >             
-             <option value="1">Joelle</option>
-             <option value="2">Samuel</option>
-             <option value="3">JF</option>
-             <option value="4">Alexane</option>   
-             
-           </MySelect>
-       
-
-           <MySelect label="Day Of Week" name="DayOfWeek" onClick={handleChange}>             
-             <option value="1">Lundi</option>
-             <option value="2">Mardi</option>
-             <option value="3">Mercredi</option>
-             <option value="4">Jeudi</option>
-             <option value="5">Vendredi</option>
-             <option value="6">Samedi</option>
-             <option value="0">Dimanche</option>
-             {alignment === 'update' && <option value="">All Days</option>}
-           </MySelect>
-
-            <MySelect label="Exercise" name="Exercise">             
-             {exercises.map((e,i)=>{
-                    return (<option key={i} value={e._id}>{e.name}</option>)
-             })}
-           </MySelect>
-
-           {alignment === 'update' && 
-           <div>
-            <button className='btn-done' type="submit" >Find</button>
-            </div>}
-
-           <label htmlFor="reps">Reps</label>
-            <Field name="reps" type="text" />
-            
-            <label htmlFor="sets">Sets</label>
-            <Field name="sets" type="text" />
-            
-            <label htmlFor="lbs">Lbs</label>
-            <Field name="lbs" type="text" />
-            
-            <label htmlFor="seconds">Seconds</label>
-            <Field name="seconds" type="text" />           
-
-            <div>
-            <button className='btn-done' type="submit">Submit</button>
-            </div>
-          </Form>
-        </Formik>*/
+     
       ) : (<></>)};
       </div>
 

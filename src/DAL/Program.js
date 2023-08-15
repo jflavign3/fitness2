@@ -15,7 +15,7 @@ export const InsertProgram = async(program) => {
 
 export const UpdateProgram = async(program) => {
   
-  debugger;
+
   const url = "/.netlify/functions/UpdatePrograms";    
 
   let result = await fetch(url, {

@@ -6,7 +6,6 @@ import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
 import List from "./List";
 import CircularProgress from '@mui/material/CircularProgress';
-
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Box from '@mui/material/Box';
@@ -48,12 +47,17 @@ const Home = () => {
       var todayProgram = programs.filter(x=>x.weekday === day);  
 
       todayProgram.forEach(programItem => {
-        let exercise = allExercises.filter(x=>x._id === programItem.exerciseId)[0];
-       // console.log('current exercise: ' + JSON.stringify(exercise));
-        let currentProgram = programs.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId)[0];
-        //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
         
-        //debugger;
+        var exercise = allExercises.filter(x=>x._id === programItem.exerciseId)[0];
+        if (exercise == null){
+          console.log("Error with program:" + JSON.stringify(todayProgram));
+          return;
+        }
+       // console.log('current exercise: ' + JSON.stringify(exercise));
+        var currentProgram = programs.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId && x.weekday === day)[0];
+        //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
+       // exercise.ddd =1;
+       // debugger;
         if (currentProgram){
            let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id);
            exercise.details = currentDetails;

@@ -22,3 +22,18 @@ export const InsertExerciseDetails = async(details) => {
   
     return result;
 };
+export const UpdateExerciseDetails = async(details) => {
+  
+    
+    const url = "/.netlify/functions/UpdateExerciseDetails";
+  
+    let result = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(details),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        }
+        }).then(response => response.json());   
+  
+    return result;
+};
