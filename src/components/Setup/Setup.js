@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Formik,Field, Form,  useFormik, ErrorMessage ,useField } from 'formik';
 import {GetAllExercises} from "../../Exercises";
 import {InsertExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
@@ -41,18 +40,19 @@ const Setup = () => {
   }
 
   const handleRepsChange = (e) => {
-    setReps(e.target.value);
+    setReps(Number(e.target.value));
   }
 
   const handleSetsChange = (e) => {
-    setSets(e.target.value);
+    setSets(Number(e.target.value));
   }
 
   const handleSecondsChange = (e) => {
-    setSeconds(e.target.value);
+    
+    setSeconds(Number(e.target.value));
   }
   const handleLbsChange = (e) => {
-    setLbs(e.target.value);
+    setLbs(Number(e.target.value));
   }
 
   const handleToggleChange = (event, newAlignment) => {
@@ -64,7 +64,7 @@ const Setup = () => {
 
   if (alignment === 'update' ){
     Update();
-  }else{
+  }else if (alignment){
      InsertItem();
   }
 }
@@ -83,7 +83,8 @@ const Setup = () => {
       let programs = await GetProgramsByUserId(userId);   
       let allDetails = await GetAllExerciseDetails();
 
-      programs = programs.filter(x=>x.exerciseId === exerciseId );    
+      programs = programs.filter(x=>x.exerciseId === exerciseId );  
+      
       if (programs.length === 0){
         toast.error(
           `Program not found.`
@@ -92,32 +93,39 @@ const Setup = () => {
         return;
       }
       var programArray = [];
-      if (weekday !== "" ){
+      if (weekday !== "" || programs.length === 1 ){
+
+        if ( programs.length === 1 ){
+          var program = programs[0];
+
+        }else{
         var program = programs.filter(x=>x.weekday === weekday)[0];    
+        }
         programArray.push(program);        
         console.log("Program to update: " + JSON.stringify(program));
-        let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Reps')[0];
+        let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Reps')[0];
         if (detail) {
             setReps(detail.Value);
         }
-        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Sets')[0];
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Sets')[0];
         if (detail) {
               setSets(detail.Value);
         }
-        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Seconds')[0];
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Seconds')[0];
         if (detail) {
            setSeconds(detail.Value);
         }
-        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title == 'Lbs')[0];
+        detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Lbs')[0];
         if (detail){
            setLbs(detail.Value);
         }
       }else{
         setMultipleUpdates(true);
-        programArray.push(programs);
+        programArray = programs;
         console.log("Programs to update: " + JSON.stringify(programs));
       }
 
+  
       setProgramsToUpdate(programArray);
       
      
@@ -132,6 +140,7 @@ const Setup = () => {
 
     const Update = async ()=>{
 
+      var updated = 0;
       var today = getToday();
       
       var details = [{"Title": "Reps", "Value": Number(reps)},
@@ -139,31 +148,45 @@ const Setup = () => {
                          {"Title": "Seconds", "Value": Number(seconds)},
                          {"Title": "Lbs", "Value": Number(lbs)}]       
 
-      for (const program of programsToUpdate) {       
-        
-        for(var i = 0; i < details.length; i++)
+      
+                         
+     for(var i = 0; i < programsToUpdate.length; i++)
+     {
+         let program = programsToUpdate[i];
+         updated++;
+        for(var j = 0; j < details.length; j++)
         {
-              let d = details[i];          
+              let d = details[j];          
               if (d.Value){
                  var exDetails = {"ProgramId": program._id, "Title":d.Title, "Value":d.Value, "LastUpdateDate": today};  
                  var p = await UpdateExerciseDetails(exDetails);
                 console.log(`Updated or inserted detail for ${d.Title}` + JSON.stringify(p));
+               
               }
         
        }        
       }; 
+      toast.success(`Updated ${updated} program details`)
 
     }
 
+
+const isSubmitEnabled = ()=>
+{
+  debugger;
+  if (alignment==="update"){
+    return programsToUpdate.length > 0;
+
+  }else{
+    return true;
+  }
+}
+
 const InsertItem = async ()=>{
   
+  debugger;
   let program = {userId, weekday,exerciseId, "lastCompletionDate": new Date(2001,1,1)};
- 
-  let reps = Number(reps);
-  let sets =  Number(sets);
-  let lbs =  Number(lbs);
-  let seconds =  Number(seconds);
-  
+
   var p = await InsertProgram(program);
   console.log('Inserted program ' + JSON.stringify(p));
   var programId = p.insertedId;
@@ -218,6 +241,7 @@ const InsertItem = async ()=>{
       {exercises ? (
 
 <form className='form' onSubmit={handleSubmit}>
+
 
 <div className='form-row'>
   <label htmlFor='user' className='form-label'>User</label>
@@ -280,12 +304,12 @@ const InsertItem = async ()=>{
 </div>
 
 <div>
-  <button type='submit'>Submit</button>
+  <button type='submit' disabled={isSubmitEnabled()}  className='btn-done' >Submit</button>
 </div>
 
 </form>
      
-      ) : (<></>)};
+      ) : (<></>)}
       </div>
 
       );

@@ -30,7 +30,8 @@ const Home = () => {
   };
 
 
-  const GetHomeData = async (day) => {
+  const GetHomeData = async (day) => {   
+  
     setIsLoaded(false);
     var userId = Number(sessionStorage.getItem("__userId"));
 
@@ -41,9 +42,8 @@ const Home = () => {
      //console.log('all details: ' + JSON.stringify(details));
      let todayExercises = [];
  
-     //const d = new Date();
-     //var day = d.getDay();
       let programs = await GetProgramsByUserId(userId);   
+      //debugger;
       var todayProgram = programs.filter(x=>x.weekday === day);  
 
       todayProgram.forEach(programItem => {
@@ -61,13 +61,16 @@ const Home = () => {
         if (currentProgram){
            let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id);
            exercise.details = currentDetails;
-           exercise.program = programItem;           
+           exercise.program = programItem;     
+                 
            todayExercises.push(exercise);
         }
       });
 
-      console.log("Setting programs ");// + JSON.stringify(todayExercises));
- 
+      todayExercises.forEach((e) =>{
+        console.log("Setting program" + JSON.stringify(e));
+      });
+      
       setExercises(todayExercises);
       setIsLoaded(true);
     }

@@ -23,13 +23,10 @@ const checkIfCompleted = async ()=>{
   var monday = getMonday();
   var sunday = getSunday();
 
-  debugger;
-
   let completionDate = new Date( program.lastCompletionDate);  
  
-  if (completionDate >= monday && completionDate <= sunday){  
-    setIsCompleted(true);
-  }
+  setIsCompleted(completionDate >= monday && completionDate <= sunday);
+
 }
 
 const saveProgress = async ()=>{
@@ -79,7 +76,7 @@ const expandCard = ()=>{
    
 
    useEffect(()=>{
-    
+ 
     setProgram(program);
     checkIfCompleted();
   },[]);
@@ -91,6 +88,7 @@ const expandCard = ()=>{
     <div className='exerciseSelection'>
 
       <article className='exercise'> 
+   
       {isCompleted ? 
           <Badge badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
               <img src={image} alt={name} className='img' />
@@ -99,6 +97,7 @@ const expandCard = ()=>{
        }
 
         <div>
+        {isCompleted}
           <h4>{name}</h4>
           <p>{type}</p>
       
@@ -136,10 +135,6 @@ const expandCard = ()=>{
         >
           I'm Done!
         </button>
-         
-
-
-
         </div>
       }
       </div>
