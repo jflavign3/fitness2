@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import "../../App.scss";
-import "./home.scss";
+//import "../../App.scss";
+//import "./home.scss";
 import {GetAllExercises} from "../../Exercises";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
@@ -19,6 +19,8 @@ const Home = () => {
   const [alignment, setAlignment] = useState("1");
   
   const [isToday, setIsToday] = useState(true);
+
+
 
   const handleToggleChange = (event, i) => {
     let day = Number(i);
@@ -90,6 +92,8 @@ const Home = () => {
     //debugger;
   return (    
     <main>    
+
+
       <section className='container'>
         
         {(isLoaded) ? <>

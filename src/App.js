@@ -72,10 +72,10 @@ useEffect(() => {
 
 <>   
 <ToastContainer
-          autoClose={2000}
-          hideProgressBar={true}
-          position="top-center"
-        />
+   autoClose={2000}
+   hideProgressBar={true}
+   position="top-center"
+/>
 
     {
         !user && users

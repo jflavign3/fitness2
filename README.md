@@ -30,3 +30,4 @@ https://www.youtube.com/watch?v=5wv670fHuG4
 
 
  //Studies show that when you increase your strength, flexibility, and endurance, back pain decreases
+ //Perform core strength exercises to provide additional support to the lower back and reduce strain on the spine.

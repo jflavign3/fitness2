@@ -20,7 +20,7 @@ const MenuBar = ({setCurrentPage}) => {
           return (
             <li key={name} onClick={()=>setCurrentPage(item)} className="">
               <a
-                href="_blank"
+                //href="_blank"
                 className={itemActive === name ? "itemActive" : "itemDisabled"}
               >
                 {item.image === "fa fa-cog" ? (

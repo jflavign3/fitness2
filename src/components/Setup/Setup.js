@@ -5,8 +5,8 @@ import {GetProgramsByUserId} from "../../Program";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {UpdateExerciseDetails} from "../../DAL/ExerciseDetails";
 import {InsertProgram, UpdateProgram} from "../../DAL/Program";
-import "./styles.css";
-import "./styles-custom.css";
+//import "./styles.css";
+//import "./styles-custom.css";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { toast } from "react-toastify";
@@ -171,20 +171,20 @@ const Setup = () => {
     }
 
 
-const isSubmitEnabled = ()=>
+const isSubmitDisabled = ()=>
 {
-  debugger;
+ //debugger;
   if (alignment==="update"){
-    return programsToUpdate.length > 0;
+    return programsToUpdate.length === 0;
 
   }else{
-    return true;
+    return false;
   }
 }
 
 const InsertItem = async ()=>{
   
-  debugger;
+
   let program = {userId, weekday,exerciseId, "lastCompletionDate": new Date(2001,1,1)};
 
   var p = await InsertProgram(program);
@@ -304,7 +304,7 @@ const InsertItem = async ()=>{
 </div>
 
 <div>
-  <button type='submit' disabled={isSubmitEnabled()}  className='btn-done' >Submit</button>
+  <button type='submit' disabled={isSubmitDisabled()}  className='btn-done' >Submit</button>
 </div>
 
 </form>
