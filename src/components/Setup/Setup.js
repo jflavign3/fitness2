@@ -5,8 +5,7 @@ import {GetProgramsByUserId} from "../../Program";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {UpdateExerciseDetails} from "../../DAL/ExerciseDetails";
 import {InsertProgram, UpdateProgram} from "../../DAL/Program";
-//import "./styles.css";
-//import "./styles-custom.css";
+import "./styles.css";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import { toast } from "react-toastify";
@@ -15,7 +14,7 @@ import { getToday } from "../../Common";
 
 const Setup = () => {
 
-  const [alignment, setAlignment] = React.useState('new');
+  const [alignment, setAlignment] = useState('new');
   const [exercises, setExercises] = useState([]);    
   const [weekday, setWeekday] = useState('');
   const [userId, setUserId] = useState('');
@@ -31,11 +30,13 @@ const Setup = () => {
   const handleWeekdayChange = (e) => {
     setWeekday(Number(e));
   }
+
   const handleUserChange = (e) => {
 
     setUserId(Number(e));
   }
   const handleExerciseChange = (e) => {
+    debugger;
     setExerciseId(e);
   }
 
@@ -62,11 +63,17 @@ const Setup = () => {
   const handleSubmit = (e) => {    
   e.preventDefault();
 
+  debugger;
+  let msg = validateForm();
+  if (msg){
+    toast.error(msg);
+  }else{
   if (alignment === 'update' ){
     Update();
   }else if (alignment){
      InsertItem();
   }
+}
 }
  
 
@@ -170,19 +177,33 @@ const Setup = () => {
 
     }
 
-
-const isSubmitDisabled = ()=>
-{
- //debugger;
+const validateForm = () => {
   if (alignment==="update"){
-    return programsToUpdate.length === 0;
+    var valid = programsToUpdate.length === 0
+    if (valid) return null;
+    return "No programs are loaded."; 
+   }else{
+      valid = (weekday && userId && exerciseId && (reps || sets || seconds || lbs)); 
+      if (valid) return null;
+      return "Missing values.";
+   }
+}
+
+    /*
+const isSubmitDisabledSetting = ()=>
+{
+ debugger;
+  if (alignment==="update"){
+   setIsSubmitDisabled(programsToUpdate.length === 0);
 
   }else{
     if (!weekday || !userId || !exerciseId){
-       return false;
+       setIsSubmitDisabled(true);
+    }else{
+      setIsSubmitDisabled(false);
     }
   }
-}
+}*/
 
 const InsertItem = async ()=>{
   
@@ -306,7 +327,7 @@ const InsertItem = async ()=>{
 </div>
 
 <div>
-  <button type='submit'  {...(isSubmitDisabled() ? {diabled:'true'} : {})}  className='btn-done' >Submit</button>
+  <button type='submit'  className="btn-done" >Submit</button>
 </div>
 
 </form>

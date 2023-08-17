@@ -90,7 +90,8 @@ const expandCard = ()=>{
       <article className='exercise'> 
    
       {isCompleted ? 
-          <Badge badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
+          <Badge sx={{ "& .MuiBadge-badge": { fontSize: 20, height: 35, minWidth: 35, borderRadius:40 } }}
+           badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
               <img src={image} alt={name} className='img' />
           </Badge> :
           <img src={image} alt={name} className='img' />
