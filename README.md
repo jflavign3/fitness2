@@ -7,15 +7,17 @@ localstore for logges user
 store exercises, details in session
 
 features:
-
+user item menu
+setup spinner
+put timer
 warmup as exercise
 progress bar for the day (material)
 inspirational quote (you lose muscle every day...)
 include cardio tracking
-graph on improvment
+graph on improvment, show stats
 randonmize exercise by types
 user badge upper right of page
-bouton pour Previous/Next day
+drag exercise to order it
 
 
 

@@ -5,17 +5,22 @@ import {GetProgramsByUserId} from "../../Program";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {UpdateExerciseDetails} from "../../DAL/ExerciseDetails";
 import {InsertProgram, UpdateProgram} from "../../DAL/Program";
-//import "./styles.css";
-//import "./styles-custom.css";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import "./styles.css";
 import { toast } from "react-toastify";
 import { getToday } from "../../Common";
+//material////////////////
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+/////////////////////
 
 
 const Setup = () => {
 
-  const [alignment, setAlignment] = React.useState('new');
+  const [alignment, setAlignment] = useState('new');
   const [exercises, setExercises] = useState([]);    
   const [weekday, setWeekday] = useState('');
   const [userId, setUserId] = useState('');
@@ -24,87 +29,85 @@ const Setup = () => {
   const [sets, setSets] = useState('');
   const [seconds, setSeconds] = useState('');
   const [lbs, setLbs] = useState('');
-  const [multipleUpdates, setMultipleUpdates] = useState(false);
+  const [multipleUpdatesLabel, setMultipleUpdatesLabel] = useState(false);
   const [programsToUpdate, setProgramsToUpdate] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  
+  const numbers15 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+  const numbersLbs = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25,30,35,40,45,50,60,70];
+  const seconds90 = [15,20,30,40,50,60,90];
+
   const handleWeekdayChange = (e) => {
+    cleanUp();
     setWeekday(Number(e));
   }
+
   const handleUserChange = (e) => {
 
+    cleanUp();
     setUserId(Number(e));
   }
   const handleExerciseChange = (e) => {
+    cleanUp();
     setExerciseId(e);
   }
 
   const handleRepsChange = (e) => {
-    setReps(Number(e.target.value));
+    setReps(Number(e));
   }
 
   const handleSetsChange = (e) => {
-    setSets(Number(e.target.value));
+    setSets(Number(e));
   }
 
   const handleSecondsChange = (e) => {
     
-    setSeconds(Number(e.target.value));
+    setSeconds(Number(e));
   }
   const handleLbsChange = (e) => {
-    setLbs(Number(e.target.value));
+    setLbs(Number(e));
   }
 
   const handleToggleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
 
-  const handleSubmit = (e) => {    
-  e.preventDefault();
+ const handleSubmit = (e) => {    
 
-  if (alignment === 'update' ){
+  
+  setIsLoading(true); 
+   try {
+      e.preventDefault();
+  
+ 
+  let msg = validateForm();
+  if (msg){
+   toast.error(msg);
+  }else if (alignment === 'update' ){
     Update();
   }else if (alignment){
      InsertItem();
   }
+}catch(e){
+  console.log('error');  
+}finally {
+  setIsLoading(false); 
+}
+
 }
  
+const cleanUp = () => {
+  setMultipleUpdatesLabel(false);
+  setReps('');
+  setSeconds('');
+  setSets('');
+  setLbs('');
+} 
 
-    const GetExercises = async()=>{
-      
-     //to do , keep in session storage
-      let allExercises = await GetAllExercises();  
-      setExercises(allExercises);
-    }
+const setDetails = (allDetails, program) => {
 
-    const loadDetails = async ()=>{
-
-    
-      let programs = await GetProgramsByUserId(userId);   
-      let allDetails = await GetAllExerciseDetails();
-
-      programs = programs.filter(x=>x.exerciseId === exerciseId );  
-      
-      if (programs.length === 0){
-        toast.error(
-          `Program not found.`
-         );    
-     
-        return;
-      }
-      var programArray = [];
-      if (weekday !== "" || programs.length === 1 ){
-
-        if ( programs.length === 1 ){
-          var program = programs[0];
-
-        }else{
-        var program = programs.filter(x=>x.weekday === weekday)[0];    
-        }
-        programArray.push(program);        
-        console.log("Program to update: " + JSON.stringify(program));
-        let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Reps')[0];
-        if (detail) {
+     let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Reps')[0];
+     if (detail) {
             setReps(detail.Value);
         }
         detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Sets')[0];
@@ -119,26 +122,61 @@ const Setup = () => {
         if (detail){
            setLbs(detail.Value);
         }
+
+}
+
+    const GetExercises = async()=>{
+      
+     //to do , keep in session storage
+      let allExercises = await GetAllExercises();  
+      setExercises(allExercises);
+    }
+
+    const loadDetails = async ()=>{
+    
+      setIsLoading(true);
+    
+      let programs = await GetProgramsByUserId(userId);   
+      let allDetails = await GetAllExerciseDetails();
+
+      programs = programs.filter(x=>x.exerciseId === exerciseId );  
+      
+      if (programs.length === 0){
+        toast.error(
+          `Program not found.`
+         );    
+     
+         setIsLoading(false);
+        return;
+      }
+      var programArray = [];
+      if (weekday !== "" || programs.length === 1 ){
+
+        if ( programs.length === 1 ){
+          var program = programs[0];
+
+        }else{
+        var program = programs.filter(x=>x.weekday === weekday)[0];    
+        }
+        programArray.push(program);        
+        console.log("Program to update: " + JSON.stringify(program));
+        setDetails(allDetails, program);
+    
       }else{
-        setMultipleUpdates(true);
+        setMultipleUpdatesLabel(true);
+        setDetails(allDetails, programs[0]);
         programArray = programs;
         console.log("Programs to update: " + JSON.stringify(programs));
       }
 
   
       setProgramsToUpdate(programArray);
-      
-     
-
-
-      //get program or programs with day and user and exercise
-
-
-
+      setIsLoading(false);
     }
 
 
     const Update = async ()=>{
+
 
       var updated = 0;
       var today = getToday();
@@ -148,7 +186,7 @@ const Setup = () => {
                          {"Title": "Seconds", "Value": Number(seconds)},
                          {"Title": "Lbs", "Value": Number(lbs)}]       
 
-      
+      ///debugger;
                          
      for(var i = 0; i < programsToUpdate.length; i++)
      {
@@ -157,36 +195,35 @@ const Setup = () => {
         for(var j = 0; j < details.length; j++)
         {
               let d = details[j];          
-              if (d.Value){
                  var exDetails = {"ProgramId": program._id, "Title":d.Title, "Value":d.Value, "LastUpdateDate": today};  
                  var p = await UpdateExerciseDetails(exDetails);
                 console.log(`Updated or inserted detail for ${d.Title}` + JSON.stringify(p));
                
-              }
+          
         
        }        
       }; 
+      //debugger;
       toast.success(`Updated ${updated} program details`)
 
     }
 
+const validateForm = () => {
 
-const isSubmitDisabled = ()=>
-{
- //debugger;
   if (alignment==="update"){
-    return programsToUpdate.length === 0;
-
-  }else{
-    if (!weekday || !userId || !exerciseId){
-       return false;
-    }
-  }
+    var valid = programsToUpdate.length > 0
+    if (valid) return null;
+    return "No programs are loaded."; 
+   }else{
+      valid = (weekday != '' && userId && exerciseId && (reps || sets || seconds || lbs)); 
+      if (valid) return null;
+      return "Missing values.";
+   }
 }
+
 
 const InsertItem = async ()=>{
   
-
   let program = {userId, weekday,exerciseId, "lastCompletionDate": new Date(2001,1,1)};
 
   var p = await InsertProgram(program);
@@ -215,19 +252,28 @@ const InsertItem = async ()=>{
   }
 
    var ed = await InsertExerciseDetails(details);   
+ 
    console.log('Inserted ExerciseDetails ' + JSON.stringify(ed));
 
 }
 
-      useEffect(()=>{
+
+useEffect(()=>{
      
         console.log("SETUP - Get all exercises");
         GetExercises();
       },[]);
 
 
-    return (
+return (
       <div className='main'>
+
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}        
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
      
      <ToggleButtonGroup
       color="primary"
@@ -238,6 +284,7 @@ const InsertItem = async ()=>{
     >
       <ToggleButton value="new">NEW</ToggleButton>
       <ToggleButton value="update">UPDATE</ToggleButton>      
+      <ToggleButton value="delete">DELETE</ToggleButton>      
     </ToggleButtonGroup>
 
       {exercises ? (
@@ -282,31 +329,56 @@ const InsertItem = async ()=>{
 
 
 {alignment === 'update' && 
-           <div>
-            <button className='btn-done' onClick={()=>loadDetails()} type="button" >Load Details</button>
+           <div>            
+            <Button type='button' onClick={()=>loadDetails()} variant="outlined">Load Details</Button>              
             </div>}
-            {multipleUpdates && <div>No data show. Mutiple programs to update.</div>}
+            {multipleUpdatesLabel && <div className="warningLabel">Mutiple programs loaded. Showing one.</div>}
 
-
+{alignment !== 'delete' && (
+  <>
 <div className='form-row'>
   <label htmlFor='reps' className='form-label'>Reps</label>
-  <input type='text' id='reps' className='form-input' value={reps}  onChange={handleRepsChange}></input>
+  <select id='reps' className='form-input'  value={reps} onChange={(e)=>{handleRepsChange(e.target.value);}}>
+  <option value="">----</option>
+  {numbers15.map((number)=>{
+    return   <option value={number.toString()}>{number}</option>
+  })} 
+  </select>
 </div>
+
+
 <div className='form-row'>
   <label htmlFor='sets' className='form-label'>Sets</label>
-  <input type='text' id='sets' className='form-input' value={sets}  onChange={handleSetsChange}></input>
+  <select id='sets' className='form-input'  value={sets} onChange={(e)=>{handleSetsChange(e.target.value);}}>
+  <option value="">----</option>
+  {numbers15.map((number)=>{
+    return   <option value={number.toString()}>{number}</option>
+  })} 
+  </select>
 </div>
 <div className='form-row'>
   <label htmlFor='seconds' className='form-label'>Seconds</label>
-  <input type='text' id='seconds' className='form-input' value={seconds} onChange={handleSecondsChange}></input>
+  <select id='seconds' className='form-input'  value={seconds} onChange={(e)=>{handleSecondsChange(e.target.value);}}>
+  <option value="">----</option>
+  {seconds90.map((number)=>{
+    return   <option value={number.toString()}>{number}</option>
+  })} 
+  </select>
 </div>
 <div className='form-row'>
   <label htmlFor='lbs' className='form-label'>Lbs</label>
-  <input type='text' id='lbs' className='form-input' value={lbs}  onChange={handleLbsChange}></input>
+  <select id='lbs' className='form-input'  value={lbs} onChange={(e)=>{handleLbsChange(e.target.value);}}>
+  <option value="">----</option>
+  {numbersLbs.map((number)=>{
+    return   <option value={number.toString()}>{number}</option>
+  })} 
+  </select>
 </div>
+</>
+)}
 
 <div>
-  <button type='submit'  {...(isSubmitDisabled() ? {diabled:'true'} : {})}  className='btn-done' >Submit</button>
+   <Button type='submit' variant="contained">Save</Button>  
 </div>
 
 </form>

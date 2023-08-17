@@ -4,6 +4,8 @@ import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 import {getToday, getMonday, getSunday} from "../../Common";
+import { emoji, useReward } from 'react-rewards';
+
 
 
 
@@ -12,7 +14,9 @@ const ExerciseCard = ({ program, image, name, type, details }) => {
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
-
+const [isVisible, setIsVisible] = useState(false);
+const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('rewardId', 'confetti');
+const { reward: emojiReward, isAnimating: isEmojiAnimating } = useReward('rewardId', 'emoji');
 
 const checkIfCompleted = async ()=>{
   
@@ -32,11 +36,18 @@ const checkIfCompleted = async ()=>{
 const saveProgress = async ()=>{
      //update 
      
-     
+     let n = Math.random() * 2;
+     if (n < 1){
+     confettiReward();
+    }else{
+       emojiReward();
+     }
+
+
      var date = getToday();
      program.lastCompletionDate = date;
      setIsCompleted(true);
-     expandCard();
+     
      var p = await UpdateProgram(program);       
      console.log('===>Updated program ' + JSON.stringify(p));
 
@@ -66,17 +77,19 @@ const saveProgress = async ()=>{
   currentStat.lastUpdateDate = date;
   var r = await UpsertStat(currentStat);
   console.log('===>Updated stats ' + JSON.stringify(r));
- 
+  
      //stats
 }
 
 const expandCard = ()=>{
-    setIsExpanded(!isExpanded);
-   }
-   
 
-   useEffect(()=>{
- 
+   
+    setIsVisible(true);
+    setIsExpanded(!isExpanded);
+    
+   }   
+
+   useEffect(()=>{ 
     setProgram(program);
     checkIfCompleted();
   },[]);
@@ -86,30 +99,22 @@ const expandCard = ()=>{
 
     
     <div className='exerciseSelection'>
-
-      <article className='exercise'> 
+  
+ 
+      <article  id="rewardId" className='exercise' onClick={()=>{expandCard()}}> 
    
       {isCompleted ? 
-          <Badge badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
-              <img src={image} alt={name} className='img' />
+          <Badge sx={{ "& .MuiBadge-badge": { fontSize: 20, height: 35, minWidth: 35, borderRadius:40 } }}
+           badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
+              <img src={image} alt={name} className='imgLineup' />
           </Badge> :
-          <img src={image} alt={name} className='img' />
+          <img src={image} alt={name} className='imgLineup' />
        }
 
         <div>
         {isCompleted}
           <h4>{name}</h4>
-          <p>{type}</p>
-      
-      {!isCompleted &&
-        <button
-          type='button'
-          className='btn btn-block'
-          onClick={() => expandCard()}
-        >
-          Lets do it
-        </button>
-      }
+          <p>{type}</p>     
         </div>
         
       </article>
@@ -128,18 +133,15 @@ const expandCard = ()=>{
         </div>
         )
         })}
-        <button
+       {!isCompleted && <button         
           type='button'
-          className='btn-done'
-          onClick={() => saveProgress()}
-        >
+          className='btn btn-block'
+          onClick={() => saveProgress()}        >
           I'm Done!
-        </button>
+        </button>}
         </div>
       }
       </div>
-
-
     );
   };
   export default ExerciseCard;

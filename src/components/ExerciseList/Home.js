@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-//import "../../App.scss";
-//import "./home.scss";
+import "../../App.scss";
+import "./home.scss";
 import {GetAllExercises} from "../../Exercises";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
 import List from "./List";
+//material
 import CircularProgress from '@mui/material/CircularProgress';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+//
+
 import Box from '@mui/material/Box';
 import { FaSpinner } from "react-icons/fa";
 
@@ -26,8 +30,8 @@ const Home = () => {
     let day = Number(i);
     const d = new Date();
     
-    setIsToday(day === d.getDay());
-    setAlignment(day);
+    setIsToday(day === d.getDay());    
+    setAlignment(day.toString());
     GetHomeData(day);
   };
 
@@ -61,7 +65,7 @@ const Home = () => {
        // exercise.ddd =1;
        // debugger;
         if (currentProgram){
-           let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id);
+           let currentDetails = details.filter(x=>x.ProgramId === currentProgram._id && x.Value > 0);
            exercise.details = currentDetails;
            exercise.program = programItem;     
                  
@@ -84,7 +88,7 @@ const Home = () => {
      const d = new Date();
      let day = d.getDay();
      console.log("HOME - set day " + day);
-     setAlignment(day);
+     setAlignment(day.toString());
       setUserName(sessionStorage.getItem("userName"));   
       GetHomeData(day);
     },[]);
@@ -95,24 +99,14 @@ const Home = () => {
 
 
       <section className='container'>
-        
-        {(isLoaded) ? <>
-        <div className='HomeTitle'>Bonjour {userName}.</div>
-        {(isToday) && <div className='HomeTitle'>You have {exercises.length} exercises today</div>} </> :
-        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...
-        {/* <FaSpinner icon="spinner" className="spinner" />*/}
-        <Box sx={{ display: 'flex' }}>
-          <CircularProgress />
-        </Box>
-        </div>)}
-      
-        <ToggleButtonGroup
+
+
+      <ToggleButtonGroup
       color="primary"
       value={alignment}
       exclusive
       onChange={handleToggleChange}
-      aria-label="Platform"
-    >
+      aria-label="Platform"   >
       <ToggleButton value="1">L</ToggleButton>
       <ToggleButton value="2">M</ToggleButton>      
       <ToggleButton value="3">M</ToggleButton>
@@ -121,6 +115,26 @@ const Home = () => {
       <ToggleButton value="6">S</ToggleButton>   
       <ToggleButton value="0">D</ToggleButton>        
   </ToggleButtonGroup>
+
+
+
+        
+        {(isLoaded) ? <>      
+      
+     
+
+  
+        <div className='HomeTitle'>Bonjour {userName}.</div>
+        
+        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises today</div>} </> :
+        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...
+        {/* <FaSpinner icon="spinner" className="spinner" />*/}
+        <Box sx={{ display: 'flex' }}> <CircularProgress /> </Box>
+        </div>)
+        
+        }
+        
+      
 
         {exercises.length > 0 &&
         (<List exercises={exercises} />)}
