@@ -178,7 +178,9 @@ const isSubmitDisabled = ()=>
     return programsToUpdate.length === 0;
 
   }else{
-    return false;
+    if (!weekday || !userId || !exerciseId){
+       return false;
+    }
   }
 }
 
@@ -304,7 +306,7 @@ const InsertItem = async ()=>{
 </div>
 
 <div>
-  <button type='submit' disabled={isSubmitDisabled()}  className='btn-done' >Submit</button>
+  <button type='submit'  {...(isSubmitDisabled() ? {diabled:'true'} : {})}  className='btn-done' >Submit</button>
 </div>
 
 </form>

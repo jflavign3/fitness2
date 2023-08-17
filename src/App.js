@@ -7,6 +7,7 @@ import {GetAllUsers} from "./Users";
 import Login from './components/Login/Login';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorBoundary from "./ErrorBoundary";
 
 
 function App() {
@@ -22,12 +23,10 @@ function App() {
   };
 
   const SetCurrentPage = async(page) => {
-   // debugger;
-    
+       
     console.log(`Page ${page.name} was selected.`);
     sessionStorage.setItem("__page",page.name);
-    setPage(page);
-  
+    setPage(page.name); 
    
   }
 
@@ -71,6 +70,8 @@ useEffect(() => {
  return (   
 
 <>   
+<ErrorBoundary>
+
 <ToastContainer
    autoClose={2000}
    hideProgressBar={true}
@@ -84,7 +85,8 @@ useEffect(() => {
           </section></main>: (
            
 
-<main>            
+<main>       
+    
     <div className="leftMenuForBigScreen">
       <MenuBar setCurrentPage={SetCurrentPage}></MenuBar>
     </div>
@@ -105,7 +107,7 @@ useEffect(() => {
     </main>)}
 
  
-
+    </ErrorBoundary>
     </>
     )
 }

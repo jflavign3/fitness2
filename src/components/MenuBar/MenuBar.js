@@ -5,7 +5,12 @@ import { useState } from "react";
 import { FaHome, FaCog, FaBook } from "react-icons/fa";
 
 const MenuBar = ({setCurrentPage}) => {
-  const [itemActive] = useState("Home");
+  const [itemActive, setItemActive] = useState("Home");
+
+  const menuClicked = (item)=>{
+    setItemActive(item.name);
+    setCurrentPage(item);
+  }
 
   return (
     <div className="menuBar">
@@ -18,9 +23,8 @@ const MenuBar = ({setCurrentPage}) => {
         {menuData.map((item) => {
           const { name } = item;
           return (
-            <li key={name} onClick={()=>setCurrentPage(item)} className="">
-              <a
-                //href="_blank"
+            <li key={name} onClick={()=>menuClicked(item)} className="">
+              <a                
                 className={itemActive === name ? "itemActive" : "itemDisabled"}
               >
                 {item.image === "fa fa-cog" ? (
