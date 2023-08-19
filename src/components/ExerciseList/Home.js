@@ -95,7 +95,7 @@ const Home = () => {
 
     //debugger;
   return (    
-    <main>    
+    <div className='main'>
 
 <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -105,8 +105,8 @@ const Home = () => {
       </Backdrop>
 
 
-      <section className='container'>
 
+      
 
       <ToggleButtonGroup
       color="primary"
@@ -123,6 +123,7 @@ const Home = () => {
       <ToggleButton value="0">D</ToggleButton>        
   </ToggleButtonGroup>
 
+  <section className='container'>
 
 
         <div className='welcome'>
@@ -138,13 +139,13 @@ const Home = () => {
 
         {exercises.length > 0 &&
         (<List exercises={exercises} />)}
-        {(exercises.length === 0 && isLoading) &&
+        {(exercises.length === 0 && !isLoading) &&
            (<img src={'./images/rest.png'} alt='rest' className='img' />)}
         
      
        
       </section>
-    </main>
+    </div>
   );
 };
 
