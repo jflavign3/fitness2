@@ -10,6 +10,7 @@ features:
 user item menu
 setup spinner
 put timer
+create secondary type per exercise
 warmup as exercise
 progress bar for the day (material)
 inspirational quote (you lose muscle every day...)

@@ -1,10 +1,11 @@
 import "./exerciseCard.scss";
-import {UpdateProgram} from "../../DAL/Program";
+import {UpdateProgram, deleteProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 import {getToday, getMonday, getSunday} from "../../Common";
 import { emoji, useReward } from 'react-rewards';
+import { toast } from "react-toastify";
 
 
 
@@ -15,8 +16,10 @@ const [isExpanded, setIsExpanded] = useState(false);
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
 const [isVisible, setIsVisible] = useState(false);
-const { reward: confettiReward, isAnimating: isConfettiAnimating } = useReward('rewardId', 'confetti');
-const { reward: emojiReward, isAnimating: isEmojiAnimating } = useReward('rewardId', 'emoji');
+const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
+         useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:20, zIndex:100});
+const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
+         useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100});
 
 const checkIfCompleted = async ()=>{
   
@@ -36,8 +39,8 @@ const checkIfCompleted = async ()=>{
 const saveProgress = async ()=>{
      //update 
      
-     let n = Math.random() * 2;
-     if (n < 1){
+     let n = Math.random() * 10;
+     if (n >1){
      confettiReward();
     }else{
        emojiReward();
@@ -77,9 +80,18 @@ const saveProgress = async ()=>{
   currentStat.lastUpdateDate = date;
   var r = await UpsertStat(currentStat);
   console.log('===>Updated stats ' + JSON.stringify(r));
+  expandCard(false);
   
      //stats
 }
+
+const deleteProgram_ = async (detail) =>{
+  debugger;
+  await deleteProgram(detail.ProgramId);
+  toast.success('deleted');
+
+}
+
 
 const expandCard = ()=>{
 
@@ -101,7 +113,7 @@ const expandCard = ()=>{
     <div className='exerciseSelection'>
   
  
-      <article  id="rewardId" className='exercise' onClick={()=>{expandCard()}}> 
+      <article  className='exercise' onClick={()=>{expandCard()}}> 
    
       {isCompleted ? 
           <Badge sx={{ "& .MuiBadge-badge": { fontSize: 20, height: 35, minWidth: 35, borderRadius:40 } }}
@@ -113,7 +125,7 @@ const expandCard = ()=>{
 
         <div>
         {isCompleted}
-          <h4>{name}</h4>
+          <h4 id="rewardId"   >{name}</h4>
           <p>{type}</p>     
         </div>
         
@@ -127,20 +139,31 @@ const expandCard = ()=>{
     return(
         <div key={i} className="detailRow">
           <div className='kpi'>
-            <div>{detail.Title}</div>
+            <div >{detail.Title}</div>
             <div className="kpiValue">{detail.Value}</div>
           </div>          
         </div>
         )
-        })}
-       {!isCompleted && <button         
+   })}
+       {!isCompleted && 
+       <button 
+       
+           
           type='button'
           className='btn btn-block'
           onClick={() => saveProgress()}        >
-          I'm Done!
+          Done!
         </button>}
+        <button         
+          type='button'
+          className='btn'
+          onClick={() => deleteProgram_(details[0])}        >
+          X
+        </button>
         </div>
       }
+
+      
       </div>
     );
   };

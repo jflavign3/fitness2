@@ -6,10 +6,10 @@ import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
 import List from "./List";
 //material
-import CircularProgress from '@mui/material/CircularProgress';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 //
 
 import Box from '@mui/material/Box';
@@ -18,7 +18,7 @@ import { FaSpinner } from "react-icons/fa";
 const Home = () => {
 
   const [exercises, setExercises] = useState([]);  
-  const [isLoaded, setIsLoaded] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);  
   const [userName, setUserName] = useState("");  
   const [alignment, setAlignment] = useState("1");
   
@@ -38,7 +38,7 @@ const Home = () => {
 
   const GetHomeData = async (day) => {   
   
-    setIsLoaded(false);
+    setIsLoading(true);
     var userId = Number(sessionStorage.getItem("__userId"));
 
     console.log(`Getting home data for day `+ day);
@@ -78,7 +78,7 @@ const Home = () => {
       });
       
       setExercises(todayExercises);
-      setIsLoaded(true);
+      setIsLoading(false);
     }
 
     useEffect(() => {
@@ -96,6 +96,13 @@ const Home = () => {
     //debugger;
   return (    
     <main>    
+
+<Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isLoading}        
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
 
       <section className='container'>
@@ -118,27 +125,20 @@ const Home = () => {
 
 
 
-        
-        {(isLoaded) ? <>      
+        <div className='welcome'>
+        {(!isLoading) ? <>      
       
-     
-
-  
         <div className='HomeTitle'>Bonjour {userName}.</div>
         
         {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises today</div>} </> :
-        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...
-        {/* <FaSpinner icon="spinner" className="spinner" />*/}
-        <Box sx={{ display: 'flex' }}> <CircularProgress /> </Box>
-        </div>)
+        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)
         
         }
-        
-      
+        </div>
 
         {exercises.length > 0 &&
         (<List exercises={exercises} />)}
-        {(exercises.length === 0 && isLoaded) &&
+        {(exercises.length === 0 && isLoading) &&
            (<img src={'./images/rest.png'} alt='rest' className='img' />)}
         
      

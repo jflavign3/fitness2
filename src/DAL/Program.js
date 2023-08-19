@@ -29,3 +29,16 @@ headers: {
   return result;
 };
 
+
+export const deleteProgram = async(id) => {
+  
+
+  const url = "/.netlify/functions/DeleteProgram?programid="+id;    
+
+  let result = await fetch(url, {
+method: 'DELETE'
+}).then(response => response.json());   
+
+  return result;
+};
+

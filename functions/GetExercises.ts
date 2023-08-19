@@ -5,7 +5,6 @@ exports.handler = async (event, context) => {
   
   const mongoClient = new MongoClient(process.env.MONGODB_URI);
   try {
-  console.log(process.env.MONGODB_URI);
   const clientPromise = mongoClient.connect();
   const database = (await clientPromise).db("FITNESS");
   const collection = database.collection("Exercise");
