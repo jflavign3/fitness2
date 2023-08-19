@@ -17,9 +17,9 @@ const [isCompleted, setIsCompleted] = useState(false);
 const [_program, setProgram] = useState(null);
 const [isVisible, setIsVisible] = useState(false);
 const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
-         useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:20, zIndex:100});
+         useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
-         useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100});
+         useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
 
 const checkIfCompleted = async ()=>{
   
@@ -154,12 +154,12 @@ const expandCard = ()=>{
           onClick={() => saveProgress()}        >
           Done!
         </button>}
-        <button         
+       {/* <button         
           type='button'
           className='btn'
           onClick={() => deleteProgram_(details[0])}        >
           X
-        </button>
+       </button>*/}
         </div>
       }
 
