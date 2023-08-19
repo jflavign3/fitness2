@@ -32,10 +32,10 @@ const menuItems = [
       showName: true,
     },
     {
-      name: "More",
-      title: "More",
+      name: "User",
+      title: "User",
       default: false,
-      image: "fa fa-ellipsis-h",
+      image: "fa fa-user",
       webOnly: true,
       showName: false,
     },

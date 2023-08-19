@@ -79,7 +79,7 @@ useEffect(() => {
 />
 
     {
-        !user && users
+        (!user && users) || page === "User"
           ? <main> <section className='containerLogin'>
             <Login users={users} setCurrentUser={SetCurrentUser}></Login>
           </section></main>: (
