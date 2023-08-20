@@ -27,7 +27,7 @@ const Timer = ({seconds, onTimerOver}) => {
           isPlaying
           duration={seconds}
           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[10, 6, 3, 0]}
+          colorsTime={[seconds *.75, seconds * .5,  seconds * .25, 0]}
           onComplete={() => onTimerOver()}
         >
           {renderTime}

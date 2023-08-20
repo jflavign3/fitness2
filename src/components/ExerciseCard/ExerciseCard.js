@@ -24,8 +24,7 @@ const { reward: confettiReward, isAnimating: isConfettiAnimating} =
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
-const { reward: balloonsReward, isAnimating: isBalloonsAnimating } = 
-         useReward('spacer', 'balloons', {lifetime:400, zIndex:100, elementCount:100, angle:45 });
+
 
 
 
@@ -57,17 +56,13 @@ const onTimerOver = ()=>{
 const saveProgress = async ()=>{
      //update 
      
-     let n = Math.random() * 50;
+     let n = Math.random() * 100;
      console.log('random:' + n);
-     if (n >10){
+     if (n >5){
         confettiReward()
      
-    }else if (n > 1){
-       emojiReward(); //1$
-       toast.success('Claim 1$');
     }else{
-      balloonsReward(); //10$
-      toast.success('Claim 10$');
+       emojiReward();
     }
 
 
