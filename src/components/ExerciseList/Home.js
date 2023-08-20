@@ -10,9 +10,9 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-//
-
 import Box from '@mui/material/Box';
+////////
+
 import { FaSpinner } from "react-icons/fa";
 
 const Home = () => {
@@ -26,6 +26,11 @@ const Home = () => {
 
 
 
+
+  
+
+
+  
   const handleToggleChange = (event, i) => {
     let day = Number(i);
     const d = new Date();
@@ -96,6 +101,9 @@ const Home = () => {
     //debugger;
   return (    
     <div className='main'>
+
+
+
 
 <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

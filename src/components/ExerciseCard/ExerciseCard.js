@@ -6,7 +6,9 @@ import Badge from '@mui/material/Badge';
 import {getToday, getMonday, getSunday} from "../../Common";
 import { emoji, useReward } from 'react-rewards';
 import { toast } from "react-toastify";
-
+import ReactDOM from "react-dom";
+import Timer from "../Timer/timer";
+import { BsStopwatch } from "react-icons/bs";
 
 
 
@@ -16,10 +18,20 @@ const [isExpanded, setIsExpanded] = useState(false);
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
 const [isVisible, setIsVisible] = useState(false);
+const [showTimer, setShowTimer] = useState(false);
+const [timerSeconds, setTimerSeconds] = useState(false);
 const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
+const { reward: balloonsReward, isAnimating: isBalloonsAnimating } = 
+         useReward('spacer', 'balloons', {lifetime:400, zIndex:100, elementCount:100, angle:45 });
+
+
+
+
+
+
 
 const checkIfCompleted = async ()=>{
   
@@ -36,15 +48,27 @@ const checkIfCompleted = async ()=>{
 
 }
 
+const onTimerOver = ()=>{
+  setShowTimer(false);
+
+};
+
+
 const saveProgress = async ()=>{
      //update 
      
-     let n = Math.random() * 10;
-     if (n >1){
-     confettiReward();
+     let n = Math.random() * 50;
+     console.log('random:' + n);
+     if (n >10){
+        confettiReward()
+     
+    }else if (n > 1){
+       emojiReward(); //1$
+       toast.success('Claim 1$');
     }else{
-       emojiReward();
-     }
+      balloonsReward(); //10$
+      toast.success('Claim 10$');
+    }
 
 
      var date = getToday();
@@ -86,9 +110,9 @@ const saveProgress = async ()=>{
 }
 
 const deleteProgram_ = async (detail) =>{
-  debugger;
-  await deleteProgram(detail.ProgramId);
-  toast.success('deleted');
+  setShowTimer(true);
+  //await deleteProgram(detail.ProgramId);
+  //toast.success('deleted');
 
 }
 
@@ -103,6 +127,8 @@ const expandCard = ()=>{
 
    useEffect(()=>{ 
     setProgram(program);
+    
+    setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
     checkIfCompleted();
   },[]);
 
@@ -112,7 +138,8 @@ const expandCard = ()=>{
     
     <div className='exerciseSelection'>
   
- 
+
+
       <article  className='exercise' onClick={()=>{expandCard()}}> 
    
       {isCompleted ? 
@@ -128,6 +155,9 @@ const expandCard = ()=>{
           <h4 id="rewardId"   >{name}</h4>
           <p>{type}</p>     
         </div>
+
+{showTimer && timerSeconds > 0 &&
+        <Timer seconds={timerSeconds} onTimerOver={onTimerOver} />}
         
       </article>
       
@@ -145,6 +175,16 @@ const expandCard = ()=>{
         </div>
         )
    })}
+
+        { timerSeconds > 0 &&
+        <button      
+          className='btn-timer'
+          type='button'
+          onClick={() => setShowTimer(!showTimer)} >
+             <BsStopwatch size={'1.5rem'} />
+  </button>}
+
+
        {!isCompleted && 
        <button 
        
@@ -154,16 +194,15 @@ const expandCard = ()=>{
           onClick={() => saveProgress()}        >
           Done!
         </button>}
-       {/* <button         
+       {/*<button         
           type='button'
-          className='btn'
           onClick={() => deleteProgram_(details[0])}        >
-          X
+          X  
        </button>*/}
+
         </div>
       }
 
-      
       </div>
     );
   };

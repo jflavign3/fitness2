@@ -5,14 +5,18 @@ typesscript
 graphql
 localstore for logges user
 store exercises, details in session
+setup spinner not working
 
 features:
-user item menu
-setup spinner
 put timer
+suggestion to upgrade after 1 month of same intensity
+modify details on card
+disable landcape
 create secondary type per exercise
-warmup as exercise
-progress bar for the day (material)
+warmup as exercise, order field
+voir tout les exercise dispo par type
+progress bar for the week (material)
+prize with 3 balloon explosion
 inspirational quote (you lose muscle every day...)
 include cardio tracking
 graph on improvment, show stats

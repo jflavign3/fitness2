@@ -23,7 +23,11 @@ const MenuBar = ({setCurrentPage}) => {
         {menuData.map((item) => {
           const { name } = item;
           return (
+
+            
+
             <li key={name} onClick={()=>menuClicked(item)} className="">
+ 
               <a                
                 className={itemActive === name ? "itemActive" : "itemDisabled"}
               >
