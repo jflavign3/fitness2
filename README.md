@@ -8,14 +8,20 @@ store exercises, details in session
 setup spinner not working
 
 features:
-points  (1 per exercise, 50 for emoji)   10$/100 point
+
+stat total seconds, with stat button on card
+warmup as exercise, order field
+page to overview of user daily exercises
+adding exercise, shoudl have pop up screen with categories and images
+incldue tips on card: TiP: You can superset bicep with tricpep...
 suggestion to upgrade after 2 weeks month of same intensity
 modify details on card
 password
+defis pour points
 improve week buttons
 disable landcape
 create secondary type per exercise
-warmup as exercise, order field
+
 voir tout les exercise dispo par type, graph des types ratio
 progress bar for the week (material)
 inspirational quote (you lose muscle every day...)

@@ -96,9 +96,12 @@ const saveProgress = async ()=>{
   var totalReps = currentStat.totalReps ?? 0;
   currentStat.totalReps = totalReps + todayTotalReps;
 
+  debugger;
+  currentStat.totalSeconds = currentStat.totalSeconds + todaySeconds;
+
   var completions = currentStat.totalCompletions ?? 0;
   currentStat.totalCompletions = completions + 1;
-  currentStat.lastUpdateDate = date;
+  currentStat.lastUpdateDate = date;  
 
   let currentPoints = sessionStorage.getItem('userPoints');
   let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
@@ -115,8 +118,8 @@ const saveProgress = async ()=>{
 
 const deleteProgram_ = async (detail) =>{
   setShowTimer(true);
-  //await deleteProgram(detail.ProgramId);
-  //toast.success('deleted');
+  await deleteProgram(detail.ProgramId);
+  toast.success('deleted');
 
 }
 
@@ -198,11 +201,11 @@ const expandCard = ()=>{
           onClick={() => saveProgress()}        >
           Done!
         </button>}
-       {/*<button         
+       {<button         
           type='button'
           onClick={() => deleteProgram_(details[0])}        >
           X  
-       </button>*/}
+       </button>}
 
         </div>
       }
