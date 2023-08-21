@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import ReactDOM from "react-dom";
 import Timer from "../Timer/timer";
 import { BsStopwatch } from "react-icons/bs";
+import userEvent from "@testing-library/user-event";
 
 
 
@@ -20,6 +21,7 @@ const [isCompleted, setIsCompleted] = useState(false);
 const [_program, setProgram] = useState(null);
 const [isVisible, setIsVisible] = useState(false);
 const [showTimer, setShowTimer] = useState(false);
+const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
 const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
@@ -60,8 +62,7 @@ const saveProgress = async ()=>{
      let n = Math.random() * 50;
      console.log('random:' + n);
      if (n >1){
-        confettiReward()
-     
+        confettiReward()     
     }else{
        bonus = 50;
        emojiReward();
@@ -75,16 +76,13 @@ const saveProgress = async ()=>{
      var p = await UpdateProgram(program);       
      console.log('===>Updated program ' + JSON.stringify(p));
 
-  //to do, put stats in session
-  let stats = await GetAllStats(); 
-
-  let currentStat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
     
     let todayReps = details.filter(v=>v.Title === "Reps")[0]?.Value;
-    let todaySets = details.filter(v=>v.Title === "Sets")[0]?.Value;
-    let todayLbs = details.filter(v=>v.Title === "Lbs")[0]?.Value;
+    let todaySets = details.filter(v=>v.Title === "Sets")[0]?.Value ?? 1;
+    let todayLbs = details.filter(v=>v.Title === "Lbs")[0]?.Value;    
     let todaySeconds = details.filter(v=>v.Title === "Seconds")[0]?.Value;
     let todayTotalReps = todayReps * todaySets;
+    let todayTotalSeconds = todaySeconds * todaySets;
   
     //initialize object if new
     if (!currentStat){  
@@ -96,19 +94,21 @@ const saveProgress = async ()=>{
   var totalReps = currentStat.totalReps ?? 0;
   currentStat.totalReps = totalReps + todayTotalReps;
 
-  debugger;
-  currentStat.totalSeconds = currentStat.totalSeconds + todaySeconds;
+  var totalSeconds = currentStat.totalSeconds ?? 0;
+  currentStat.totalSeconds = totalSeconds + todayTotalSeconds;
 
   var completions = currentStat.totalCompletions ?? 0;
   currentStat.totalCompletions = completions + 1;
   currentStat.lastUpdateDate = date;  
 
+  debugger;
   let currentPoints = sessionStorage.getItem('userPoints');
   let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
   r = await UpdatePoints(program.userId, newPoints);
   updatePoints(newPoints);
 
   var r = await UpsertStat(currentStat);  
+  setCurrentStat(currentStat);
 
   console.log('===>Updated stats ' + JSON.stringify(r));
   expandCard(false);
@@ -123,6 +123,13 @@ const deleteProgram_ = async (detail) =>{
 
 }
 
+const initStats = async () => {
+  
+  
+  let stats = await GetAllStats(); 
+  let stat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
+     setCurrentStat(stat);
+}
 
 const expandCard = ()=>{
 
@@ -135,6 +142,8 @@ const expandCard = ()=>{
    useEffect(()=>{ 
     setProgram(program);
     
+    initStats();
+     
     setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
     checkIfCompleted();
   },[]);
@@ -171,7 +180,7 @@ const expandCard = ()=>{
        { isExpanded &&      
      
        <div className='exerciseDetails'>
-
+<div className="kpis">
   {details.map((detail, i)=>{
     return(
         <div key={i} className="detailRow">
@@ -190,22 +199,30 @@ const expandCard = ()=>{
           onClick={() => setShowTimer(!showTimer)} >
              <BsStopwatch size={'1.5rem'} />
   </button>}
+  
+  </div>
 
-
-       {!isCompleted && 
+<div>
+       {//!isCompleted && 
        <button 
-       
-           
           type='button'
           className='btn btn-block'
           onClick={() => saveProgress()}        >
           Done!
         </button>}
-       {/*<button         
+       {/*
+       <button         
           type='button'
           onClick={() => deleteProgram_(details[0])}        >
           X  
+       </button>}
+       {
+       <button         
+       type='button'
+       onClick={() => console.log('stats:' + JSON.stringify(currentStat)) }        >
+       Stats  
        </button>*/}
+    </div>
 
         </div>
       }

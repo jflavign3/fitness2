@@ -1,5 +1,6 @@
 .exerciseDetails{
     display: flex;
+    justify-content: space-between;
     margin-top: 5PX;
     margin-bottom: 40px;
     padding-bottom: 20px;
@@ -40,6 +41,10 @@
     margin-top: 0.9rem;
     text-transform: capitalize;
     font-size: 24px;
+}
+.kpis{
+  display: flex;
+  flex-direction: row;
 }
 .exercise {
     display: grid;

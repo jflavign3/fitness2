@@ -137,12 +137,15 @@ const Home = ({updatePoints}) => {
         <div className='welcome'>
         {(!isLoading) ? <>      
       
-        <div className='HomeTitle'>Bonjour {userName}.</div>
+        <div className='HomeTitle'>Bonjour {userName}. {userName==='Joelle' && alignment==1 ? "LOWER BODY day":''}
+                                                       {userName==='Joelle' && alignment==3 ? "UPPER BODY day":''}
+                                                       {userName==='Joelle' && alignment==6 ? "FULL BODY day":''}</div>
         
-        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises today</div>} </> :
-        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)
-        
+        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </> :
+        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)        
         }
+      
+
         </div>
 
         {exercises.length > 0 &&

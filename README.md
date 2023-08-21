@@ -9,12 +9,14 @@ setup spinner not working
 
 features:
 
-stat total seconds, with stat button on card
+
 warmup as exercise, order field
 page to overview of user daily exercises
 adding exercise, shoudl have pop up screen with categories and images
 incldue tips on card: TiP: You can superset bicep with tricpep...
+                           for this exercise can rest on a exercis eball (torso ketteball twist)    
 suggestion to upgrade after 2 weeks month of same intensity
+button to show stats on card
 modify details on card
 password
 defis pour points
@@ -41,6 +43,7 @@ taskkill /PID typeyourPIDhere /F
 //thoracic spine extensions
 https://www.youtube.com/watch?v=5m8Ue-aQuok
 https://www.youtube.com/watch?v=5wv670fHuG4
+3 day workout examples: https://www.setforset.com/blogs/news/3-day-workout-split
 
 
  //Studies show that when you increase your strength, flexibility, and endurance, back pain decreases

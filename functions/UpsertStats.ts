@@ -11,7 +11,7 @@ exports.handler = async (event, context) => {
   const collection = database.collection("Stats");
   
   
-  const { userId, totalReps, exerciseId, totalCompletions, lastUpdateDate, lbs } = JSON.parse(event.body);
+  const { userId, totalReps, totalSeconds, exerciseId, totalCompletions, lastUpdateDate, lbs } = JSON.parse(event.body);
   
   console.log('values:'  + userId);
   const filter = { "userId": userId, "exerciseId": exerciseId};
@@ -22,6 +22,7 @@ exports.handler = async (event, context) => {
       userId : userId,
       exerciseId : exerciseId,
       lbs: lbs,
+      totalSeconds: totalSeconds,
       totalCompletions: totalCompletions,
       lastUpdateDate : new Date(lastUpdateDate)
     },

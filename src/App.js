@@ -22,6 +22,8 @@ function App() {
     console.log(`Getting list of all users`);
     let allUsers = await GetAllUsers();
     setUsers(allUsers);       
+
+    debugger;
     var currentPoints = sessionStorage.getItem("userPoints");   
     if (currentPoints){
       updatePoints(currentPoints);
