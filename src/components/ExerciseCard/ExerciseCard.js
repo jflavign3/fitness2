@@ -201,11 +201,11 @@ const expandCard = ()=>{
           onClick={() => saveProgress()}        >
           Done!
         </button>}
-       {<button         
+       {/*<button         
           type='button'
           onClick={() => deleteProgram_(details[0])}        >
           X  
-       </button>}
+       </button>*/}
 
         </div>
       }
