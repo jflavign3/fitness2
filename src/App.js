@@ -8,6 +8,7 @@ import Login from './components/Login/Login';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorBoundary from "./ErrorBoundary";
+//import coin from "/coin.png";
 
 
 function App() {
@@ -15,11 +16,16 @@ function App() {
   const [users, setUsers] = useState([]);  
   const [user, setUser] = useState(null);  
   const [page, setPage] = useState(null);  
+  const [points, setPoints] = useState(0);
 
   const GetListOfUsers = async () => {   
     console.log(`Getting list of all users`);
     let allUsers = await GetAllUsers();
     setUsers(allUsers);       
+    var currentPoints = sessionStorage.getItem("userPoints");   
+    if (currentPoints){
+      updatePoints(currentPoints);
+    }
   };
 
   const SetCurrentPage = async(page) => {
@@ -29,14 +35,20 @@ function App() {
     setPage(page.name); 
    
   }
-
+const updatePoints = (total) =>{
+  setPoints(total);  
+  sessionStorage.setItem("userPoints",total);   
+}
 
   const SetCurrentUser = async (user) => {
-    
+  
+
+    setPoints(user.points);
      console.log(`User ${user.name} was selected. Load home data.`);
      
      sessionStorage.setItem("__userId",user.userId);     
-     sessionStorage.setItem("userName",user.name);     
+     sessionStorage.setItem("userName",user.name); 
+     sessionStorage.setItem("userPoints",user.points);     
      setUser(user.userId);
      sessionStorage.setItem("__page","Home");     
      setPage("Home");
@@ -91,12 +103,23 @@ useEffect(() => {
       <MenuBar setCurrentPage={SetCurrentPage}></MenuBar>
     </div>
 
+<div className="main">
+  <div className="topBar">
+    <div>
+  <img id="coinImage" src="/coin.png" alt="image" />
+  </div>
+  <div  className="pointNumber">
+  {points}
+  </div>
+  </div>
     {page === "Home" ? (
-      <Home/>   
+      <Home updatePoints={updatePoints}/>   
  
     ) : (<Setup/>)
     
     }
+
+</div>
 
 
       <div id="bottomMenuForSmallScreen">

@@ -1,6 +1,7 @@
 import "./exerciseCard.scss";
 import {UpdateProgram, deleteProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
+import {UpdatePoints} from "../../DAL/User";
 import { useState, useEffect } from 'react';
 import Badge from '@mui/material/Badge';
 import {getToday, getMonday, getSunday} from "../../Common";
@@ -12,7 +13,7 @@ import { BsStopwatch } from "react-icons/bs";
 
 
 
-const ExerciseCard = ({ program, image, name, type, details }) => {
+const ExerciseCard = ({ updatePoints, program, image, name, type, details }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
@@ -55,13 +56,14 @@ const onTimerOver = ()=>{
 
 const saveProgress = async ()=>{
      //update 
-     
-     let n = Math.random() * 100;
+     var bonus = 0;
+     let n = Math.random() * 50;
      console.log('random:' + n);
-     if (n >5){
+     if (n >1){
         confettiReward()
      
     }else{
+       bonus = 50;
        emojiReward();
     }
 
@@ -97,7 +99,14 @@ const saveProgress = async ()=>{
   var completions = currentStat.totalCompletions ?? 0;
   currentStat.totalCompletions = completions + 1;
   currentStat.lastUpdateDate = date;
-  var r = await UpsertStat(currentStat);
+
+  let currentPoints = sessionStorage.getItem('userPoints');
+  let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
+  r = await UpdatePoints(program.userId, newPoints);
+  updatePoints(newPoints);
+
+  var r = await UpsertStat(currentStat);  
+
   console.log('===>Updated stats ' + JSON.stringify(r));
   expandCard(false);
   

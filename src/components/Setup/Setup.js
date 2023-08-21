@@ -216,10 +216,8 @@ const validateForm = () => {
     var valid = programsToUpdate.length > 0
     if (valid) return null;
     return "No programs are loaded."; 
-   }else{
-      valid = (weekday != '' && userId && exerciseId && (reps || sets || seconds || lbs)); 
-
- 
+   }else{    
+      valid = (weekday >-1 && userId && exerciseId && (reps || sets || seconds || lbs));  
       if (valid) return null;
       return "Missing values.";
    }
@@ -312,7 +310,7 @@ return (
 <div className='form-row'>
   <label htmlFor='weekday' className='form-label'>Day</label>
   <select id='weekday' className='form-input'  value={weekday} onChange={(e)=>{handleWeekdayChange(e.target.value);}}>
-  <option value="">----</option>
+  <option value="-1">----</option>
   <option value="1">Lundi</option>
              <option value="2">Mardi</option>
              <option value="3">Mercredi</option>
@@ -342,15 +340,6 @@ return (
 
 {alignment !== 'delete' && (
   <>
-<div className='form-row'>
-  <label htmlFor='reps' className='form-label'>Reps</label>
-  <select id='reps' className='form-input'  value={reps} onChange={(e)=>{handleRepsChange(e.target.value);}}>
-  <option value="">----</option>
-  {numbers15.map((number, i)=>{
-    return   <option key={i} value={number.toString()}>{number}</option>
-  })} 
-  </select>
-</div>
 
 
 <div className='form-row'>
@@ -362,6 +351,20 @@ return (
   })} 
   </select>
 </div>
+
+
+<div className='form-row'>
+  <label htmlFor='reps' className='form-label'>Reps</label>
+  <select id='reps' className='form-input'  value={reps} onChange={(e)=>{handleRepsChange(e.target.value);}}>
+  <option value="">----</option>
+  {numbers15.map((number, i)=>{
+    return   <option key={i} value={number.toString()}>{number}</option>
+  })} 
+  </select>
+</div>
+
+
+
 <div className='form-row'>
   <label htmlFor='seconds' className='form-label'>Seconds</label>
   <select id='seconds' className='form-input'  value={seconds} onChange={(e)=>{handleSecondsChange(e.target.value);}}>

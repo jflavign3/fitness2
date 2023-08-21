@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 
 import { FaSpinner } from "react-icons/fa";
 
-const Home = () => {
+const Home = ({updatePoints}) => {
 
   const [exercises, setExercises] = useState([]);  
   const [isLoading, setIsLoading] = useState(false);  
@@ -146,7 +146,7 @@ const Home = () => {
         </div>
 
         {exercises.length > 0 &&
-        (<List exercises={exercises} />)}
+        (<List exercises={exercises} updatePoints={updatePoints}/>)}
         {(exercises.length === 0 && !isLoading) &&
            (<img src={'./images/rest.png'} alt='rest' className='img' />)}
         

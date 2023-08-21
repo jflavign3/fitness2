@@ -8,15 +8,16 @@ store exercises, details in session
 setup spinner not working
 
 features:
-put timer
-suggestion to upgrade after 1 month of same intensity
+points  (1 per exercise, 50 for emoji)   10$/100 point
+suggestion to upgrade after 2 weeks month of same intensity
 modify details on card
+password
+improve week buttons
 disable landcape
 create secondary type per exercise
 warmup as exercise, order field
-voir tout les exercise dispo par type
+voir tout les exercise dispo par type, graph des types ratio
 progress bar for the week (material)
-prize with 3 balloon explosion
 inspirational quote (you lose muscle every day...)
 include cardio tracking
 graph on improvment, show stats
