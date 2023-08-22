@@ -6,11 +6,14 @@ graphql
 localstore for logges user
 store exercises, details in session
 setup spinner not working
+points. improve dragging it everywhere
+
 
 features:
 
 
 warmup as exercise, order field
+
 page to overview of user daily exercises
 adding exercise, shoudl have pop up screen with categories and images
 incldue tips on card: TiP: You can superset bicep with tricpep...
@@ -19,7 +22,7 @@ suggestion to upgrade after 2 weeks month of same intensity
 button to show stats on card
 modify details on card
 password
-defis pour points
+defis pour points. Weekly degi. 5 point / km COURU, 100 Push up progress bAR...
 improve week buttons
 disable landcape
 create secondary type per exercise
