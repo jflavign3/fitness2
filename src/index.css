@@ -278,7 +278,7 @@ main {
   /* border: 2px solid red; */
   width: 95vw;
   max-width: var(--fixed-width);
-  margin: 5rem 0;
+  margin: 2rem 0;
   background: var(--white);
   border-radius: var(--borderRadius);
   padding: 1.5rem 1.5rem;
@@ -288,7 +288,7 @@ main {
 .container {
   /* border: 2px solid red; */
   width: 95vw;
-  margin: 5rem 0;
+  margin: 2rem 0;
   padding: 1.5rem 1.5rem;
 }
 

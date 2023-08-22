@@ -13,10 +13,10 @@
 use('FITNESS');
 
 //ADD FIELD
-/*
+
 db.Program.updateMany({}, { 
-   $set: { LastCompletionDate: new Date() } 
-});*/
+   $set: { order: 1 } 
+});
 
 
 //rename field
@@ -39,12 +39,12 @@ db.EXERCISE.updateOne( { id:1 },
 
 
 //add exercise
-
+/*
 db.getCollection('Exercise').insertOne({  
   "name": "Bulgarian Squat",
   "type": "quad",
   "image": "/images/bulgariansquat.jpg",
-});
+});*/
 
 
 /*

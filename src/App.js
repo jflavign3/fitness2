@@ -19,11 +19,11 @@ function App() {
   const [points, setPoints] = useState(0);
 
   const GetListOfUsers = async () => {   
+    
     console.log(`Getting list of all users`);
     let allUsers = await GetAllUsers();
     setUsers(allUsers);       
 
-    debugger;
     var currentPoints = sessionStorage.getItem("userPoints");   
     if (currentPoints){
       updatePoints(currentPoints);
@@ -93,7 +93,7 @@ useEffect(() => {
 />
 
     {
-        (!user && users) || page === "User"
+        (!user && users.length>0) || (page === "User" && users.length>1)
           ? <main> <section className='containerLogin'>
             <Login users={users} setCurrentUser={SetCurrentUser}></Login>
           </section></main>: (

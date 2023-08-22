@@ -46,6 +46,17 @@
   display: flex;
   flex-direction: row;
 }
+.leftOfDetails{
+display: flex;
+}
+
+.MuiInputBase-input{
+  padding: 3px !important;
+}/*
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input{
+  
+  padding: 3px !important;
+}*/
 .exercise {
     display: grid;
     grid-template-columns: auto 1fr;

@@ -24,6 +24,7 @@ exports.handler = async (event, context) => {
       weekday : program.weekday,
       userId : program.userId,
       exerciseId : program.exerciseId,
+      order : program.order,
       lastCompletionDate : new Date(program.lastCompletionDate)
     },
   };

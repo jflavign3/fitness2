@@ -10,10 +10,8 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 ////////
 
-import { FaSpinner } from "react-icons/fa";
 
 const Home = ({updatePoints}) => {
 
@@ -111,11 +109,19 @@ const Home = ({updatePoints}) => {
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-
-
-
       
 
+  <section className='container'>
+
+
+        <div className='welcome'>
+        {(!isLoading) ? <>      
+      
+        <div className='HomeTitle'>Bonjour {userName}. {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
+                                                       {userName==='Joelle' && alignment===3 ? "UPPER BODY day":''}
+                                                       {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
+                                                       
+  <div className='weekButtons'>
       <ToggleButtonGroup
       color="primary"
       value={alignment}
@@ -130,18 +136,11 @@ const Home = ({updatePoints}) => {
       <ToggleButton value="6">S</ToggleButton>   
       <ToggleButton value="0">D</ToggleButton>        
   </ToggleButtonGroup>
-
-  <section className='container'>
-
-
-        <div className='welcome'>
-        {(!isLoading) ? <>      
-      
-        <div className='HomeTitle'>Bonjour {userName}. {userName==='Joelle' && alignment==1 ? "LOWER BODY day":''}
-                                                       {userName==='Joelle' && alignment==3 ? "UPPER BODY day":''}
-                                                       {userName==='Joelle' && alignment==6 ? "FULL BODY day":''}</div>
-        
-        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </> :
+  </div>
+</div>        
+        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </>
+                
+        :
         (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)        
         }
       

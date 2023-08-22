@@ -3,14 +3,16 @@ import {UpdateProgram, deleteProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import {UpdatePoints} from "../../DAL/User";
 import { useState, useEffect } from 'react';
-import Badge from '@mui/material/Badge';
 import {getToday, getMonday, getSunday} from "../../Common";
-import { emoji, useReward } from 'react-rewards';
+import { useReward } from 'react-rewards';
 import { toast } from "react-toastify";
-import ReactDOM from "react-dom";
 import Timer from "../Timer/timer";
 import { BsStopwatch } from "react-icons/bs";
-import userEvent from "@testing-library/user-event";
+
+///MATERIAL
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Badge from '@mui/material/Badge';
 
 
 
@@ -19,7 +21,7 @@ const ExerciseCard = ({ updatePoints, program, image, name, type, details }) => 
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
-const [isVisible, setIsVisible] = useState(false);
+//onst [isVisible, setIsVisible] = useState(false);
 const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
@@ -27,11 +29,6 @@ const { reward: confettiReward, isAnimating: isConfettiAnimating} =
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
-
-
-
-
-
 
 
 
@@ -54,6 +51,13 @@ const onTimerOver = ()=>{
   setShowTimer(false);
 
 };
+
+const updateOrder = async () =>{
+ 
+  debugger;
+
+  var p = await UpdateProgram(program);   
+}
 
 
 const saveProgress = async ()=>{
@@ -101,7 +105,7 @@ const saveProgress = async ()=>{
   currentStat.totalCompletions = completions + 1;
   currentStat.lastUpdateDate = date;  
 
-  debugger;
+
   let currentPoints = sessionStorage.getItem('userPoints');
   let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
   r = await UpdatePoints(program.userId, newPoints);
@@ -134,7 +138,7 @@ const initStats = async () => {
 const expandCard = ()=>{
 
    
-    setIsVisible(true);
+   // setIsVisible(true);
     setIsExpanded(!isExpanded);
     
    }   
@@ -202,14 +206,30 @@ const expandCard = ()=>{
   
   </div>
 
+<div className="leftOfDetails">
 <div>
-       {//!isCompleted && 
+       {!isCompleted && 
        <button 
           type='button'
           className='btn btn-block'
           onClick={() => saveProgress()}        >
           Done!
         </button>}
+        </div>
+<div>
+      <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '5ch', padding:'3px' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField size="small" id="outlined-basic" label="" variant="outlined" />
+    </Box>
+    </div>
+    </div>
+
        {/*
        <button         
           type='button'
@@ -224,7 +244,7 @@ const expandCard = ()=>{
        </button>*/}
     </div>
 
-        </div>
+     
       }
 
       </div>
