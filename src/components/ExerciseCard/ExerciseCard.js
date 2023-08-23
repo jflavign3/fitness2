@@ -16,7 +16,7 @@ import Badge from '@mui/material/Badge';
 
 
 
-const ExerciseCard = ({ updatePoints, program, image, name, type, details }) => {
+const ExerciseCard = ({ updatePoints, program, image, name, type, order, details }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
@@ -49,11 +49,9 @@ const checkIfCompleted = async ()=>{
 
 const onTimerOver = ()=>{
   setShowTimer(false);
-
 };
 
-const updateOrder = async () =>{
- 
+const updateOrder = async () =>{ 
   var p = await UpdateProgram(program);   
 }
 
@@ -69,7 +67,6 @@ const saveProgress = async ()=>{
        bonus = 50;
        emojiReward();
     }
-debugger;
 
      var date = getToday();
      program.lastCompletionDate = date;
@@ -128,8 +125,7 @@ const deleteProgram_ = async (detail) =>{
 }
 
 const initStats = async () => {
-  
-  
+    
   let stats = await GetAllStats(); 
   let stat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
      setCurrentStat(stat);
@@ -158,8 +154,6 @@ const expandCard = ()=>{
     
     <div className='exerciseSelection'>
   
-
-
       <article  className='exercise' onClick={()=>{expandCard()}}> 
    
       {isCompleted ? 
@@ -225,7 +219,7 @@ const expandCard = ()=>{
       noValidate
       autoComplete="off"
     >
-      <TextField size="small" id="outlined-basic" label="" variant="outlined" />
+      <TextField size="small" id="outlined-basic" label={order} variant="outlined" />
     </Box>
     </div>
     </div>

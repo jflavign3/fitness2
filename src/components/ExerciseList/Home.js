@@ -133,14 +133,6 @@ const Home = ({updatePoints}) => {
 
   <section className='container'>
 
-
-        <div className='welcome'>
-        {(!isLoading) ? <>      
-      
-        <div className='HomeTitle'>{dayOfWeek}. {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
-                                                       {userName==='Joelle' && alignment===3 ? "UPPER BODY day":''}
-                                                       {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
-                                                       
   <div className='weekButtons'>
       <ToggleButtonGroup
       color="primary"
@@ -157,6 +149,16 @@ const Home = ({updatePoints}) => {
       <ToggleButton value="0">D</ToggleButton>        
   </ToggleButtonGroup>
   </div>
+
+  
+        <div className='welcome'>
+        {(!isLoading) ? <>      
+      
+        <div className='HomeTitle'>{dayOfWeek} {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
+                                                       {userName==='Joelle' && alignment===3 ? "UPPER BODY day":''}
+                                                       {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
+                                                       
+ 
 </div>        
         {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </>
                 
