@@ -18,9 +18,9 @@ const Home = ({updatePoints}) => {
   const [exercises, setExercises] = useState([]);  
   const [isLoading, setIsLoading] = useState(false);  
   const [userName, setUserName] = useState("");  
-  const [alignment, setAlignment] = useState("1");
-  
+  const [alignment, setAlignment] = useState("1");  
   const [isToday, setIsToday] = useState(true);
+  const [dayOfWeek, setDayOfWeek] = useState("");
 
 
 
@@ -35,9 +35,28 @@ const Home = ({updatePoints}) => {
     
     setIsToday(day === d.getDay());    
     setAlignment(day.toString());
+    setDayOfWeek(getDayName(day));
     GetHomeData(day);
   };
 
+  const getDayName = (id) =>{
+
+    const d = new Date();
+    if (d.getDay()===id){
+      return "Aujourd'hui";
+    }
+    switch(id){
+      case 1: return('Lundi');
+      case 2: return('Mardi');
+      case 3: return('Mercredi');
+      case 4: return('Jeudi');
+      case 5: return('Vendredi');
+      case 6: return('Samedi');
+      case 0: return('Dimanche');
+     }
+     
+
+  }
 
   const GetHomeData = async (day) => {   
   
@@ -91,7 +110,8 @@ const Home = ({updatePoints}) => {
      const d = new Date();
      let day = d.getDay();
      console.log("HOME - set day " + day);
-     setAlignment(day.toString());
+      setDayOfWeek(getDayName(day));
+      setAlignment(day.toString());
       setUserName(sessionStorage.getItem("userName"));   
       GetHomeData(day);
     },[]);
@@ -117,7 +137,7 @@ const Home = ({updatePoints}) => {
         <div className='welcome'>
         {(!isLoading) ? <>      
       
-        <div className='HomeTitle'>Bonjour {userName}. {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
+        <div className='HomeTitle'>{dayOfWeek}. {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
                                                        {userName==='Joelle' && alignment===3 ? "UPPER BODY day":''}
                                                        {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
                                                        

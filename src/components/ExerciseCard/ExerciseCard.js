@@ -54,8 +54,6 @@ const onTimerOver = ()=>{
 
 const updateOrder = async () =>{
  
-  debugger;
-
   var p = await UpdateProgram(program);   
 }
 
@@ -71,7 +69,7 @@ const saveProgress = async ()=>{
        bonus = 50;
        emojiReward();
     }
-
+debugger;
 
      var date = getToday();
      program.lastCompletionDate = date;
@@ -89,21 +87,23 @@ const saveProgress = async ()=>{
     let todayTotalSeconds = todaySeconds * todaySets;
   
     //initialize object if new
-    if (!currentStat){  
-    currentStat = {};
-    currentStat.userId = program.userId;
-    currentStat.exerciseId = program.exerciseId;
+    let _currentStat = {};
+    if (!currentStat){     
+    _currentStat.userId = program.userId;
+    _currentStat.exerciseId = program.exerciseId;
+  }else{
+    _currentStat = currentStat;
   }  
   
-  var totalReps = currentStat.totalReps ?? 0;
-  currentStat.totalReps = totalReps + todayTotalReps;
+  var totalReps = _currentStat.totalReps ?? 0;
+  _currentStat.totalReps = totalReps + todayTotalReps;
 
-  var totalSeconds = currentStat.totalSeconds ?? 0;
-  currentStat.totalSeconds = totalSeconds + todayTotalSeconds;
+  var totalSeconds = _currentStat.totalSeconds ?? 0;
+  _currentStat.totalSeconds = totalSeconds + todayTotalSeconds;
 
-  var completions = currentStat.totalCompletions ?? 0;
-  currentStat.totalCompletions = completions + 1;
-  currentStat.lastUpdateDate = date;  
+  var completions = _currentStat.totalCompletions ?? 0;
+  _currentStat.totalCompletions = completions + 1;
+  _currentStat.lastUpdateDate = date;  
 
 
   let currentPoints = sessionStorage.getItem('userPoints');
@@ -111,8 +111,8 @@ const saveProgress = async ()=>{
   r = await UpdatePoints(program.userId, newPoints);
   updatePoints(newPoints);
 
-  var r = await UpsertStat(currentStat);  
-  setCurrentStat(currentStat);
+  var r = await UpsertStat(_currentStat);  
+  setCurrentStat(_currentStat);
 
   console.log('===>Updated stats ' + JSON.stringify(r));
   expandCard(false);
@@ -208,7 +208,7 @@ const expandCard = ()=>{
 
 <div className="leftOfDetails">
 <div>
-       {!isCompleted && 
+       {//!isCompleted && 
        <button 
           type='button'
           className='btn btn-block'
