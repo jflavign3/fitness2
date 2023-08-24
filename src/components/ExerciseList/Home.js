@@ -23,11 +23,6 @@ const Home = ({updatePoints}) => {
   const [dayOfWeek, setDayOfWeek] = useState("");
 
 
-
-
-  
-
-
   
   const handleToggleChange = (event, i) => {
     let day = Number(i);
@@ -120,10 +115,7 @@ const Home = ({updatePoints}) => {
   return (    
     <div className='main'>
 
-
-
-
-<Backdrop
+      <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={isLoading}        
       >
@@ -159,13 +151,12 @@ const Home = ({updatePoints}) => {
                                                        {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
                                                        
  
-</div>        
+        </div>        
         {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </>
                 
         :
         (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)        
-        }
-      
+       }      
 
         </div>
 
@@ -173,8 +164,6 @@ const Home = ({updatePoints}) => {
         (<List exercises={exercises} updatePoints={updatePoints}/>)}
         {(exercises.length === 0 && !isLoading) &&
            (<img src={'./images/rest.png'} alt='rest' className='img' />)}
-        
-     
        
       </section>
     </div>

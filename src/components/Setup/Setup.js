@@ -36,7 +36,7 @@ const Setup = () => {
 
   const numbers15 = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
   const numbersLbs = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,20,25,30,35,40,45,50,60,70];
-  const seconds90 = [15,20,30,40,50,60,90];
+  const seconds90 = [15,20,30,40,45,50,60,90, 300];
 
   const handleWeekdayChange = (e) => {
     cleanUp();

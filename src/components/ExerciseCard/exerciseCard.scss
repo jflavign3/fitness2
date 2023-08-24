@@ -48,7 +48,10 @@
 }
 .leftOfDetails{
 display: flex;
+align-items: center;
+  justify-content: center;
 }
+
 
 .MuiInputBase-input{
   padding: 3px !important;

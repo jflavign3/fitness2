@@ -13,18 +13,19 @@ import { BsStopwatch } from "react-icons/bs";
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Badge from '@mui/material/Badge';
+import Button from '@mui/material/Button';
 
 
-
-const ExerciseCard = ({ updatePoints, program, image, name, type, order, details }) => {
+const ExerciseCard = ({ updatePoints, program, image, name, type, details, reorderMode }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
-//onst [isVisible, setIsVisible] = useState(false);
+const [order, setOrder] = useState(0);
 const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
+
 const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
@@ -35,7 +36,6 @@ const { reward: emojiReward, isAnimating: isEmojiAnimating } =
 const checkIfCompleted = async ()=>{
   
   if (program.lastCompletionDate === null) return false;
-
 
   var today = getToday();  
   var monday = getMonday();
@@ -52,7 +52,11 @@ const onTimerOver = ()=>{
 };
 
 const updateOrder = async () =>{ 
+  program.order = Number(order);
   var p = await UpdateProgram(program);   
+  toast.success('Updated order');
+  console.log("==>Updated order. " + JSON.stringify(p));
+
 }
 
 
@@ -132,11 +136,9 @@ const initStats = async () => {
 }
 
 const expandCard = ()=>{
-
    
    // setIsVisible(true);
-    setIsExpanded(!isExpanded);
-    
+    setIsExpanded(!isExpanded);    
    }   
 
    useEffect(()=>{ 
@@ -202,7 +204,7 @@ const expandCard = ()=>{
 
 <div className="leftOfDetails">
 <div>
-       {//!isCompleted && 
+       {!isCompleted && 
        <button 
           type='button'
           className='btn btn-block'
@@ -211,16 +213,22 @@ const expandCard = ()=>{
         </button>}
         </div>
 <div>
-      <Box
+       {reorderMode && <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '5ch', padding:'3px' },
+        '& > :not(style)': { m: 1, width: '6ch', padding:'3px' },
       }}
       noValidate
       autoComplete="off"
     >
-      <TextField size="small" id="outlined-basic" label={order} variant="outlined" />
-    </Box>
+     <TextField type="number"  inputProps={{min: 0, style: { textAlign: 'center' }}}
+                  size="small" id="outlined-basic" defaultValue={program.order}  
+                  onChange={(event) => { setOrder(event.target.value); }}
+                  variant="outlined" />
+    <Button type='button' onClick={()=>updateOrder(_program)}  variant="outlined">save</Button>   
+    </Box>     
+    }
+
     </div>
     </div>
 
