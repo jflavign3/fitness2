@@ -44,6 +44,9 @@ const updatePoints = (total) =>{
 
   const SetCurrentUser = async (user) => {
   
+    //reget users from db to get points
+    let allUsers = await GetAllUsers();
+    setUsers(allUsers);   
 
     setPoints(user.points);
      console.log(`User ${user.name} was selected. Load home data.`);
