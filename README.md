@@ -10,10 +10,10 @@ points. improve dragging it everywhere
 
 
 features:
-
-
-warmup as exercise, order field
-
+rep et set sont random, orderonne
+bouton pour done
+fleche expand
+bug: lose new points id if log back with my acct
 page to overview of user daily exercises
 adding exercise, shoudl have pop up screen with categories and images
 incldue tips on card: TiP: You can superset bicep with tricpep...
@@ -21,6 +21,7 @@ incldue tips on card: TiP: You can superset bicep with tricpep...
 suggestion to upgrade after 2 weeks month of same intensity
 button to show stats on card
 modify details on card
+update the day of exercises
 password
 defis pour points. Weekly degi. 5 point / km COURU, 100 Push up progress bAR...
 improve week buttons
@@ -36,7 +37,16 @@ randonmize exercise by types
 user badge upper right of page
 drag exercise to order it
 
-
+//stretches
+pretzel /spinal twist
+bird dog
+bridge reach over
+hip/spine twist (not to floor)
+plank
+side plank
+Foam Roller Thoracic Spine Extensions
+camel...
+bridge
 
 //HELP
 1-kill port 3000

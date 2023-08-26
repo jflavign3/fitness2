@@ -152,10 +152,10 @@ const Home = ({updatePoints}) => {
                                                        
  
         </div>        
-        {(isToday) && <div className='totalExercise'>You have {exercises.length} exercises.</div>} </>
+        {(isToday) && <div className='totalExercise'>Tu as {exercises.length} exercises.</div>} </>
                 
         :
-        (<div className='HomeTitle'>Bonjour {userName}. Getting your activities...</div>)        
+        (<div className='HomeTitle'>Un instant {userName}, je cherche tes activites...</div>)        
        }      
 
         </div>

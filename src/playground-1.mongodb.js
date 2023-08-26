@@ -18,6 +18,12 @@ db.Program.updateMany({}, {
    $set: { order: 1 } 
 });
 
+db.Program.updateMany(
+  { s: { $lt: 100 } },
+  {
+    $set: { security_deposit: 100, minimum_nights: 1 }
+  }
+)
 
 //rename field
 /*

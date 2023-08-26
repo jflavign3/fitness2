@@ -7,7 +7,7 @@ import {getToday, getMonday, getSunday} from "../../Common";
 import { useReward } from 'react-rewards';
 import { toast } from "react-toastify";
 import Timer from "../Timer/timer";
-import { BsStopwatch } from "react-icons/bs";
+import { BsStopwatch,BsCheck2Square } from "react-icons/bs";
 
 ///MATERIAL
 import Box from '@mui/material/Box';
@@ -31,6 +31,7 @@ const { reward: confettiReward, isAnimating: isConfettiAnimating} =
 const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
 
+//const detailOrder = [{'Reps':1,'Sets':2,'Lbs':3,'Seconds':4}];
 
 
 const checkIfCompleted = async ()=>{
@@ -111,6 +112,7 @@ const saveProgress = async ()=>{
   let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
   r = await UpdatePoints(program.userId, newPoints);
   updatePoints(newPoints);
+  sessionStorage.setItem('userPoints', newPoints);
 
   var r = await UpsertStat(_currentStat);  
   setCurrentStat(_currentStat);
@@ -134,7 +136,19 @@ const initStats = async () => {
   let stat = stats.filter(s=>s.exerciseId === program.exerciseId && s.userId === program.userId)[0];
      setCurrentStat(stat);
 }
+const setDetailOrder = (details) => {
+  
+     details.forEach((detail)=> {
+      switch (detail.Title){
+        case 'Reps': detail.order = 1; break;
+        case 'Sets': detail.order = 2; break;
+        case 'Lbs': detail.order = 3; break;
+        case 'Seconds': detail.order = 4; break;
+        
+      }  
+    });
 
+}
 const expandCard = ()=>{
    
    // setIsVisible(true);
@@ -143,7 +157,7 @@ const expandCard = ()=>{
 
    useEffect(()=>{ 
     setProgram(program);
-    
+    setDetailOrder(details);
     initStats();
      
     setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
@@ -181,7 +195,9 @@ const expandCard = ()=>{
      
        <div className='exerciseDetails'>
 <div className="kpis">
-  {details.map((detail, i)=>{
+  {details
+  .sort((a,b) => a.order > b.order ? 1 : -1)
+  .map((detail, i)=>{
     return(
         <div key={i} className="detailRow">
           <div className='kpi'>
@@ -205,12 +221,7 @@ const expandCard = ()=>{
 <div className="leftOfDetails">
 <div>
        {!isCompleted && 
-       <button 
-          type='button'
-          className='btn btn-block'
-          onClick={() => saveProgress()}        >
-          Done!
-        </button>}
+        <BsCheck2Square color="#d946ef" size={'3.0rem'}  onClick={() => saveProgress()} />}
         </div>
 <div>
        {reorderMode && <Box

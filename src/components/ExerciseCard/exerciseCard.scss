@@ -78,14 +78,17 @@ align-items: center;
   }
 
   .btn-done{
-    padding: 0.5rem 1.25rem;
-    font-size: 1rem;
-    border-radius: 10px;    
-    border: 2px solid var(--gray-700);
-    color: var(--gray-700);
-    text-decoration: none;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    cursor: pointer;
+    color: var(--white);
+    background: #d946ef;
+    border: transparent;
+    border-radius: var(--borderRadius);
+    letter-spacing: var(--letterSpacing);
+    padding: 0.375rem 0.75rem;
+    box-shadow: var(--shadow-1);
+    transition: var(--transition);
+    text-transform: capitalize;
+    display: inline-block;
   }
 
   .btn-timer{
