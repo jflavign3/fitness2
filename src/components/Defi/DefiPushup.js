@@ -43,15 +43,25 @@ const setData = async ()=>{
   let data = defis.filter(s=>s.userId === uId)[0];
   data = defis.filter(s=>s.name === "100 Push Ups")[0];
   if (!data) return;
- 
-  setCurrentData(data);
-
-  if (data.endDate < getMonday()){
+   
+  var m = getMonday();
+  var end = new Date(data.endDate);
+  if (end < m){
     //new week
+    data.total = 0;
+    data.startDate = getMonday();
+    data.endDate = getSunday();
+    var r = await UpdateDefi(data);      
+    console.log("===>UPDATED pushup. Reinit" );
+    
   }else{
     setProgressValue(data.total);
   }
   
+  
+  setCurrentData(data);
+
+
 }
 
 const setNewValue = async () => {
