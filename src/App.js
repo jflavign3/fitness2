@@ -39,6 +39,7 @@ function App() {
    
   }
 const updatePoints = (total) =>{
+  debugger;
   setPoints(total);  
   sessionStorage.setItem("userPoints",total);   
 }
@@ -50,7 +51,7 @@ const updatePoints = (total) =>{
     setUsers(allUsers);   
 
     //refresh user
-    debugger;
+    //debugger;
     var _user  = allUsers.filter(x=>x.userId === user.userId)[0];
     console.log(`User ${_user.name} was selected. Setting its points.`);
     setPoints(_user.points);
@@ -125,7 +126,7 @@ useEffect(() => {
     {page === "Home" ? (
       <Home updatePoints={updatePoints}/>    
     ) : page === "Defi" ?  (
-      <Defi/>
+      <Defi updatePoints={updatePoints}/>
     )    :<Setup/>
     }
 

@@ -8,11 +8,11 @@ import {getMonday, getSunday} from '../../Common';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import Button from '@mui/material/Button';
 import {UpdateDefi,GetAllDefis} from "../../DAL/Defi";
-
+import {UpdatePoints} from "../../DAL/User";
 
 
          
-const DefiPushUp = () => {
+const DefiPushUp = ({updatePoints}) => {
 
 
   const { reward: confettiReward } = 
@@ -64,11 +64,18 @@ const setNewValue = async () => {
 
   if (newVal >= 100){
     confettiReward();
+    let currentPoints = Number(sessionStorage.getItem('userPoints'));
+    let newPoints = currentPoints + 20;
+    var f = await UpdatePoints(currentData.userId, newPoints);
+    console.log("===>UPDATED points to " +  currentData.userId, newPoints);
+    updatePoints(newPoints);
+
   }
   setProgressValue(newVal);
   currentData.total = newVal;
-  var r = await UpdateDefi(currentData);
+  var r = await UpdateDefi(currentData);      
   console.log("===>UPDATED pushup" );
+  
    
   
 

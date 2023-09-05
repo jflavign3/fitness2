@@ -3,14 +3,14 @@ import DefiCourse from './DefiCourse';
 import DefiPushup from './DefiPushup';
 
 
-const DefiPage = () => {
+const DefiPage = ({updatePoints}) => {
 
   
 
   return (    
     <div>
     <DefiCourse/>   
-    <DefiPushup/>   
+    <DefiPushup  updatePoints={updatePoints}/>   
     </div>
   );
 };

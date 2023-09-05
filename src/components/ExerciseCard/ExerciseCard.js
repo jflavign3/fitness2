@@ -68,7 +68,7 @@ const saveProgress = async ()=>{
      if (n >1){
         confettiReward()     
     }else{
-       bonus = 50;
+       bonus = 40;
        emojiReward();
     }
 
