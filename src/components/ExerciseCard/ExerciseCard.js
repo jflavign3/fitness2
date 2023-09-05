@@ -1,5 +1,5 @@
 import "./exerciseCard.scss";
-import {UpdateProgram, deleteProgram} from "../../DAL/Program";
+import {UpdateProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import {UpdatePoints} from "../../DAL/User";
 import { useState, useEffect } from 'react';
@@ -26,9 +26,9 @@ const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
 
-const { reward: confettiReward, isAnimating: isConfettiAnimating} = 
+const { reward: confettiReward } = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
-const { reward: emojiReward, isAnimating: isEmojiAnimating } = 
+const { reward: emojiReward } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
 
 //const detailOrder = [{'Reps':1,'Sets':2,'Lbs':3,'Seconds':4}];
@@ -37,8 +37,7 @@ const { reward: emojiReward, isAnimating: isEmojiAnimating } =
 const checkIfCompleted = async ()=>{
   
   if (program.lastCompletionDate === null) return false;
-
-  var today = getToday();  
+  
   var monday = getMonday();
   var sunday = getSunday();
 
@@ -64,7 +63,7 @@ const updateOrder = async () =>{
 const saveProgress = async ()=>{
      //update 
      var bonus = 0;
-     let n = Math.random() * 50;
+     let n = Math.random() * 60;
      console.log('random:' + n);
      if (n >1){
         confettiReward()     
@@ -82,8 +81,7 @@ const saveProgress = async ()=>{
 
     
     let todayReps = details.filter(v=>v.Title === "Reps")[0]?.Value;
-    let todaySets = details.filter(v=>v.Title === "Sets")[0]?.Value ?? 1;
-    let todayLbs = details.filter(v=>v.Title === "Lbs")[0]?.Value;    
+    let todaySets = details.filter(v=>v.Title === "Sets")[0]?.Value ?? 1;    
     let todaySeconds = details.filter(v=>v.Title === "Seconds")[0]?.Value;
     let todayTotalReps = todayReps * todaySets;
     let todayTotalSeconds = todaySeconds * todaySets;
@@ -110,7 +108,7 @@ const saveProgress = async ()=>{
 
   let currentPoints = sessionStorage.getItem('userPoints');
   let newPoints = Number(currentPoints) + Number(todaySets) + bonus;
-  r = await UpdatePoints(program.userId, newPoints);
+  await UpdatePoints(program.userId, newPoints);
   updatePoints(newPoints);
   sessionStorage.setItem('userPoints', newPoints);
 
@@ -123,12 +121,13 @@ const saveProgress = async ()=>{
      //stats
 }
 
+/*
 const deleteProgram_ = async (detail) =>{
   setShowTimer(true);
   await deleteProgram(detail.ProgramId);
   toast.success('deleted');
 
-}
+}*/
 
 const initStats = async () => {
     
@@ -144,7 +143,7 @@ const setDetailOrder = (details) => {
         case 'Sets': detail.order = 2; break;
         case 'Lbs': detail.order = 3; break;
         case 'Seconds': detail.order = 4; break;
-        
+        default : detail.order = 1;
       }  
     });
 

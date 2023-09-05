@@ -12,7 +12,7 @@ const List = ({ exercises, updatePoints }) => {
          {exercises && exercises
          .sort((a,b) => a.program.order > b.program.order ? 1 : -1)
          .map((exercise) => {
-          console.log('..' + JSON.stringify(exercise));
+          //console.log('..' + JSON.stringify(exercise));
         return <ExerciseCard key={exercise.program._id} reorderMode={reorderMode} updatePoints={updatePoints} {...exercise} />;
       })}
    

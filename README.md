@@ -10,32 +10,31 @@ points. improve dragging it everywhere
 
 
 features:
-rep et set sont random, orderonne
-bouton pour done
+
+show how long with same detail.
+page defis. Weekly  100 push challege, 
+defi 6 k challege 
 fleche expand
-bug: lose new points id if log back with my acct
 page to overview of user daily exercises
 adding exercise, shoudl have pop up screen with categories and images
 incldue tips on card: TiP: You can superset bicep with tricpep...
                            for this exercise can rest on a exercis eball (torso ketteball twist)    
-suggestion to upgrade after 2 weeks month of same intensity
+suggestion to upgrade after 2 weeks month of same intensity, with graph and arrow 2 weeks in yelloe, 4 is ref
+ -----Satifaction rating after exercise. Will help decide if upgrading is doable
 button to show stats on card
 modify details on card
 update the day of exercises
 password
-defis pour points. Weekly degi. 5 point / km COURU, 100 Push up progress bAR...
-improve week buttons
 disable landcape
 create secondary type per exercise
-
 voir tout les exercise dispo par type, graph des types ratio
-progress bar for the week (material)
 inspirational quote (you lose muscle every day...)
 include cardio tracking
 graph on improvment, show stats
 randonmize exercise by types
 user badge upper right of page
-drag exercise to order it
+
+
 
 //stretches
 pretzel /spinal twist

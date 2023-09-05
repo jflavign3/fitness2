@@ -2,7 +2,7 @@ import "./menubar.scss";
 import menuData from "./menuData.js";
 import logo from "../../images/vite.JPG";
 import { useState } from "react";
-import { FaHome, FaCog, FaBook, FaUser } from "react-icons/fa";
+import { FaHome, FaCog, FaBook, FaUser, FaBullseye } from "react-icons/fa";
 
 const MenuBar = ({setCurrentPage}) => {
   const [itemActive, setItemActive] = useState("Home");
@@ -35,6 +35,8 @@ const MenuBar = ({setCurrentPage}) => {
                   <FaCog size={'1.5rem'} />
                 ) : item.image === "fa fa-chart" ? (
                   <FaBook size={'1.5rem'} />
+                ) : item.image === "fa fa-bullseye" ? (
+                    <FaBullseye size={'1.5rem'} />
                 ) : item.image === "fa fa-user" ? (
                   <FaUser size={'1.5rem'} />
                 ) : <FaHome size={'1.5rem'} />

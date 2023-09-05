@@ -5,6 +5,7 @@ import Setup from './components/Setup/Setup';
 import MenuBar from "./components/MenuBar/MenuBar";
 import {GetAllUsers} from "./Users";
 import Login from './components/Login/Login';
+import Defi from './components/Defi/DefiPage';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorBoundary from "./ErrorBoundary";
@@ -48,13 +49,17 @@ const updatePoints = (total) =>{
     let allUsers = await GetAllUsers();
     setUsers(allUsers);   
 
-    setPoints(user.points);
-     console.log(`User ${user.name} was selected. Load home data.`);
+    //refresh user
+    debugger;
+    var _user  = allUsers.filter(x=>x.userId === user.userId)[0];
+    console.log(`User ${_user.name} was selected. Setting its points.`);
+    setPoints(_user.points);
+    
      
-     sessionStorage.setItem("__userId",user.userId);     
-     sessionStorage.setItem("userName",user.name); 
-     sessionStorage.setItem("userPoints",user.points);     
-     setUser(user.userId);
+     sessionStorage.setItem("__userId",_user.userId);     
+     sessionStorage.setItem("userName",_user.name); 
+     sessionStorage.setItem("userPoints",_user.points);     
+     setUser(_user.userId);
      sessionStorage.setItem("__page","Home");     
      setPage("Home");
 
@@ -118,10 +123,10 @@ useEffect(() => {
   </div>
   </div>
     {page === "Home" ? (
-      <Home updatePoints={updatePoints}/>   
- 
-    ) : (<Setup/>)
-    
+      <Home updatePoints={updatePoints}/>    
+    ) : page === "Defi" ?  (
+      <Defi/>
+    )    :<Setup/>
     }
 
 </div>

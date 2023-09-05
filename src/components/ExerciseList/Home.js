@@ -90,9 +90,9 @@ const Home = ({updatePoints}) => {
         }
       });
 
-      todayExercises.forEach((e) =>{
+      /*todayExercises.forEach((e) =>{
         console.log("Setting program" + JSON.stringify(e));
-      });
+      });*/
       
       setExercises(todayExercises);
       setIsLoading(false);
