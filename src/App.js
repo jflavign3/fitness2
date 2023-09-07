@@ -39,7 +39,7 @@ function App() {
    
   }
 const updatePoints = (total) =>{
-  debugger;
+  //debugger;
   setPoints(total);  
   sessionStorage.setItem("userPoints",total);   
 }

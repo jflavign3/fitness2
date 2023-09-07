@@ -8,6 +8,7 @@ import { useReward } from 'react-rewards';
 import { toast } from "react-toastify";
 import Timer from "../Timer/timer";
 import { BsStopwatch,BsCheck2Square } from "react-icons/bs";
+import ReactSpeedometer from "react-d3-speedometer"
 
 ///MATERIAL
 import Box from '@mui/material/Box';
@@ -25,6 +26,7 @@ const [order, setOrder] = useState(0);
 const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
+const [daysSinceChange, setDaysSinceChange] = useState(0);
 
 const { reward: confettiReward } = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
@@ -148,15 +150,41 @@ const setDetailOrder = (details) => {
     });
 
 }
+
+const setMeterValue = (date) => {
+    
+  //debugger;
+       // To calculate the time difference of two dates
+    var Difference_In_Time = getToday().getTime() - new Date(date).getTime();
+      
+    // To calculate the no. of days between two dates
+    setDaysSinceChange(Difference_In_Time / (1000 * 3600 * 24));
+
+}
+const getval = () => {
+  return Math.trunc(daysSinceChange) + ' jours';
+}
+
 const expandCard = ()=>{
    
    // setIsVisible(true);
+   
     setIsExpanded(!isExpanded);    
    }   
 
    useEffect(()=>{ 
     setProgram(program);
     setDetailOrder(details);
+
+    var dates=[];
+  
+
+    details.forEach(element => {
+      dates.push( new Date(element.LastUpdateDate));
+    });
+   
+    var maxDate=new Date(Math.max.apply(null,dates));
+    setMeterValue(maxDate);
     initStats();
      
     setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
@@ -181,8 +209,9 @@ const expandCard = ()=>{
 
         <div>
         {isCompleted}
-          <h4 id="rewardId"   >{name}</h4>
+          <h4 id="rewardId"   >{name}</h4>          
           <p>{type}</p>     
+         
         </div>
 
 {showTimer && timerSeconds > 0 &&
@@ -201,9 +230,10 @@ const expandCard = ()=>{
         <div key={i} className="detailRow">
           <div className='kpi'>
             <div >{detail.Title}</div>
-            <div className="kpiValue">{detail.Value}</div>
+            <div className="kpiValue">{detail.Value}</div>            
           </div>          
         </div>
+        
         )
    })}
 
@@ -241,6 +271,50 @@ const expandCard = ()=>{
 
     </div>
     </div>
+    <div>
+           <ReactSpeedometer value={daysSinceChange}
+             
+             needleHeightRatio={0.7}
+             maxValue={28}
+             currentValueText={getval()}
+             customSegmentLabels={[
+               {
+                 text: '',
+                 position: 'INSIDE',
+                 color: '#bf616a',
+               },
+               {
+                 text: '',
+                 position: 'INSIDE',
+                 color: '#555',
+               },
+               {
+                 text: '',
+                 position: 'INSIDE',
+                 color: '#555',
+                 fontSize: '19px',
+               },
+            /*   {
+                 text: '',
+                 position: 'INSIDE',
+                 color: '#555',
+               },
+               {
+                 text: '',
+                 position: 'INSIDE',
+                 color: '#555',
+               },*/
+             ]}
+             segmentColors={["limegreen","gold", "firebrick"]}
+             customSegmentStops={[0, 14, 21, 28]}
+             segments={3}
+             ringWidth={27}
+             needleTransitionDuration={3333}
+             needleTransition="easeElastic"
+             needleColor={'#90f2ff'}
+             textColor={'#d8dee9'}
+             width={150} height={150} />
+        </div>
 
        {/*
        <button         
@@ -255,6 +329,7 @@ const expandCard = ()=>{
        Stats  
        </button>*/}
     </div>
+    
 
      
       }
