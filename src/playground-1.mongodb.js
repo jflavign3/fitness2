@@ -13,7 +13,7 @@
 use('FITNESS');
 
 //ADD FIELD
-
+/*
 db.Program.updateMany({}, { 
    $set: { order: 1 } 
 });
@@ -24,14 +24,14 @@ db.Program.updateMany(
     $set: { security_deposit: 100, minimum_nights: 1 }
   }
 )
-
+*/
 //rename field
-/*
+
 db.Program.updateMany( 
     { }, 
-    { $rename: { "LastCompletionDate": "lastCompletionDate" } } 
+    { $rename: { "LastUpdatedDate": "LastUpdateDate" } } 
   )
-*/
+
 
 //edit exercise
 /*
