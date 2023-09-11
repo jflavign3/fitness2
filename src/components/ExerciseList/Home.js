@@ -62,7 +62,7 @@ const Home = ({updatePoints}) => {
      //try to get db stuff here
      let allExercises = await GetAllExercises();
      let details = await GetAllExerciseDetails();
-     
+     //debugger;
      //console.log('all details: ' + JSON.stringify(details));
      let todayExercises = [];
  

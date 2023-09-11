@@ -13,24 +13,25 @@
 use('FITNESS');
 
 //ADD FIELD
-/*
-db.Program.updateMany({}, { 
-   $set: { order: 1 } 
-});
 
+db.Program.updateMany({}, { 
+   $set: { showSpeedometer: 1 } 
+});
+/*
 db.Program.updateMany(
   { s: { $lt: 100 } },
   {
     $set: { security_deposit: 100, minimum_nights: 1 }
   }
-)
-*/
-//rename field
+)*/
 
+
+//rename field
+/*
 db.Program.updateMany( 
     { }, 
     { $rename: { "LastUpdatedDate": "LastUpdateDate" } } 
-  )
+  )*/
 
 
 //edit exercise

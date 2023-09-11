@@ -38,10 +38,10 @@ const [currentData, setCurrentData] = useState({});
   
 const setData = async ()=>{
   
+  //debugger;
  var uId = Number(sessionStorage.getItem("__userId"));   
   let defis = await GetAllDefis(); 
-  let data = defis.filter(s=>s.userId === uId)[0];
-  data = defis.filter(s=>s.name === "100 Push Ups")[0];
+  let data = defis.filter(s=>s.userId === uId)[0];  
   if (!data) return;
    
   var m = getMonday();

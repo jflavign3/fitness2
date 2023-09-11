@@ -16,6 +16,7 @@ import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import Checkbox from '@mui/material/Checkbox';
 /////////////////////
 
 
@@ -30,6 +31,7 @@ const Setup = () => {
   const [sets, setSets] = useState('');
   const [seconds, setSeconds] = useState('');
   const [lbs, setLbs] = useState('');
+  const [showSpeedometer, setShowSpeedometer] = useState(true);
   const [multipleUpdatesLabel, setMultipleUpdatesLabel] = useState(false);
   const [programsToUpdate, setProgramsToUpdate] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +62,9 @@ const Setup = () => {
   const handleSetsChange = (e) => {
     setSets(Number(e));
   }
-
+  const handleChangeSpeed = (event) => {
+    setShowSpeedometer(event.target.checked);
+  };
   const handleSecondsChange = (e) => {
     
     setSeconds(Number(e));
@@ -68,7 +72,6 @@ const Setup = () => {
   const handleLbsChange = (e) => {
     setLbs(Number(e));
   }
-
   const handleToggleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
@@ -107,6 +110,16 @@ const cleanUp = () => {
 } 
 
 const setDetails = (allDetails, program) => {
+
+  debugger;
+     var show;
+     if (program.showSpeedometer === 1){ //old values
+      show = true;
+     }else{
+      show = program.showSpeedometer
+     }
+     setShowSpeedometer(show);
+     console.log(program.showSpeedometer);
 
      let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Reps')[0];
      if (detail) {
@@ -382,6 +395,16 @@ return (
     return   <option key={i} value={number.toString()}>{number}</option>
   })} 
   </select>
+</div>
+<div className='form-row'>
+  <label htmlFor='showSpeedometer' className='form-label'>Show Speedometer</label>
+  <div id='check'>
+  <Checkbox
+      checked={showSpeedometer}
+      onChange={handleChangeSpeed}
+      inputProps={{ 'aria-label': 'controlled' }}
+    />
+  </div>
 </div>
 </>
 )}

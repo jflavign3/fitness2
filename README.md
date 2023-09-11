@@ -11,28 +11,26 @@ points. improve dragging it everywhere
 
 features:
 
-show how long with same detail.
-page defis. Weekly  100 push challege, 
+dont showSpeedometer on warmup. add to setup 
+modify details on card
 defi 6 k challege 
 fleche expand
-page to overview of user daily exercises
-adding exercise, shoudl have pop up screen with categories and images
-incldue tips on card: TiP: You can superset bicep with tricpep...
-                           for this exercise can rest on a exercis eball (torso ketteball twist)    
-suggestion to upgrade after 2 weeks month of same intensity, with graph and arrow 2 weeks in yelloe, 4 is ref
- -----Satifaction rating after exercise. Will help decide if upgrading is doable
-button to show stats on card
-modify details on card
-update the day of exercises
 password
 disable landcape
+page to overview of user daily exercises
+adding exercise, shoudl have pop up screen with categories and images
+user badge upper right of page
+--------------
+incldue tips on card: TiP: You can superset bicep with tricpep...
+                           for this exercise can rest on a exercis eball (torso ketteball twist)    
+Satifaction rating after exercise. Will help decide if upgrading after 2 weeks is a good idea--show history
+button to show stats on card
+update the day of exercises
 create secondary type per exercise
 voir tout les exercise dispo par type, graph des types ratio
 inspirational quote (you lose muscle every day...)
-include cardio tracking
 graph on improvment, show stats
 randonmize exercise by types
-user badge upper right of page
 
 
 

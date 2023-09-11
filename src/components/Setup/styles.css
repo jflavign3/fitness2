@@ -26,3 +26,8 @@ button[type="submit"] {
 .warningLabel{
   color: crimson;
 }
+
+#showSpeed{
+  width: auto;
+  
+}

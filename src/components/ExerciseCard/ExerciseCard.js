@@ -27,6 +27,7 @@ const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
 const [daysSinceChange, setDaysSinceChange] = useState(0);
+const [showSpeedometer, setShowSpeedometer] = useState(0);
 
 const { reward: confettiReward } = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
@@ -177,14 +178,12 @@ const expandCard = ()=>{
     setDetailOrder(details);
 
     var dates=[];
-  
-
     details.forEach(element => {
       dates.push( new Date(element.LastUpdateDate));
-    });
-   
+    });   
     var maxDate=new Date(Math.max.apply(null,dates));
     setMeterValue(maxDate);
+    setShowSpeedometer(program.showSpeedometer);
     initStats();
      
     setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
@@ -272,7 +271,7 @@ const expandCard = ()=>{
     </div>
     </div>
     <div>
-           <ReactSpeedometer value={daysSinceChange}
+          {showSpeedometer === 1 && <ReactSpeedometer value={daysSinceChange}
              
              needleHeightRatio={0.7}
              maxValue={28}
@@ -293,17 +292,7 @@ const expandCard = ()=>{
                  position: 'INSIDE',
                  color: '#555',
                  fontSize: '19px',
-               },
-            /*   {
-                 text: '',
-                 position: 'INSIDE',
-                 color: '#555',
-               },
-               {
-                 text: '',
-                 position: 'INSIDE',
-                 color: '#555',
-               },*/
+               },    
              ]}
              segmentColors={["limegreen","gold", "firebrick"]}
              customSegmentStops={[0, 14, 21, 28]}
@@ -313,7 +302,7 @@ const expandCard = ()=>{
              needleTransition="easeElastic"
              needleColor={'#90f2ff'}
              textColor={'#d8dee9'}
-             width={150} height={150} />
+             width={150} height={150} />}
         </div>
 
        {/*
