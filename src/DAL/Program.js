@@ -30,7 +30,7 @@ headers: {
 };
 
 
-export const deleteProgram = async(id) => {
+export const DeleteProgram = async(id) => {
   
 
   const url = "/.netlify/functions/DeleteProgram?programid="+id;    

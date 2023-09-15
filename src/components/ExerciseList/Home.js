@@ -79,7 +79,7 @@ const Home = ({updatePoints}) => {
         }
        // console.log('current exercise: ' + JSON.stringify(exercise));
         var currentProgram = programs.filter(x=>x.userId === userId && x.exerciseId === programItem.exerciseId && x.weekday === day)[0];
-        //console.log('current user exercises: ' + JSON.stringify(currentUserExercise));
+       //console.log('current user exercises: ' + JSON.stringify(currentProgram));
        // exercise.ddd =1;
        // debugger;
         if (currentProgram){

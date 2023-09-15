@@ -1,5 +1,5 @@
 import "./exerciseCard.scss";
-import {UpdateProgram} from "../../DAL/Program";
+import {UpdateProgram, DeleteProgram} from "../../DAL/Program";
 import {UpsertStat, GetAllStats} from "../../DAL/Stat";
 import {UpdatePoints} from "../../DAL/User";
 import { useState, useEffect } from 'react';
@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 
 
-const ExerciseCard = ({ updatePoints, program, image, name, type, details, reorderMode }) => {
+const ExerciseCard = ({ updatePoints, program, image, name, type, details, reorderMode, deleteMode }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
@@ -124,13 +124,14 @@ const saveProgress = async ()=>{
      //stats
 }
 
-/*
+
 const deleteProgram_ = async (detail) =>{
+  debugger;
   setShowTimer(true);
-  await deleteProgram(detail.ProgramId);
+  await DeleteProgram(detail.ProgramId);
   toast.success('deleted');
 
-}*/
+}
 
 const initStats = async () => {
     
@@ -305,13 +306,12 @@ const expandCard = ()=>{
              width={150} height={150} />}
         </div>
 
-       {/*
-       <button         
-          type='button'
+       { deleteMode && 
+       <Button         
           onClick={() => deleteProgram_(details[0])}        >
           X  
-       </button>}
-       {
+       </Button>}
+       {/*
        <button         
        type='button'
        onClick={() => console.log('stats:' + JSON.stringify(currentStat)) }        >

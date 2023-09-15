@@ -111,7 +111,7 @@ const cleanUp = () => {
 
 const setDetails = (allDetails, program) => {
 
-  debugger;
+  //debugger;
      var show;
      if (program.showSpeedometer === 1){ //old values
       show = true;
