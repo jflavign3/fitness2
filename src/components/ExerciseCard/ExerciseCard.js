@@ -15,10 +15,11 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
-
+import useSound from 'use-sound';
 
 const ExerciseCard = ({ updatePoints, program, image, name, type, showSpeedometer, details, reorderMode, deleteMode }) => {
   
+const [playSound] = useSound('sound.mp3');
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
@@ -50,7 +51,9 @@ const checkIfCompleted = async ()=>{
 }
 
 const onTimerOver = ()=>{
+// playSound;
   setShowTimer(false);
+
 };
 
 const updateOrder = async () =>{ 
@@ -213,7 +216,7 @@ const expandCard = ()=>{
         </div>
 
 {showTimer && timerSeconds > 0 &&
-        <Timer seconds={timerSeconds} onTimerOver={onTimerOver} />}
+        <Timer onClick={playSound} seconds={timerSeconds} onTimerOver={playSound} />}
         
       </article>
       
