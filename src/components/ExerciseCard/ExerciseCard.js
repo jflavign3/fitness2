@@ -29,7 +29,7 @@ const [timerSeconds, setTimerSeconds] = useState(false);
 const [daysSinceChange, setDaysSinceChange] = useState(0);
 
 const { reward: confettiReward } = 
-         useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
+         useReward('rewardId', 'confetti',{lifetime:400, elementCount:120, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
 

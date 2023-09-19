@@ -5,7 +5,7 @@ import {InsertExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {UpdateExerciseDetails} from "../../DAL/ExerciseDetails";
-import {InsertProgram, UpdateProgram} from "../../DAL/Program";
+import {InsertProgram} from "../../DAL/Program";
 import "./styles.css";
 import { toast } from "react-toastify";
 import { getToday } from "../../Common";
@@ -30,8 +30,7 @@ const Setup = () => {
   const [reps, setReps] = useState('');
   const [sets, setSets] = useState('');
   const [seconds, setSeconds] = useState('');
-  const [lbs, setLbs] = useState('');
-  const [showSpeedometer, setShowSpeedometer] = useState(true);
+  const [lbs, setLbs] = useState('');  
   const [multipleUpdatesLabel, setMultipleUpdatesLabel] = useState(false);
   const [programsToUpdate, setProgramsToUpdate] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,9 +61,7 @@ const Setup = () => {
   const handleSetsChange = (e) => {
     setSets(Number(e));
   }
-  const handleChangeSpeed = (event) => {
-    setShowSpeedometer(event.target.checked);
-  };
+
   const handleSecondsChange = (e) => {
     
     setSeconds(Number(e));
@@ -118,7 +115,7 @@ const setDetails = (allDetails, program) => {
      }else{
       show = program.showSpeedometer
      }
-     setShowSpeedometer(show);
+
      console.log(program.showSpeedometer);
 
      let detail = allDetails.filter(x=>x.ProgramId === program._id && x.Title === 'Reps')[0];
@@ -192,16 +189,13 @@ const setDetails = (allDetails, program) => {
 
     const Update = async ()=>{
 
-
       var updated = 0;
       var today = getToday();
       
       var details = [{"Title": "Reps", "Value": Number(reps)},
                          {"Title": "Sets", "Value": Number(sets)},
                          {"Title": "Seconds", "Value": Number(seconds)},
-                         {"Title": "Lbs", "Value": Number(lbs)}]       
-
-      ///debugger;
+                         {"Title": "Lbs", "Value": Number(lbs)}]     
                          
      for(var i = 0; i < programsToUpdate.length; i++)
      {
@@ -212,13 +206,11 @@ const setDetails = (allDetails, program) => {
               let d = details[j];          
                  var exDetails = {"ProgramId": program._id, "Title":d.Title, "Value":d.Value, "LastUpdateDate": today};  
                  var p = await UpdateExerciseDetails(exDetails);
-                console.log(`Updated or inserted detail for ${d.Title}` + JSON.stringify(p));
-               
-          
-        
+                console.log(`Updated or inserted detail for ${d.Title}` + JSON.stringify(p));              
+                  
        }        
       }; 
-      //debugger;
+
       toast.success(`Updated ${updated} program details`)
 
     }
@@ -395,16 +387,6 @@ return (
     return   <option key={i} value={number.toString()}>{number}</option>
   })} 
   </select>
-</div>
-<div className='form-row'>
-  <label htmlFor='showSpeedometer' className='form-label'>Show Speedometer</label>
-  <div id='check'>
-  <Checkbox
-      checked={showSpeedometer}
-      onChange={handleChangeSpeed}
-      inputProps={{ 'aria-label': 'controlled' }}
-    />
-  </div>
 </div>
 </>
 )}

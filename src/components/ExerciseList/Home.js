@@ -147,9 +147,9 @@ const Home = ({updatePoints}) => {
         <div className='welcome'>
         {(!isLoading) ? <>      
       
-        <div className='HomeTitle'>{dayOfWeek} {userName==='Joelle' && alignment===1 ? "LOWER BODY day":''}
-                                                       {userName==='Joelle' && alignment===3 ? "UPPER BODY day":''}
-                                                       {userName==='Joelle' && alignment===6 ? "FULL BODY day":''}
+        <div className='HomeTitle'>{dayOfWeek} {userName==='Joelle' && alignment==='1' ? " (Lower Body)":''}
+                                                       {userName==='Joelle' && alignment==='3' ? " (Upper Body)":''}
+                                                       {userName==='Joelle' && alignment==='6' ? " (Full Body)":''}
                                                        
  
         </div>        

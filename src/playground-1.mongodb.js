@@ -14,7 +14,7 @@ use('FITNESS');
 
 //ADD FIELD
 
-db.Program.updateMany({}, { 
+db.Exercise.updateMany({}, { 
    $set: { showSpeedometer: 1 } 
 });
 /*
