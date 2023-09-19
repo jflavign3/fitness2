@@ -11,13 +11,13 @@ points. improve dragging it everywhere
 
 features:
 
-dont showSpeedometer on warmup. add to setup 
+disable landcape
+page to overview of user weekly exercises by type
+--
 modify details on card
 defi 6 k challege 
 fleche expand
 password
-disable landcape
-page to overview of user daily exercises
 adding exercise, shoudl have pop up screen with categories and images
 user badge upper right of page
 --------------

@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 
 
-const ExerciseCard = ({ updatePoints, program, image, name, type, details, reorderMode, deleteMode }) => {
+const ExerciseCard = ({ updatePoints, program, image, name, type, showSpeedometer, details, reorderMode, deleteMode }) => {
   
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
@@ -27,7 +27,6 @@ const [showTimer, setShowTimer] = useState(false);
 const [currentStat, setCurrentStat] = useState([])
 const [timerSeconds, setTimerSeconds] = useState(false);
 const [daysSinceChange, setDaysSinceChange] = useState(0);
-const [showSpeedometer, setShowSpeedometer] = useState(0);
 
 const { reward: confettiReward } = 
          useReward('rewardId', 'confetti',{lifetime:600, elementCount:120, startVelocity:15, zIndex:100, angle:120});
@@ -184,7 +183,6 @@ const expandCard = ()=>{
     });   
     var maxDate=new Date(Math.max.apply(null,dates));
     setMeterValue(maxDate);
-    setShowSpeedometer(program.showSpeedometer);
     initStats();
      
     setTimerSeconds(details.find((x)=>x.Title === 'Seconds')?.Value);
