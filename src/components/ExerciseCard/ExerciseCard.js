@@ -7,7 +7,7 @@ import {getToday, getMonday, getSunday} from "../../Common";
 import { useReward } from 'react-rewards';
 import { toast } from "react-toastify";
 import Timer from "../Timer/timer";
-import { BsStopwatch,BsCheck2Square } from "react-icons/bs";
+import { BsStopwatch,BsCheck2Square,BsTrash } from "react-icons/bs";
 import ReactSpeedometer from "react-d3-speedometer"
 
 ///MATERIAL
@@ -208,16 +208,21 @@ const expandCard = ()=>{
           <img src={image} alt={name} className='imgLineup' />
        }
 
-        <div>
+        <div className="cardInfo"> 
         {isCompleted}
-          <h4 id="rewardId"   >{name}</h4>          
-          <p>{type}</p>     
+          <div className="cardName">
+          <h4 id="rewardId"   >{name}</h4>  
+          { deleteMode &&           
+          <BsTrash size={'2.0rem'} className="trash" onClick={() => deleteProgram_(details[0])}/>}
+          </div>
+
+          <p>{type}</p>
          
         </div>
 
 {showTimer && timerSeconds > 0 &&
         <Timer onClick={playSound} seconds={timerSeconds} onTimerOver={playSound} />}
-        
+       
       </article>
       
        { isExpanded &&      
@@ -247,30 +252,13 @@ const expandCard = ()=>{
   </button>}
   
   </div>
-
+<div className="checkAndSpeed">
 <div className="leftOfDetails">
 <div>
        {!isCompleted && 
         <BsCheck2Square color="#d946ef" size={'3.0rem'}  onClick={() => saveProgress()} />}
         </div>
-<div>
-       {reorderMode && <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '6ch', padding:'3px' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-     <TextField type="number"  inputProps={{min: 0, style: { textAlign: 'center' }}}
-                  size="small" id="outlined-basic" defaultValue={program.order}  
-                  onChange={(event) => { setOrder(event.target.value); }}
-                  variant="outlined" />
-    <Button type='button' onClick={()=>updateOrder(_program)}  variant="outlined">save</Button>   
-    </Box>     
-    }
 
-    </div>
     </div>
     <div>
           {showSpeedometer === 1 && <ReactSpeedometer value={daysSinceChange}
@@ -306,12 +294,27 @@ const expandCard = ()=>{
              textColor={'#d8dee9'}
              width={150} height={150} />}
         </div>
+      </div> 
 
-       { deleteMode && 
-       <Button         
-          onClick={() => deleteProgram_(details[0])}        >
-          X  
-       </Button>}
+      <div>
+       {reorderMode && <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '6ch', padding:'3px' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+     <TextField type="number"  inputProps={{min: 0, style: { textAlign: 'center' }}}
+                  size="small" id="outlined-basic" defaultValue={program.order}  
+                  onChange={(event) => { setOrder(event.target.value); }}
+                  variant="outlined" />
+    <Button type='button' onClick={()=>updateOrder(_program)}  variant="outlined">save</Button>   
+    </Box>     
+    }
+
+    </div>
+    
        {/*
        <button         
        type='button'

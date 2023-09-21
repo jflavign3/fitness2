@@ -2,6 +2,7 @@ import "./App.scss";
 import { useState, useEffect } from 'react';
 import Home from './components/ExerciseList/Home';
 import Setup from './components/Setup/Setup';
+import Overview from './components/Overview/Overview';
 import MenuBar from "./components/MenuBar/MenuBar";
 import {GetAllUsers} from "./Users";
 import Login from './components/Login/Login';
@@ -127,7 +128,9 @@ useEffect(() => {
       <Home updatePoints={updatePoints}/>    
     ) : page === "Defi" ?  (
       <Defi updatePoints={updatePoints}/>
-    )    :<Setup/>
+    )  : page === "Week" ?  (
+      <Overview/>
+    ) :<Setup/>
     }
 
 </div>

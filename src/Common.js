@@ -10,6 +10,25 @@ export const getTodayFormatted = () => {
     return today;
 };*/
 
+export const getDayName = (id, useToday) =>{
+
+    const d = new Date();
+    if (d.getDay()===id && useToday){
+      return "Aujourd'hui";
+    }
+    switch(id){
+      case 1: return('Lundi');
+      case 2: return('Mardi');
+      case 3: return('Mercredi');
+      case 4: return('Jeudi');
+      case 5: return('Vendredi');
+      case 6: return('Samedi');
+      case 0: return('Dimanche');
+     }
+     
+
+  }
+
 export const getToday = () => {
     
     let dt = new Date(); 

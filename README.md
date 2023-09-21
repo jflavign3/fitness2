@@ -11,7 +11,6 @@ points. improve dragging it everywhere
 
 features:
 
-disable landcape
 page to overview of user weekly exercises by type
 --
 modify details on card

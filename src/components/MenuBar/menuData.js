@@ -16,10 +16,10 @@ const menuItems = [
       showName: true,
     },
     {
-      name: "Data",
-      title: "Data",
+      name: "Week",
+      title: "Week",
       default: false,
-      image: "fa fa-chart",
+      image: "fa fa-calendar",
       webOnly: false,
       showName: true,
     },

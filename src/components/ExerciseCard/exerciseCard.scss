@@ -1,6 +1,7 @@
 .exerciseDetails{
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
     margin-top: 5PX;
     margin-bottom: 40px;
     padding-bottom: 20px;
@@ -8,15 +9,27 @@
     flex-wrap: wrap;
     }
 
+.checkAndSpeed{
+   display: flex;   
+}
+
 .exerciseSelection{
     background: var(--clr-grey-10);
     box-shadow: 0 5px 15px rgba(0,0,0,.1);
     margin-bottom: 2rem;
     max-width: 500px;
     transition: var(--transition);
-
 }
 
+.cardName{
+  display: flex;
+  justify-content: space-between;
+}
+.cardInfo{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 .detailRow{
     color: var(--clr-grey-5);
     display: flex;
@@ -24,7 +37,9 @@
     font-size: .75rem;
     margin-right: 12px;
 }
-
+.trash{
+  margin-right: 5px;
+}
 .kpi{
     color: var(--grey-800);
     display: flex;
@@ -49,8 +64,7 @@
 }
 .leftOfDetails{
 display: flex;
-align-items: center;
-  justify-content: center;
+margin: 17px;
 }
 
 
@@ -62,9 +76,9 @@ align-items: center;
   padding: 3px !important;
 }*/
 .exercise {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    column-gap: 0.75rem;
+    display: flex;
+   //grid-template-columns: auto 1fr;
+   // column-gap: 0.75rem;
     align-items: center;
   }
   .exercise img {
@@ -93,6 +107,8 @@ align-items: center;
   }
 
   .btn-timer{
+    height: 50px;
+    margin-top: 7px;
       cursor: pointer;
       color: var(--white);
       background: #2caeba;
@@ -108,6 +124,6 @@ align-items: center;
   }
 
   .imgLineup{
-    padding: 3px;
+    margin: 7px;
  }
  

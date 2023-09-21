@@ -5,6 +5,7 @@ import {GetAllExercises} from "../../Exercises";
 import {GetAllExerciseDetails} from "../../DAL/ExerciseDetails";
 import {GetProgramsByUserId} from "../../Program";
 import List from "./List";
+import {getDayName} from "../../Common";
 //material
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -30,28 +31,11 @@ const Home = ({updatePoints}) => {
     
     setIsToday(day === d.getDay());    
     setAlignment(day.toString());
-    setDayOfWeek(getDayName(day));
+    setDayOfWeek(getDayName(day,true));
     GetHomeData(day);
   };
 
-  const getDayName = (id) =>{
-
-    const d = new Date();
-    if (d.getDay()===id){
-      return "Aujourd'hui";
-    }
-    switch(id){
-      case 1: return('Lundi');
-      case 2: return('Mardi');
-      case 3: return('Mercredi');
-      case 4: return('Jeudi');
-      case 5: return('Vendredi');
-      case 6: return('Samedi');
-      case 0: return('Dimanche');
-     }
-     
-
-  }
+ 
 
   const GetHomeData = async (day) => {   
   
@@ -106,7 +90,7 @@ const Home = ({updatePoints}) => {
      const d = new Date();
      let day = d.getDay();
      console.log("HOME - set day " + day);
-      setDayOfWeek(getDayName(day));
+      setDayOfWeek(getDayName(day, true));
       setAlignment(day.toString());
       setUserName(sessionStorage.getItem("userName"));   
       GetHomeData(day);
