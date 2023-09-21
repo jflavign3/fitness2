@@ -5,12 +5,21 @@
 
 }
 
+.weekDay{
+  margin-right: 9px;
+
+}
+.lineupTitle{
+  display: flex;  
+
+}
+
 .containerLineup{
   max-width: var(--fixed-width);
   //margin: 2rem 0;
   background: var(--white);
   border-radius: var(--borderRadius);
-  padding: 1.5rem 1.5rem;
+  padding: 0.5rem 0.5rem;
   box-shadow: var(--shadow-1);
   overflow-x: scroll;
   display: flex;

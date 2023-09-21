@@ -6,6 +6,7 @@ import DayView from './DayView';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import {getToday, getMonday, getSunday, getDayName} from "../../Common";
+import { BiHide } from "react-icons/bi";
 
 const Overview = () => {
 
@@ -106,10 +107,14 @@ const Overview = () => {
             console.log(JSON.stringify(week));
             
             return (
-              <>
-              <div>{week.day}</div>
+              <div>
+              <div className='lineupTitle'>
+              <div className='weekDay'>{week.day}</div>
+              <BiHide size={'1.5rem'}/>
+              </div>
+              
             <DayView exercises={week.exercises} day={week.day} />
-            </>
+            </div>
             )
           }
           
