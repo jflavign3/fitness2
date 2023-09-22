@@ -11,14 +11,10 @@ points. improve dragging it everywhere
 
 features:
 
-page to overview of user weekly exercises by type
---
 modify details on card
 defi 6 k challege 
-fleche expand
 password
 adding exercise, shoudl have pop up screen with categories and images
-user badge upper right of page
 --------------
 incldue tips on card: TiP: You can superset bicep with tricpep...
                            for this exercise can rest on a exercis eball (torso ketteball twist)    
