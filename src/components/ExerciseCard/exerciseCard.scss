@@ -12,7 +12,9 @@
 .checkAndSpeed{
    display: flex;   
 }
-
+.timer-wrapper{
+  justify-content: left !important;
+}
 .exerciseSelection{
     background: var(--clr-grey-10);
     box-shadow: 0 5px 15px rgba(0,0,0,.1);

@@ -1,12 +1,23 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
 import "./overview.scss";
 import Badge from '@mui/material/Badge';
+import { BiHide } from "react-icons/bi";
 
 export default function DayView({exercises, day}) {
+
+  const [visible, setVisible] = useState(true);
+
   return (
-    <div className='main'>
+    <div className='main'>      
       <section className='containerLineup'>
       
+      <div className='lineupTitle'>
+         <div className='weekDay'>{day}</div>
+         <BiHide onClick={()=>setVisible(!visible)} size={'1.5rem'}/>
+      </div>
+      {visible &&
+
       <div className='dailyExerciseRow'>
         
         {exercises.map((exercise)=>{
@@ -22,20 +33,18 @@ export default function DayView({exercises, day}) {
               <img src={exercise.image} alt={exercise.image} className='imgLineup' />
           </Badge> :
               <img src={exercise.image} alt={exercise.image} className='imgLineup' />
-       }
-
-       
+       }      
                 
-                </div>
-                
+        </div>               
 
-                </div>
+        </div>
                 )
         })}
 
 
-    </div>
+    </div>}
     </section>
+
     </div>
   );
 }

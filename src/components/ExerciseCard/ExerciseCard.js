@@ -220,11 +220,14 @@ const expandCard = ()=>{
          
         </div>
 
-{showTimer && timerSeconds > 0 &&
-        <Timer onClick={playSound} seconds={timerSeconds} onTimerOver={playSound} />}
+
        
       </article>
       
+      
+      { isExpanded && showTimer && timerSeconds > 0 &&
+           <Timer onClick={playSound} seconds={timerSeconds} onTimerOver={playSound} />}
+
        { isExpanded &&      
      
        <div className='exerciseDetails'>
