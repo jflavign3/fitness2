@@ -10,6 +10,9 @@ import Defi from './components/Defi/DefiPage';
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorBoundary from "./ErrorBoundary";
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+
 //import coin from "/coin.png";
 
 
@@ -17,6 +20,7 @@ function App() {
  
   const [users, setUsers] = useState([]);  
   const [user, setUser] = useState(null);  
+  const [avatar, setAvatar] = useState('');  
   const [page, setPage] = useState(null);  
   const [points, setPoints] = useState(0);
 
@@ -61,6 +65,7 @@ const updatePoints = (total) =>{
      sessionStorage.setItem("__userId",_user.userId);     
      sessionStorage.setItem("userName",_user.name); 
      sessionStorage.setItem("userPoints",_user.points);     
+     setAvatar(user.avatar);     
      setUser(_user.userId);
      sessionStorage.setItem("__page","Home");     
      setPage("Home");
@@ -82,8 +87,7 @@ useEffect(() => {
 
   //on first rerender take user from session
   var userSession = sessionStorage.getItem("__userId");
-  if (!user && users && userSession){
-   
+  if (!user && users && userSession){    
     setUser(userSession);
   }
 
@@ -118,7 +122,10 @@ useEffect(() => {
 <div className="main">
   <div className="topBar">
     <div>
-  <img id="coinImage" src="/coin.png" alt="image" />
+    <Stack direction="row" spacing={2}>
+        <Avatar alt="Remy Sharp" sx={{ width: 40, height: 40 }} src={avatar} />
+        <img id="coinImage" src="/coin.png" sx={{ width: 36, height: 36 }} alt="image" />
+        </Stack>
   </div>
   <div  className="pointNumber">
   {points}
@@ -150,3 +157,4 @@ useEffect(() => {
 }
 
 export default App;
+

@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import Timer from "../Timer/timer";
 import { BsStopwatch,BsCheck2Square,BsTrash } from "react-icons/bs";
 import ReactSpeedometer from "react-d3-speedometer"
-
+import { MdExpandMore, MdExpandLess } from "react-icons/md";
 ///MATERIAL
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -30,7 +30,7 @@ const [timerSeconds, setTimerSeconds] = useState(false);
 const [daysSinceChange, setDaysSinceChange] = useState(0);
 
 const { reward: confettiReward } = 
-         useReward('rewardId', 'confetti',{lifetime:400, elementCount:120, startVelocity:15, zIndex:100, angle:120});
+         useReward('rewardId', 'confetti',{lifetime:300, elementCount:100, startVelocity:15, zIndex:100, angle:120});
 const { reward: emojiReward } = 
          useReward('rewardId', 'emoji', {lifetime:300,startVelocity:20, zIndex:100, angle:120});
 
@@ -200,6 +200,7 @@ const expandCard = ()=>{
   
       <article  className='exercise' onClick={()=>{expandCard()}}> 
    
+   <div className="imageSection">
       {isCompleted ? 
           <Badge sx={{ "& .MuiBadge-badge": { fontSize: 20, height: 35, minWidth: 35, borderRadius:40 } }}
            badgeContent={'✓'} color="success" anchorOrigin={{vertical: 'top', horizontal: 'left',}}>
@@ -207,6 +208,11 @@ const expandCard = ()=>{
           </Badge> :
           <img src={image} alt={name} className='imgLineup' />
        }
+             {isExpanded ? <MdExpandLess color={"gray"} size={'1.5rem'}/> :
+                        <MdExpandMore color={"gray"} size={'1.5rem'}/>
+         }
+         
+       </div>
 
         <div className="cardInfo"> 
         {isCompleted}
@@ -217,7 +223,8 @@ const expandCard = ()=>{
           </div>
 
           <p>{type}</p>
-         
+
+    
         </div>
 
 

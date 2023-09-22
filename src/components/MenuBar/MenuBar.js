@@ -24,8 +24,6 @@ const MenuBar = ({setCurrentPage}) => {
           const { name } = item;
           return (
 
-            
-
             <li key={name} onClick={()=>menuClicked(item)} className="">
  
               <a                

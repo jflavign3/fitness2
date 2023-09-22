@@ -9,6 +9,12 @@
     flex-wrap: wrap;
     }
 
+    .imageSection{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 .checkAndSpeed{
    display: flex;   
 }
@@ -66,7 +72,7 @@
 }
 .leftOfDetails{
 display: flex;
-margin: 17px;
+margin-top: 20px;
 }
 
 

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import "./overview.scss";
 import Badge from '@mui/material/Badge';
-import { BiHide } from "react-icons/bi";
+import { MdExpandMore, MdExpandLess } from "react-icons/md";
 
 export default function DayView({exercises, day}) {
 
@@ -14,7 +14,11 @@ export default function DayView({exercises, day}) {
       
       <div className='lineupTitle'>
          <div className='weekDay'>{day}</div>
-         <BiHide onClick={()=>setVisible(!visible)} size={'1.5rem'}/>
+         {visible ?
+         <MdExpandLess onClick={()=>setVisible(!visible)} size={'1.5rem'}/>
+         :
+         <MdExpandMore onClick={()=>setVisible(!visible)} size={'1.5rem'}/>
+         }
       </div>
       {visible &&
 

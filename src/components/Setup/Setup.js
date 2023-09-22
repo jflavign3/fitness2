@@ -293,7 +293,6 @@ return (
     >
       <ToggleButton value="new">NEW</ToggleButton>
       <ToggleButton value="update">UPDATE</ToggleButton>      
-      <ToggleButton value="delete">DELETE</ToggleButton>      
     </ToggleButtonGroup>
 
       {exercises ? (
