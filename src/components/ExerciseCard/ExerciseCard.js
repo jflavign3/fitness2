@@ -19,7 +19,7 @@ import useSound from 'use-sound';
 
 const ExerciseCard = ({ updatePoints, program, image, name, type, showSpeedometer, details, reorderMode, deleteMode }) => {
   
-const [playSound] = useSound('sound.mp3');
+const [playSound] = useSound('/bell.mp3');
 const [isExpanded, setIsExpanded] = useState(false);  
 const [isCompleted, setIsCompleted] = useState(false);  
 const [_program, setProgram] = useState(null);
@@ -302,7 +302,7 @@ const expandCard = ()=>{
              needleTransition="easeElastic"
              needleColor={'#90f2ff'}
              textColor={'#d8dee9'}
-             width={150} height={150} />}
+             width={150} height={100} />}
         </div>
       </div> 
 
