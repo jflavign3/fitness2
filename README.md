@@ -30,15 +30,21 @@ randonmize exercise by types
 
 
 //stretches
-pretzel /spinal twist
+arms behind and up
+overhead stretch
+overhead side stretch
+quad stretch
+camel
 bird dog
-bridge reach over
+press up (superman)
+seat cross lean 3 reps - wait 1 min after
+lie leg over 3 reps each       
+lie back quad
+
 hip/spine twist (not to floor)
-plank
-side plank
 Foam Roller Thoracic Spine Extensions
 camel...
-bridge
+
 
 //HELP
 1-kill port 3000

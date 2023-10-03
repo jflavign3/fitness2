@@ -1,0 +1,26 @@
+.detailTextbox{
+  width: 50px;
+}
+
+.css-1x51dt5-MuiInputBase-input-MuiInput-input{
+  color: #2caeba !important;
+  font-size: 24px !important;
+}
+.valueAndButtons{
+  display: flex;
+}
+.saves{
+display: flex;
+flex-direction: column;
+}
+
+.kpiValue{
+  color: #2caeba;
+ // color: var(--clr-primary-5);
+  font-size: .8rem;
+  line-height: 0;
+  margin-bottom: 0;
+  margin-top: 0.9rem;
+  text-transform: capitalize;
+  font-size: 24px;
+}

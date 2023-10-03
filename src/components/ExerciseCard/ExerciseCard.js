@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
 import useSound from 'use-sound';
+import DetailUpdateField from "../DetailUpdateField/DetailUpdateField";
 
 const ExerciseCard = ({ updatePoints, program, image, name, type, showSpeedometer, details, reorderMode, deleteMode }) => {
   
@@ -233,7 +234,7 @@ const expandCard = ()=>{
       
       
       { isExpanded && showTimer && timerSeconds > 0 &&
-           <Timer onClick={playSound} seconds={timerSeconds} onTimerOver={playSound} />}
+           <Timer seconds={timerSeconds} onTimerOver={playSound} />}
 
        { isExpanded &&      
      
@@ -246,7 +247,9 @@ const expandCard = ()=>{
         <div key={i} className="detailRow">
           <div className='kpi'>
             <div >{detail.Title}</div>
-            <div className="kpiValue">{detail.Value}</div>            
+            <div>
+            <DetailUpdateField detail={detail} exerciseId={program.exerciseId} userId={program.userId}/>
+            </div>            
           </div>          
         </div>
         
