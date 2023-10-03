@@ -34,6 +34,10 @@ function App() {
     if (currentPoints){
       updatePoints(currentPoints);
     }
+
+    var user = JSON.parse(sessionStorage.getItem("user"));   
+    setAvatar(user.avatar);
+    
   };
 
   const SetCurrentPage = async(page) => {
@@ -65,6 +69,7 @@ const updatePoints = (total) =>{
      sessionStorage.setItem("__userId",_user.userId);     
      sessionStorage.setItem("userName",_user.name); 
      sessionStorage.setItem("userPoints",_user.points);     
+     sessionStorage.setItem("user", JSON.stringify(_user));     
      setAvatar(user.avatar);     
      setUser(_user.userId);
      sessionStorage.setItem("__page","Home");     
