@@ -11,7 +11,6 @@ exports.handler = async (event, context) => {
   const collection = database.collection("Program");
   
   let program = JSON.parse(event.body);
-  console.log('test'+ JSON.stringify(program));
   /*
   const test = await collection.find({_id : new ObjectId(program._id)});
   console.log('test'+ JSON.stringify(test));

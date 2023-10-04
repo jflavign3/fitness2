@@ -13,10 +13,10 @@
 use('FITNESS');
 
 //ADD FIELD
-
+/*
 db.Exercise.updateMany({}, { 
    $set: { showSpeedometer: 1 } 
-});
+});*/
 /*
 db.Program.updateMany(
   { s: { $lt: 100 } },
@@ -31,7 +31,16 @@ db.Program.updateMany(
 db.Program.updateMany( 
     { }, 
     { $rename: { "LastUpdatedDate": "LastUpdateDate" } } 
-  )*/
+  )
+*/
+
+//delete field
+/*
+  db.ExerciseDetails.updateMany( { },
+    { $unset: { LastUpdatedDate: "" } }
+ )
+ */
+
 
 
 //edit exercise

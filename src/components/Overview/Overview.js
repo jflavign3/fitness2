@@ -22,6 +22,8 @@ const Overview = () => {
   const [coreEnabled, setCoreEnabled] = useState(false);  
   const [harmstringEnabled, setHarmstringEnabled] = useState(false);  
   const [shoulderEnabled, setShoulderEnabled] = useState(false);  
+  const [chestEnabled, setChestEnabled] = useState(false);  
+  const [backEnabled, setBackEnabled] = useState(false);  
 
   const cloneExercise = (exercise) => {
     let e = {};
@@ -53,6 +55,8 @@ const Overview = () => {
       case 'core': return coreEnabled;
       case 'shoulder': return shoulderEnabled;
       case 'harmstring': return harmstringEnabled;
+      case 'chest': return chestEnabled;
+      case 'back': return backEnabled;
       default: return false;
      }    
   }
@@ -115,7 +119,7 @@ const Overview = () => {
 
     useEffect(() => {
       GetWeekData();
-  }, [bicepEnabled, tricepEnabled, quadEnabled, coreEnabled, calfEnabled, harmstringEnabled, shoulderEnabled]);
+  }, [bicepEnabled, tricepEnabled, quadEnabled, coreEnabled, calfEnabled, harmstringEnabled, shoulderEnabled, backEnabled, chestEnabled]);
 
 
       return (    
@@ -130,16 +134,19 @@ const Overview = () => {
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      <Stack spacing={1} alignItems="center">
-      <Stack direction="row" spacing={1}>
+      <Stack spacing={1} alignItems="left">
+      <Stack  direction="row" spacing={1}>
         <Chip label="bicep" color="primary" onClick={()=>setBicepEnabled(!bicepEnabled)} variant={bicepEnabled ? "" : "outlined"} />
         <Chip label="tricep" color="primary" onClick={()=>setTricepEnabled(!tricepEnabled)} variant={tricepEnabled ? "" : "outlined"} />
         <Chip label="quad" color="primary" onClick={()=>setQuadEnabled(!quadEnabled)} variant={quadEnabled ? "" : "outlined"} />
-        <Chip label="core" color="primary" onClick={()=>setCoreEnabled(!coreEnabled)} variant={coreEnabled ? "" : "outlined"} />
+        <Chip label="core" color="primary" onClick={()=>setCoreEnabled(!coreEnabled)} variant={coreEnabled ? "" : "outlined"} />        
         <Chip label="calf" color="primary" onClick={()=>setCalfEnabled(!calfEnabled)} variant={calfEnabled ? "" : "outlined"} />
+        </Stack>
+         <Stack  direction="row" spacing={1}>
         <Chip label="harmstring" color="primary" onClick={()=>setHarmstringEnabled(!harmstringEnabled)} variant={harmstringEnabled ? "" : "outlined"} />
         <Chip label="shoulder" color="primary" onClick={()=>setShoulderEnabled(!shoulderEnabled)} variant={shoulderEnabled ? "" : "outlined"} />
-    
+        <Chip label="chest" color="primary" onClick={()=>setChestEnabled(!chestEnabled)} variant={chestEnabled ? "" : "outlined"} />
+        <Chip label="back" color="primary" onClick={()=>setBackEnabled(!backEnabled)} variant={backEnabled ? "" : "outlined"} />
         </Stack>
       </Stack>
 

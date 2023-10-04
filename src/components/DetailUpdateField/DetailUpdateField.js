@@ -37,12 +37,17 @@ const _setEditMode = () => {
         
     if (saveAll){
       let programs = await GetProgramsByUserId(userId);   
+
       programs = programs.filter(x=>x.exerciseId === exerciseId );  
-      for(var i = 0; i < programs.length; i++)
-      {
-          var exDetails = {"ProgramId": detail.ProgramId, "Title":detail.Title, "Value":value, "LastUpdateDate": today};  
+      debugger;
+      for (const program of programs){
+      
+        /*if (detail.ProgramId === '6512ef6abccf0f568022d151'){
+           debugger;
+        }*/
+          var exDetails = {"ProgramId": program._id, "Title":detail.Title, "Value":value, "LastUpdateDate": today};  
           var d = await UpdateExerciseDetails(exDetails);
-      }
+      };
       
       toast.success(`Updated ${programs.length} program details`)
 

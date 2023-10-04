@@ -158,7 +158,6 @@ const setDetailOrder = (details) => {
 
 const setMeterValue = (date) => {
     
-  //debugger;
        // To calculate the time difference of two dates
     var Difference_In_Time = getToday().getTime() - new Date(date).getTime();
       
@@ -182,8 +181,12 @@ const expandCard = ()=>{
     setDetailOrder(details);
 
     var dates=[];
+  
+    //debugger;
     details.forEach(element => {
+      if (element.LastUpdateDate){      
       dates.push( new Date(element.LastUpdateDate));
+      }
     });   
     var maxDate=new Date(Math.max.apply(null,dates));
     setMeterValue(maxDate);
