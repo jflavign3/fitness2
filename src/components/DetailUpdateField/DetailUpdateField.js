@@ -30,7 +30,6 @@ const _setEditMode = () => {
     if (!value > 0){
       toast.error(`Must update the value`)
       return;
-
     }
 
     var updated = 0;
