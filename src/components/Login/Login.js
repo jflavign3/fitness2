@@ -20,8 +20,7 @@ const Login = ({users, setCurrentUser}) => {
 
   const handlePassword = (password) =>{
     
-    debugger;
-    if (password === 'rhea'){
+    if (password === '219'){
       setIsAuthenticated(true);
       localStorage.setItem('isAuthenticated','true');
 
