@@ -11,8 +11,7 @@ points. improve dragging it everywhere
 
 features:
 
-modify details on card
-defi 6 k challege 
+ 
 password
 adding exercise, shoudl have pop up screen with categories and images
 --------------

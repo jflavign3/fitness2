@@ -39,7 +39,7 @@ const _setEditMode = () => {
       let programs = await GetProgramsByUserId(userId);   
 
       programs = programs.filter(x=>x.exerciseId === exerciseId );  
-      debugger;
+      //debugger;
       for (const program of programs){
       
         /*if (detail.ProgramId === '6512ef6abccf0f568022d151'){

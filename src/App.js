@@ -36,7 +36,9 @@ function App() {
     }
 
     var user = JSON.parse(sessionStorage.getItem("user"));   
-    setAvatar(user.avatar);
+    if (user){
+       setAvatar(user.avatar);
+    }
     
   };
 
@@ -82,6 +84,7 @@ const updatePoints = (total) =>{
 //debugger;
 useEffect(() => {
   console.log("useEffect app");
+  //debugger;
   GetListOfUsers();
 
   //on first rerender take page from session

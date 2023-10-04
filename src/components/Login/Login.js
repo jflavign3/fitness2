@@ -4,7 +4,8 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 
 import { useState, useEffect } from 'react';
-
+import Password from "../Password/password";
+import { toast } from "react-toastify";
 //
 //using avatar from UI Material
 
@@ -14,7 +15,21 @@ import { useState, useEffect } from 'react';
 const Login = ({users, setCurrentUser}) => {
 
   const [usersOrdered, setUsersOrdered] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+
+  const handlePassword = (password) =>{
+    
+    debugger;
+    if (password === 'rhea'){
+      setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated','true');
+
+    }else{
+      toast.error('wrong password');
+    }
+
+  }
 
   const avatarClick = (user, setCurrentUser) =>
 {
@@ -32,10 +47,20 @@ useEffect(()=>{
   _usersOrdered.push(users.filter(x=>x.name==='Samuel')[0]);
   _usersOrdered.push(users.filter(x=>x.name==='Alexane')[0]);
   setUsersOrdered(_usersOrdered);
+  
+  var auth = localStorage.getItem('isAuthenticated');
+  
+  if (auth === 'true'){
+    setIsAuthenticated(true);
+  }
+  
 },[users]);
   
   return (    
     <div>
+
+      {isAuthenticated ?
+      <>
 
 <div className='loginLabel'>Qui suis-je?</div>
 <div className='userBadgesSection'>
@@ -47,7 +72,10 @@ useEffect(()=>{
       
     </Stack>
 
-    </div>
+    </div> </>: <Password handlePassword={handlePassword}></Password>
+}
+
+
     </div>
   );
 };
