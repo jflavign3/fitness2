@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./timer.css";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import useSound from 'use-sound';
 
 
 const Timer = ({seconds, onTimerOver}) => {
 
+  //const [played, setPlayed] = useState(false);
     
   const renderTime = ({ remainingTime }) => {
-    
-  
+       
+   /*ar v = sessionStorage.getItem('played');
+    console.log(v);
+    if (remainingTime === 299 && !v==='1'){        
+        sessionStorage.setItem('played','1');
+        console.log(remainingTime);
+    }*/
+
+
     return (
       <div className="timer">
         <div className="text">Remaining</div>
