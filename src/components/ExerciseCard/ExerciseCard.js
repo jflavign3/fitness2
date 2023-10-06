@@ -10,6 +10,7 @@ import Timer from "../Timer/timer";
 import { BsStopwatch,BsCheck2Square,BsTrash } from "react-icons/bs";
 import ReactSpeedometer from "react-d3-speedometer"
 import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import done from "../../images/done.png";
 ///MATERIAL
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -69,7 +70,7 @@ const updateOrder = async () =>{
 const saveProgress = async ()=>{
      //update 
      var bonus = 0;
-     let n = Math.random() * 60;
+     let n = Math.random() * 100;
      console.log('random:' + n);
      if (n >1){
         confettiReward()     
@@ -272,7 +273,7 @@ const expandCard = ()=>{
 <div className="leftOfDetails">
 <div>
        {!isCompleted && 
-        <BsCheck2Square color="#d946ef" size={'3.0rem'}  onClick={() => saveProgress()} />}
+        <img alt="logo" className="checkButton" onClick={() => saveProgress()} id="logo" src={done} />}
         </div>
 
     </div>
