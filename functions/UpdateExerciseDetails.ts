@@ -4,7 +4,7 @@ const {MongoClient} = require("mongodb");
 
 exports.handler = async (event, context) => {
   
-  const mongoClient = new MongoClient(process.env.MONGODB_URI);
+  const mongoClient = new MongoClient("mongodb+srv://m001-student:q1w2e3r4@mycluster.izglnnd.mongodb.net");
   
   try {
   

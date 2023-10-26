@@ -4,7 +4,7 @@ import Home from './components/ExerciseList/Home';
 import Setup from './components/Setup/Setup';
 import Overview from './components/Overview/Overview';
 import MenuBar from "./components/MenuBar/MenuBar";
-import {GetAllUsers} from "./Users";
+import {GetAllUsers} from "./DAL/User";
 import Login from './components/Login/Login';
 import Defi from './components/Defi/DefiPage';
 import { ToastContainer} from 'react-toastify';
