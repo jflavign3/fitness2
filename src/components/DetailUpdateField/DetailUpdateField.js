@@ -73,11 +73,16 @@ const _setEditMode = () => {
        <div className="kpiValue">
      <div className='valueLabel' onClick={()=>{_setEditMode();}} >{detail.Value}</div>
      </div> :
-     <>
-     <TextField className='detailTextbox' id="standard-basic" defaultValue={detail.Value} onChange={(e)=>{handleValueChange(e.target.value);}} variant="standard" /> 
+     <> 
+     <TextField
+      sx={{
+        fontSize: '24px',
+        color: '#2caeba',
+      }}
+     className='detailTextbox' id="standard-basic" defaultValue={detail.Value} onChange={(e)=>{handleValueChange(e.target.value);}} variant="standard" /> 
      <div className='saves'>
-     <LuSaveAll size={'1.5rem'} onClick={()=>save(true)} />   
-     <LuSave size={'1.5rem'}  onClick={()=>save(false)} />   
+     <LuSaveAll className='saveAllIcon' size={'2.5rem'} onClick={()=>save(true)} />   
+     <LuSave className='saveIcon' size={'2.5rem'}  onClick={()=>save(false)} />   
      
      </div>
      </>

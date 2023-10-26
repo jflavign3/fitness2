@@ -11,11 +11,16 @@
 }
 .saves{
 display: flex;
-flex-direction: column;
+flex-direction: row;
 }
-
-.kpiValue{
+.saveIcon{
   color: #2caeba;
+}
+.saveAllIcon{
+  color: #0d565d;
+}
+.kpiValue{
+  color:#2caeba;
  // color: var(--clr-primary-5);
   font-size: .8rem;
   line-height: 0;

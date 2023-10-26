@@ -1,4 +1,8 @@
-//todo:
+
+
+bugs:
+refresh
+
 
 backend:
 custom hook
@@ -10,7 +14,7 @@ localstore for logges user
 store exercises, details in session
 setup spinner not working
 points. improve dragging it everywhere
-
+warnings
 
 features:
 show stats
