@@ -1,16 +1,8 @@
 var offset = -300; //Timezone offset for EST in minutes.
-/*
-export const getTodayFormatted = () => {
- 
-    
-    let dt = new Date(); 
-    var today = new Date(dt.getTime() + offset*60*1000);    
-    today = today.toISOString().split('T')[0];
-  
-    return today;
-};*/
 
-export const getDayName = (id, useToday) =>{
+
+
+export const getDayName = (id:number, useToday:boolean) =>{
 
     const d = new Date();
     if (d.getDay()===id && useToday){

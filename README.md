@@ -1,18 +1,23 @@
-//todo:
+
+
+bugs:
+refresh
+
 
 backend:
+custom hook
+onref
+oncallback
 typesscript
 graphql
 localstore for logges user
 store exercises, details in session
 setup spinner not working
 points. improve dragging it everywhere
-
+warnings
 
 features:
-
- 
-password
+show stats
 adding exercise, shoudl have pop up screen with categories and images
 --------------
 incldue tips on card: TiP: You can superset bicep with tricpep...
@@ -28,21 +33,6 @@ randonmize exercise by types
 
 
 
-//stretches
-arms behind and up
-overhead stretch
-overhead side stretch
-quad stretch
-camel
-bird dog
-press up (superman)
-seat cross lean 3 reps - wait 1 min after
-lie leg over 3 reps each       
-lie back quad
-
-hip/spine twist (not to floor)
-Foam Roller Thoracic Spine Extensions
-camel...
 
 
 //HELP

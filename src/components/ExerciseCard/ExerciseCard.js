@@ -147,8 +147,8 @@ const setDetailOrder = (details) => {
   
      details.forEach((detail)=> {
       switch (detail.Title){
-        case 'Reps': detail.order = 1; break;
-        case 'Sets': detail.order = 2; break;
+        case 'Reps': detail.order = 2; break;
+        case 'Sets': detail.order = 1; break;
         case 'Lbs': detail.order = 3; break;
         case 'Seconds': detail.order = 4; break;
         default : detail.order = 1;

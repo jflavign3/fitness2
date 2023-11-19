@@ -1,4 +1,6 @@
-export const UpsertStat = async(stat) => {
+import {Stat} from "./../Types";
+
+export const UpsertStat = async(stat:Stat) => {
   
     const url = "/.netlify/functions/UpsertStats";    
 
